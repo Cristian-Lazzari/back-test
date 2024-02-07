@@ -20,18 +20,20 @@
             @error('name') {{ $message }} @enderror
         </div>
     </div>
-
     <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <textarea
-            class="form-control @error('description') is-invalid @enderror"
-            id="description"
-            rows="3"
-            name="description">{{ old('description',$category->description) }}</textarea>
+        <label for="slot" class="form-label">Slot</label>
+        <input
+            type="text"
+            class="form-control @error('slot') is-invalid @enderror"
+            id="slot"
+            name="slot"
+            value="{{ old('slot',$category->slot) }}"
+        >
         <div class="invalid-feedback">
-            @error('description') {{ $message }} @enderror
+            @error('slot') {{ $message }} @enderror
         </div>
     </div>
+
 
     <button class="btn btn-primary">Salva</button>
 </form>

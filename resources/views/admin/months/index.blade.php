@@ -18,7 +18,7 @@
 
 <div class="row">
     <h1 >GESTIONE DATE</h1>
-    <a  href="{{ route('admin.reservations.index') }}" class="btn btn-dark">INDIETRO</a>
+    <a  href="{{ route('admin.setting') }}" class="btn btn-dark">INDIETRO</a>
 </div>
 
     @if(session('success'))

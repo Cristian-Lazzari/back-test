@@ -10,6 +10,7 @@ class CategoryController extends Controller
 {
     private $validations = [
         'name'   => 'required|string|min:5|max:50',
+        'slot'   => 'required',
     ];
 
     public function index()
@@ -35,17 +36,15 @@ class CategoryController extends Controller
         $newCategory = new Category();
 
         $newCategory->name          = $data['name'];
+        $newCategory->slot          = $data['slot'];
 
         $newCategory->save();
 
 
-        return redirect()->route('admin.categories.show', ['category' => $newCategory->id]);
+        return redirect()->route('admin.categories.index');
     }
 
-    public function show(Category $category)
-    {
-        return view('admin.categories.show', compact('category'));
-    }
+
 
     public function edit(Category $category)
     {
@@ -60,6 +59,7 @@ class CategoryController extends Controller
 
 
         $category->name          = $data['name'];
+        $category->slot          = $data['slot'];
 
 
         $category->update();

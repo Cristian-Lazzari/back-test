@@ -37,10 +37,11 @@
             <div class="body">
                 <section class="myres-left">
                     <div class="name">{{$reservation->name}}</div>
-                    <div class="time">{{$ora_formatata}}</div>
-                    <div class="day_w">{{$giorno_settimana}}</div>
-                    <div class="date">
-                        {{$data_formatata}}
+                    <div  class="myres-left-c">
+                        <div class="time">{{$ora_formatata}}</div>
+
+                        <div class="day_w">{{$giorno_settimana}}</div>
+                        <div class="date">{{$data_formatata}}</div>
                     </div>
                     <div class="c_a">inviato alle: {{$reservation->created_at}}</div>
                 </section>

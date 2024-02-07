@@ -11,6 +11,7 @@
                 <tr>
 
                     <th>NOME</th>
+                    <th>PREZZO</th>
 
                     <th>
                         <a class="btn btn-success" href="{{ route('admin.tags.create') }}">nuovo</a>
@@ -23,6 +24,7 @@
                     <tr>
               
                         <td>{{$tag->name}}</td>
+                        <td>€ {{$tag->price / 100}}</td>
 
                         <td>
                             <div class="btn-cont">

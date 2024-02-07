@@ -10,9 +10,10 @@
                 <tr>
 
                     <th>NOME</th>
+                    <th>SLOT</th>
 
                     <th>
-                        <a class="btn btn-success" href="{{ route('admin.categories.create') }}">nuovo</a>
+                        <a class="btn btn-success" href="{{ route('admin.categories.create') }}">Nuovo</a>
                     </th>
                 </tr>
             </thead>
@@ -20,14 +21,15 @@
                 @foreach ($categories as $category)
                     <tr>
  
-                        <td>{{$category->name}}</td>
+                        <td class="">{{$category->name}}</td>
+                        <td>{{$category->slot}}</td>
 
                         <td >
                             <div class="btn-cont">
                                 <form class="delete-cat-un" action="{{ route('admin.categories.destroy', ['category' =>$category])}}" method="post">
                                     @csrf
                                     @method('delete')
-                                    <button class="btn btn-danger" >elimina</button>
+                                    <button class="btn btn-danger" >Elimina</button>
                                 </form>
                                 <a class="btn my-btn btn-warning" href="{{ route('admin.categories.edit', ['category' =>$category]) }}">Modifica</a>
 

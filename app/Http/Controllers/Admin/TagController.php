@@ -10,6 +10,7 @@ class TagController extends Controller
 {
     private $validations = [
         'name'          => 'required|string|min:5|max:50',
+        'price'         => 'required',
     ];
 
     public function index()
@@ -35,11 +36,12 @@ class TagController extends Controller
         $newTag = new Tag();
 
         $newTag->name          = $data['name'];
+        $newTag->price          = $data['price'];
 
         $newTag->save();
 
 
-        return redirect()->route('admin.tags.show', ['tag' => $newTag->id]);
+        return redirect()->route('admin.tags.index');
     }
 
 
@@ -57,6 +59,7 @@ class TagController extends Controller
 
 
         $tag->name          = $data['name'];
+        $tag->price          = $data['price'];
 
         $tag->update();
 

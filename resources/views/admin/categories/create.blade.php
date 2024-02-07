@@ -18,6 +18,19 @@
             @error('name') {{ $message }} @enderror
         </div>
     </div>
+    <div class="mb-3">
+        <label for="slot" class="form-label">Slot</label>
+        <input
+            type="text"
+            class="form-control @error('slot') is-invalid @enderror"
+            id="slot"
+            name="slot"
+            value="{{ old('slot') }}"
+        >
+        <div class="invalid-feedback">
+            @error('slot') {{ $message }} @enderror
+        </div>
+    </div>
 
     
 

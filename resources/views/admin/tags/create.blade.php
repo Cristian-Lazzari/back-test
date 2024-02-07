@@ -18,18 +18,21 @@
             @error('name') {{ $message }} @enderror
         </div>
     </div>
-
     <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <textarea
-            class="form-control @error('description') is-invalid @enderror"
-            id="description"
-            rows="3"
-            name="description">{{ old('description') }}</textarea>
+        <label for="price" class="form-label">Prezzo in centesimi</label>
+        <input
+            type="text"
+            class="form-control @error('price') is-invalid @enderror"
+            id="price"
+            name="price"
+            value="{{ old('price') }}"
+        >
         <div class="invalid-feedback">
-            @error('description') {{ $message }} @enderror
+            @error('price') {{ $message }} @enderror
         </div>
     </div>
+
+
 
     <button class="btn btn-primary">Salva</button>
 </form>

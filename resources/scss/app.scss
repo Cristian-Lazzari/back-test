@@ -521,14 +521,19 @@ td{
                 margin-top: 20px;
                 text-align: center;
                 font-size: clamp(17px, 1.7vw, 23px);
-                .time{
-                    font-size:  clamp(23px, 3vw, 35px);
-                    font-weight: bolder;
-                    
-                }
-                .day_w{
-                    font-style: italic;
-                    text-transform: lowercase;
+                .myres-left-c{
+                    display: flex;
+                    gap: 10px;
+                    flex-direction: column;
+                    .time{
+                        font-size:  clamp(23px, 3vw, 35px);
+                        font-weight: bolder;
+                        
+                    }
+                    .day_w{
+                        font-style: italic;
+                        text-transform: lowercase;
+                    }
                 }
                 .c_a{
                     font-style: italic;
@@ -581,7 +586,7 @@ td{
                 }
             }
             .myres-center-res{
-                margin: 20px;
+                
                 h4{
                     font-weight: bolder;
                     font-size: clamp(29px, 4vw, 485px);
@@ -621,6 +626,10 @@ td{
         } 
     }
     .myres{
+        .myres-left-c{
+            align-items: center;
+            flex-direction: row !important;
+        }
         .mail-tel{
 
             flex-direction: column !important;
