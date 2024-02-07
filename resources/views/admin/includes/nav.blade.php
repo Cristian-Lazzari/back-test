@@ -40,10 +40,20 @@
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Post
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{{ route('admin.posts.index') }}">Mostra tutti</a></li>
+                    <li><a class="dropdown-item" href="{{ route('admin.posts.create') }}">Aggiungi</a></li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Prenotazioni tavoli
                 </a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="{{ route('admin.reservations.index') }}">Mostra tutti</a></li>
+                    <li><a class="dropdown-item" href="{{ route('admin.reservations.create') }}">Aggiungi</a></li>
                 </ul>
             </li>
             <li class="nav-item dropdown">
@@ -52,6 +62,7 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="{{ route('admin.orders.index') }}">Mostra tutti</a></li>
+                    <li><a class="dropdown-item" href="{{ route('admin.orders.create') }}">Aggiungi</a></li>
                 </ul>
             </li>
             <li class="nav-item dropdown">
@@ -60,8 +71,8 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="{{ route('admin.setting') }}">Disponibilità servizi</a></li>
-                    <li><a class="dropdown-item" href="{{ route('admin.slot') }}">Orari tavoli</a></li>
-                    <li><a class="dropdown-item" href="{{ route('admin.timeslot') }}">Orari asporto</a></li>
+                    <li><a class="dropdown-item" href="{{ route('admin.months.index') }}">Gestione date</a></li>
+
                 </ul>
             </li>
            

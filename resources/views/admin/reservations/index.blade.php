@@ -3,8 +3,8 @@
 @section('contents')
     {{-- <img src="{{ Vite::asset('resources/img/picsum30.jpg') }}" alt=""> --}}
     <h1 class=" m-auto my-5">PRENOTAZIONI TAVOLI</h1>
-    <a  href="{{ route('admin.months.index') }}" class="btn btn-warning w-25 m-auto my-3  d-block">Gestione date</a>
-    <a  href="{{ route('admin.reservations.create') }}" class="btn btn-success w-25 m-auto my-3 d-block">Nuova Prenotazione</a>
+    <a  href="{{ route('admin.months.index') }}" class="btn btn-warning w-50 m-auto my-3  d-block">Gestione date</a>
+    <a  href="{{ route('admin.reservations.create') }}" class="btn btn-success w-50 m-auto my-3 d-block">Nuova Prenotazione</a>
     <div class="myres-c">
 
         @foreach ($reservations as $reservation)
