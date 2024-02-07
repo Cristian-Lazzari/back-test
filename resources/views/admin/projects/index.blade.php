@@ -57,7 +57,7 @@
                         <div class="price">€{{$project->price / 100}}</div>
                     </section>
                     <section class="s3">
-                        <a class="btn my-btn btn-warning" href="{{ route('admin.projects.edit', ['project' =>$project]) }}">Modifica</a>
+                        <a class="btn my-btn btn-warning w-100" href="{{ route('admin.projects.edit', ['project' =>$project]) }}">Modifica</a>
                             <form action="{{ route('admin.projects.destroy', ['project' =>$project])}}" method="post">
                                 @csrf
                                 @method('delete')

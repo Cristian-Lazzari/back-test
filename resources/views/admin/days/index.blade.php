@@ -17,11 +17,11 @@ $month_name=['gennaio','febbraio','marzo','aprile', 'maggio','giugno','luglio','
         @if ($month_id !== 1) 
             @if ($days[1]->m !== 1)
                 
-                <a href="{{ route('admin.days.index', ['month' =>$days[1]->m - 1, 'year' =>$days[1]->y, 'month_id' => $month_id - 1]) }}" class="btn btn-dark w-25">
+                <a href="{{ route('admin.days.index', ['month' =>$days[1]->m - 1, 'year' =>$days[1]->y, 'month_id' => $month_id - 1]) }}" class="btn btn-dark w-50">
                     PRECEDENTE
                 </a>
             @else
-                <a href="{{ route('admin.days.index', ['month' =>12, 'year' =>$days[1]->y + 1, 'month_id' => 1]) }}" class="btn btn-dark w-25">
+                <a href="{{ route('admin.days.index', ['month' =>12, 'year' =>$days[1]->y + 1, 'month_id' => 1]) }}" class="btn btn-dark w-50">
                     PRECEDENTE
                 </a>
             @endif
@@ -30,11 +30,11 @@ $month_name=['gennaio','febbraio','marzo','aprile', 'maggio','giugno','luglio','
         @endif
         @if ($month_id !== 12) 
             @if ($days[1]->m !== 12)   
-                <a href="{{ route('admin.days.index', ['month' =>$days[1]->m + 1, 'year' =>$days[1]->y, 'month_id' => $month_id + 1]) }}" class="btn btn-dark w-25">
+                <a href="{{ route('admin.days.index', ['month' =>$days[1]->m + 1, 'year' =>$days[1]->y, 'month_id' => $month_id + 1]) }}" class="btn btn-dark w-50">
                     PROSSIMO
                 </a>
             @else
-                <a href="{{ route('admin.days.index', ['month' => 1, 'year' =>$days[1]->y + 1, 'month_id' => 12]) }}" class="btn btn-dark w-25">
+                <a href="{{ route('admin.days.index', ['month' => 1, 'year' =>$days[1]->y + 1, 'month_id' => 12]) }}" class="btn btn-dark w-50">
                     PROSSIMO
                 </a>
             @endif
