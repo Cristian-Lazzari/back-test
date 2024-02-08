@@ -61,7 +61,7 @@ class OrderController extends Controller
             $date->reserved_pz -= $order->total_pz;
             $date->save();
 
-            return redirect("https://wa.me/" . $order->phone . '39' . "?text=E' con profondo rammarico che siamo obbligati ad disdire la vostra prenotazione!");
+            return redirect("https://wa.me/" . '39' . $order->phone . "?text=E' con profondo rammarico che siamo obbligati ad disdire la vostra prenotazione!");
         } else {
             return redirect()->back();
         }
