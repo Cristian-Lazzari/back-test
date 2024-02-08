@@ -40,11 +40,11 @@ class OrderController extends Controller
                 $date = Date::where('date_slot', $order->date_slot)->first();
                 $date->reserved_pz += $order->total_pz;
                 $date->save();
-                return redirect("https://wa.me/" . $order->phone . '39' . "?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!");
+                return redirect("https://wa.me/" . '39' . $order->phone . "?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!");
             } else {
                 $order->status = 1;
                 $order->save();
-                return redirect("https://wa.me/" . $order->phone . '39' . "?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!");
+                return redirect("https://wa.me/" . '39' . $order->phone . "?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!");
             }
         } else {
             return redirect()->back();
