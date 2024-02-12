@@ -53,7 +53,7 @@
 </head>
 <body>
 
-    <img src="https://db.dashboardrisotorante.it/public/images/or.png" alt="simbolo ordine">
+    <img src="https://db.dashboardristorante.it/public/images/or.png" alt="simbolo ordine">
     <h1>Il sign/gr {{ $data['name'] }}, ha prenotato un asporto!</h1>
     <p>Data prenotata: {{ $data['date_slot'] }}</p>
     <h3>I prodotti:</h3>

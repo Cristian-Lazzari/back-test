@@ -39,7 +39,7 @@
 </head>
 <body>
 
-    <img src="https://db.dashboardrisotorante.it/public/images/or.png" alt="simbolo ordine">
+    <img src="https://db.dashboardristorante.it/public/images/or.png" alt="simbolo ordine">
     <h1>Grazie {{ $data['name'] }}, <br>
         Il Capriccio di Leo sta elaborando la sua richiesta!</h1>
     <p>Data prenotata: {{ $data['date_slot'] }}</p>

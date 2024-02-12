@@ -27,7 +27,7 @@
 </head>
 <body>
 
-    <img src="https://db.dashboardrisotorante.it/public/images/res.png" alt="simbolo ordine">
+    <img src="https://db.dashboardristorante.it/public/images/res.png" alt="simbolo ordine">
     <h1>IL Sigr/ra {{ $data['name'] }} ha prenotato un tavolo!</h1>
     <p>Data prenotata: {{ $data['date_slot'] }}</p>
     <span>Numero ospiti:</span>
