@@ -27,17 +27,21 @@
             font-size: 18px;
             font-weight: bold;
         }
-        .variation{
+    
+        hr{
+            padding: 1px !important;
         }
-        .add, .remove{
-
+        img{
+            width: 300px;
+            margin: 0 auto;
         }
     </style>
 </head>
 <body>
 
-    <img src="" alt="">
-    <h1>Grazie per aver ordinato dal {{env('APP_NAME')}} {{ $data['name'] }}, stiamo elaborando la sua richiesta!</h1>
+    <img src="https://db.dashboardrisotorante.it/public/images/or.png" alt="simbolo ordine">
+    <h1>Grazie {{ $data['name'] }}, <br>
+        Il Capriccio di Leo sta elaborando la sua richiesta!</h1>
     <p>Data prenotata: {{ $data['date_slot'] }}</p>
     <h3>I suoi prodotti:</h3>
     <div class="products"  style="">

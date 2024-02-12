@@ -42,11 +42,18 @@
             gap: 10px;
 
         }
+        hr{
+            padding: 1px !important;
+        }
+        img{
+            width: 300px;
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body>
 
-    <img src="" alt="">
+    <img src="https://db.dashboardrisotorante.it/public/images/or.png" alt="simbolo ordine">
     <h1>Il sign/gr {{ $data['name'] }}, ha prenotato un asporto!</h1>
     <p>Data prenotata: {{ $data['date_slot'] }}</p>
     <h3>I prodotti:</h3>

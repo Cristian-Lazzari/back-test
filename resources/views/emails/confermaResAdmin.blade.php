@@ -15,14 +15,20 @@
             font-style: italic;
             padding: 15px 0;
         }
+        hr{
+            padding: 1px !important;
+        }
 
-
+        img{
+            width: 300px;
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body>
 
-   
-    <h1>Grazie {{ $data['name'] }} per aver ordinato dal {{env('APP_NAME')}}, la sua prenotazione è stata accolta!</h1>
+    <img src="https://db.dashboardrisotorante.it/public/images/res.png" alt="simbolo ordine">
+    <h1>IL Sigr/ra {{ $data['name'] }} ha prenotato un tavolo!</h1>
     <p>Data prenotata: {{ $data['date_slot'] }}</p>
     <span>Numero ospiti:</span>
     <span style="font-size: 35px; font-weight:bolder">{{$data['n_person']}}</span>

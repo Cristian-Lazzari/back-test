@@ -15,13 +15,19 @@
             font-style: italic;
             padding: 15px 0;
         }
+        hr{
+            padding: 1px !important;
+        }
 
-
+        img{
+            width: 300px;
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body>
 
-    <img src="" alt="">
+    <img src="https://db.dashboardrisotorante.it/public/images/res.png" alt="simbolo ordine">
     <h1>Il sign/gr {{ $data['name'] }}, ha prenotato un tavolo!</h1>
     <p>Data prenotata: {{ $data['date_slot'] }}</p>
     <h3>Numero ospiti: <span style="font-size: 35px; font-weight:bolder">{{$data['n_person']}}</span></h3> 
