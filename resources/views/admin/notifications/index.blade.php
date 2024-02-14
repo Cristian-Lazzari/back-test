@@ -17,6 +17,11 @@
                         <div class="accordion-body">
                             <p>{{ $item->message }}</p>
                             <div>Effettuato/a il: {{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y H:i:s') }}</div>
+                            @if ($item->source)
+                                <a href="{{ route("admin.orders.index") }}">Visualizza</a>
+                            @else
+                                <a href="{{ route("admin.reservations.index") }}">Visualizza</a>
+                            @endif
                         </div>
                     </div>
                 </div>
