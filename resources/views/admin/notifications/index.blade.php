@@ -8,15 +8,15 @@
             <div class="accordion accordion-flush " id="accordionFlushExample">
                 <div class="accordion-item">
                     <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne-{{ $item->id }}" aria-expanded="false" aria-controls="flush-collapseOne-{{ $item->id }}">
                             {{ $item->title }}
                         </button>
                         {{-- qui bisogna mettere un bottone per reindirizzare alla prenotazione o all'ordine --}}
                     </h2>
-                    <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                    <div id="flush-collapseOne-{{ $item->id }}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <p>{{ $item->message }}</p>
-                            <div>{{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y H:i:s') }}</div>
+                            <div>Effettuato/a il: {{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y H:i:s') }}</div>
                         </div>
                     </div>
                 </div>
