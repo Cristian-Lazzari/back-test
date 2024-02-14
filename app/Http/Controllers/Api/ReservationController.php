@@ -6,14 +6,15 @@ use DateTime;
 use Exception;
 use App\Models\Date;
 use App\Models\Reservation;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\TryCatch;
-use App\Http\Controllers\Controller;
 use App\Mail\confermaPrenotazione;
-use App\Mail\confermaPrenotazioneAdmin;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redis;
+use App\Mail\confermaPrenotazioneAdmin;
 use Illuminate\Database\QueryException;
 
 class ReservationController extends Controller
@@ -60,15 +61,23 @@ class ReservationController extends Controller
                     'message' => 'Il numero massimo di prenotazioni per questa data e orario è già stato raggiunto',
                 ]);
             }
-
-            // Salvo la data e la prenotazione
-            $date->save();
             $newOrder->save();
+
+            // Invio notifica a dashboard
+            $newNot = new Notification();
+            $newNot->title = 'Nuova Prenotazione';
+            $newNot->message = `Hai una nuova prenotazione: ` . $data['n_person'] . ' persone per ' . $date->date_slot;
+            $newNot->source = 0;
+            $newNot->source_id = $newOrder->id;
+
+            // Salvo la data, la prenotazione e la notifica
+            $date->save();
+            $newNot->save();
 
             // invia mail
             $mail = new confermaPrenotazione($data);
             Mail::to($data['email'])->send($mail);
-            
+
             $mailAdmin = new confermaPrenotazioneAdmin($data);
             Mail::to('test@dashboardristorante.it')->send($mailAdmin);
 
