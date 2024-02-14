@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\Project;
 use App\Models\Category;
 use App\Mail\confermaOrdine;
+use App\Models\Notification;
 use App\Models\OrderProject;
 use App\Models\projectOrder;
 use Illuminate\Http\Request;
@@ -101,11 +102,19 @@ class OrderController extends Controller
                 ]);
             }
 
-            $mail = new confermaOrdine($data, $arrvar2);
-            Mail::to($data['email'])->send($mail);
+            // Invio notifica a dashboard
+            $newNot = new Notification();
+            $newNot->title = 'Nuovo Ordine';
+            $newNot->message = `Hai un nuovo ordine: ` . $newOrder->total_pz . ' pezzi per ' . $date->date_slot;
+            $newNot->source = 1;
+            $newNot->source_id = $newOrder->id;
+            $newNot->save();
 
-            $mailAdmin = new confermaOrdineAdmin($data, $arrvar2);
-            Mail::to('test@dashboardristorante.it')->send($mailAdmin);
+            // $mail = new confermaOrdine($data, $arrvar2);
+            // Mail::to($data['email'])->send($mail);
+
+            // $mailAdmin = new confermaOrdineAdmin($data, $arrvar2);
+            // Mail::to('test@dashboardristorante.it')->send($mailAdmin);
 
             // ritornare un valore di successo al frontend
             return response()->json([
