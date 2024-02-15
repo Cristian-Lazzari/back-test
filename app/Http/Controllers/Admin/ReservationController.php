@@ -60,6 +60,10 @@ class ReservationController extends Controller
             $reservation->save();
             $date = Date::where('date_slot', $reservation->date_slot)->first();
             $date->reserved -= $reservation->n_person;
+
+            if($date->reserved < $date->max_res){
+                $date->visible = 1;
+            }
             $date->save();
             return redirect("https://wa.me/" . '39' . $reservation->phone . "?text=E' con profondo rammarico che siamo obbligati a disdire la vostra prenotazione!");
         } else {

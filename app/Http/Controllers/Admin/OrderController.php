@@ -59,6 +59,9 @@ class OrderController extends Controller
             $order->save();
             $date = Date::where('date_slot', $order->date_slot)->first();
             $date->reserved_pz -= $order->total_pz;
+            if($date->reserved_pz < $date->max_pz){
+                $date->visible = 1;
+            }
             $date->save();
 
             return redirect("https://wa.me/" . '39' . $order->phone . "?text=E' con profondo rammarico che siamo obbligati ad disdire la vostra prenotazione!");

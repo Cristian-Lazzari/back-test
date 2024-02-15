@@ -46,7 +46,7 @@
             padding: 1px !important;
         }
         img{
-            width: 300px;
+            width: 120px;
             margin: 0 auto;
         }
     </style>
