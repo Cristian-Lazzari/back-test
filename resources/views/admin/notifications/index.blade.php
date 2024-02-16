@@ -25,19 +25,11 @@
                             <div class="fs-5">{{ $item->message }}</div>
                             <div class="mb-2">Effettuato/a il: {{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y H:i:s') }}</div>
 
-                            @if ($item->source)
-                                <form class="d-inline" action="{{ route('admin.notifications.showAndDestroy', $item->id)}}" method="POST">
-                                    @csrf
-                                    @method('delete')
-                                    <button class="text-primary border-0" >Visualizza</button>
-                                </form>
-                            @else
-                                <form class="d-inline" action="{{ route('admin.notifications.showAndDestroy', $item->id)}}" method="POST">
-                                    @csrf
-                                    @method('delete')
-                                    <button class="text-primary border-0" >Visualizza</button>
-                                </form>
-                            @endif
+                            <form class="d-inline" action="{{ route('admin.notifications.showAndDestroy', $item->id)}}" method="POST">
+                                @csrf
+                                @method('delete')
+                                <button class="text-primary border-0" >Visualizza</button>
+                            </form>
 
                             <form class="d-inline" action="{{ route('admin.notifications.destroy', $item->id)}}" method="POST">
                                 @csrf
