@@ -25,7 +25,6 @@ class ReservationController extends Controller
         'email'     => 'required|email|max:100',
         'n_person'  => 'required|string|max:10',
         'message'   => 'nullable|string|max:1000',
-        'date_slot' => 'required|string|size:16',
     ];
 
     public function store(Request $request)
@@ -42,7 +41,6 @@ class ReservationController extends Controller
             $newOrder->n_person = intval($data['n_person']);
             $newOrder->message = $data['message'];
             $newOrder->status = 0;
-            $newOrder->date_slot = $data['date_slot'];
 
             // recupero data e orario in questione 
             $date = Date::where('id', $data['date_id'])->firstOrFail();
@@ -61,6 +59,7 @@ class ReservationController extends Controller
                     'message' => 'Il numero massimo di prenotazioni per questa data e orario è già stato raggiunto',
                 ]);
             }
+            $newOrder->date_slot = $date->date_slot;
             $newOrder->save();
 
             // Invio notifica a dashboard
