@@ -26,7 +26,7 @@ class ViewServiceProvider extends ServiceProvider
     {
         // Condivide la variabile $notifications con tutte le viste
         view()->composer('*', function ($view) {
-            $notifications = Notification::paginate(10);
+            $notifications = Notification::all();
             $view->with('notifications', $notifications);
         });
     }
