@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Storage;
 class ProjectController extends Controller
 {
     private $validations = [
-        'name'          => 'required|string|min:2|max:100',
+        'name'          => 'required|string|min:2|max:50',
         'price'         => 'required|string|min:1|max:6',
         'image'         => 'nullable|image|max:2048',
     ];

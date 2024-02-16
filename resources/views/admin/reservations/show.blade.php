@@ -12,27 +12,37 @@
             <h3>Id: <span class="badge rounded-pill bg-secondary">{{ $reservation->id}}</span> </h3>
             <h3>Nome: <span class="badge rounded-pill bg-secondary">{{ $reservation->name}}</span> </h3>
             <h3>Telefono: <span class="badge rounded-pill bg-secondary">{{ $reservation->phone}}</span> </h3>
-            <h3>Data: <span class="badge rounded-pill bg-secondary">{{ $dates[$reservation->date_id]->day}}/{{ $dates[$reservation->date_id]->month}}/{{ $dates[$reservation->date_id]->year}}</span> </h3>
-            <h3>Orario: <span class="badge rounded-pill bg-secondary">{{ $dates[$reservation->date_id]->time}}</span> </h3>
-            <h3>Nuemro persone: <span class="badge rounded-pill bg-success">{{ $reservation->n_person}}</span> </h3>
+            <h3>Data e orario: <span class="badge rounded-pill bg-secondary">{{ $reservation->date_slot }}</span> </h3>
+            <h3>Numero persone: <span class="badge rounded-pill bg-success">{{ $reservation->n_person}}</span> </h3>
             <h3>Messaggio: <span class="badge rounded-pill bg-secondary">{{ $reservation->message}}</span> </h3>
             <h3>Status:  
-            @if($reservation->status)
+                @if($reservation->status == 0)
 
-                <span class="badge bg-success">Completato</span> 
-            
-            @else
-            
-                <span class="badge bg-danger">In Elaborazione</span> 
-            
-            @endif
+                    <span class="badge bg-warning">In Elaborazione</span> 
+                
+                @elseif ($reservation->status == 1)
+                
+                    <span class="badge bg-success">Confermato</span> 
+                
+                @else 
+
+                    <span class="badge bg-danger">Annullato</span> 
+
+                @endif
             </h3>
            
             
-            
-            <form action="{{ route('admin.reservations.updatestatus', $reservation->id) }}" method="post">
+            <form class="d-inline w-100 " action="{{ route('admin.reservations.confirmReservation', $reservation->id) }}" method="post">
                 @csrf
-                <button class="btn btn-warning">Modifica Stuatus</button>
+                <button value="1" class="w-100 btn btn-warning">
+                    Conferma
+                </button>
+            </form>
+            <form class="d-inline w-100" action="{{ route('admin.reservations.rejectReservation', $reservation->id) }}" method="post">
+                @csrf
+                <button value="2" class="w-100 btn btn-danger">
+                    Annulla
+                </button>
             </form>
         </div>
     </div>    

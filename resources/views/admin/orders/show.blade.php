@@ -16,33 +16,83 @@
             <h3>Giorno: <span class="badge rounded-pill bg-secondary">{{ $order->date}}</span> </h3>
             <h3>Orario: <span class="badge rounded-pill bg-secondary">{{ $order->time}}</span> </h3>
             <h3>Status:  
-            @if($order->status)
+                @if($order->status == 0)
 
-                <span class="badge bg-success">Completato</span> 
-            
-            @else
-            
-                <span class="badge bg-danger">In Elaborazione</span> 
-            
-            @endif
+                    <span class="badge bg-warning">In Elaborazione</span> 
+                
+                @elseif ($order->status == 1)
+                
+                    <span class="badge bg-success">Confermato</span> 
+                
+                @else 
+
+                    <span class="badge bg-danger">Annullato</span> 
+
+                @endif
             </h3>
             <h3>Prodotti ordinati: </h3>
-            <div style="display: flex; gap: .2em; flex-wrap: wrap">
-                @foreach ($order->projects as $project)
-                    <li>{{$project->name}}</li>
-                    @foreach ($quantity_item as $qt)
-                        @if($qt->project_id == $project->id && $qt->order_id == $order->id && $qt->quantity_item!==1)
-                        <strong>x{{$qt->quantity_item}}</strong>
-                        @endif
-                    @endforeach
+            <section class="myres-center">
+                <h5>Prodotti</h5>
+
+                @foreach ($orderProject as $i)
+                
+                @if ($order->id == $i->order_id)
+                @foreach ($order->projects as $o)
+                
+                    @if ($o->id == $i->project_id)
+                    <?php $name= $o->name ?>
+                    @endif
+                    
                 @endforeach
-            </div>
+                <?php
+                    $arrA= json_decode($i->addicted); 
+                    $arrD= json_decode($i->deselected); 
+                ?>
+                <div class="product">
+                    <div class="counter">* {{$i->quantity_item}}</div>              
+                    <div class="name">{{$name}}</div>
+                    <div class="variations">
+                        <div class="add">
+                      
+                            @foreach ($arrA as $a)
+                            <span>+ {{$a}}</span>
+                            @endforeach
+                           
+                        </div>
+                        <div class="removed">
+                            
+                         
+                            @foreach ($arrD as $a)
+                            <span>- {{$a}}</span>
+                            @endforeach       
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+                @endif
+                @endforeach
+                <div class="t_price">€{{$order->total_price / 100}}</div>
+                <div class="t_price">{{$order->total_pz}} pz</div>
+                
+            </section>
             
             <h3>Prezzo totale: <span class="badge rounded-pill bg-warning">€{{ $order->total_price / 100 }}</span> </h3>
-            <form action="{{ route('admin.orders.updatestatus', $order->id) }}" method="post">
-                @csrf
-                <button class="btn btn-warning">Modifica Stuatus</button>
-            </form>
+            <section class="myres-right">
+
+                <form class="d-inline w-100 " action="{{ route('admin.orders.confirmOrder', $order->id) }}" method="post">
+                    @csrf
+                    <button value="1" class="w-100 btn btn-warning">
+                        Conferma
+                    </button>
+                </form>
+                <form class="d-inline w-100" action="{{ route('admin.orders.rejectOrder', $order->id) }}" method="post">
+                    @csrf
+                    <button value="2" class="w-100 btn btn-danger">
+                        Annulla
+                    </button>
+                </form>
+            </section>
         </div>
     </div>    
 

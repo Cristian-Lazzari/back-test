@@ -104,7 +104,7 @@ class OrderController extends Controller
 
             // Invio notifica a dashboard
             $newNot = new Notification();
-            $newNot->title = 'Nuovo Ordine';
+            $newNot->title = 'Nuovo ordine da: ' . $data['name'];
             $newNot->message = `Hai un nuovo ordine: ` . $newOrder->total_pz . ' pezzi per ' . $date->date_slot;
             $newNot->source = 1;
             $newNot->source_id = $newOrder->id;

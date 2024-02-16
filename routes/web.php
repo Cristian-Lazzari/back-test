@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\HashtagController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\admin\NotificationController;
 use App\Http\Controllers\Admin\ReservationController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Guests\PageController as GuestsPageController;
@@ -61,11 +62,11 @@ Route::middleware(['auth', 'verified'])
         // Rotte Settings
         Route::put('/settings/allupdate',                    [SettingController::class, 'allupdate'])->name('settings.allupdate');
 
-     
-        
         // Rotte Day
         Route::get('/days/showResOr/{date_slot}',       [DayController::class, 'showResOr'])->name('days.showResOr');
 
+        // Rotte Notifications
+        Route::delete('/notifications/showAndDestroy/{id}', [NotificationController::class, 'showAndDestroy'])->name('notifications.showAndDestroy');
 
         // Rotte Resource
         Route::resource('dates',        DateController::class);
@@ -79,6 +80,7 @@ Route::middleware(['auth', 'verified'])
         Route::resource('hashtags',     HashtagController::class);
         Route::resource('months',       MonthController::class);
         Route::resource('days',         DayController::class);
+        Route::resource('notifications', NotificationController::class);
 
         // Rotte Date 
         Route::post('/dates/updatestatus/{order_id}',       [DateController::class, 'updatestatus'])->name('dates.updatestatus');

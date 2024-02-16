@@ -2,27 +2,36 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Order;
+use App\Models\Reservation;
 use App\Models\Notification;
+use App\Models\OrderProject;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class NotificationController extends Controller
 {
-    public function index()
+    public function destroy($id)
     {
-        $notifications = Notification::paginate(10);
+        $notification = Notification::where('id', $id)->firstOrFail();
+        $notification->delete();
 
-        return view('admin.notifications.index', compact('notifications'));
+        return redirect()->back();
     }
 
-    // public function store(Request $request) {
-    //     $data = $request->all();
-
-    //     $newNot = new Notification();
-    //     $newNot->title = $data['title'];
-    //     $newNot->message = $data['message'];
-    //     $newNot->source = $data['source'];
-    //     $newNot->source_id = $data['source_id'];
-    //     $newNot->save();
-    // }
+    public function showAndDestroy($id)
+    {
+        $notification = Notification::where('id', $id)->firstOrFail();
+        $source = $notification->source ? 'orders' : 'reservations';
+        if ($notification->source) {
+            $order = Order::where('id', $notification->source_id)->firstOrFail();
+            $orderProject = OrderProject::all();
+            $notification->delete();
+            return view('admin.orders.show', compact('order', 'orderProject'));
+        } else {
+            $reservation = Reservation::where('id', $notification->source_id)->firstOrFail();
+            $notification->delete();
+            return view('admin.reservations.show', compact('reservation'));
+        }
+    }
 }

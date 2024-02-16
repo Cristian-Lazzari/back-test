@@ -65,7 +65,7 @@ class ReservationController extends Controller
 
             // Invio notifica a dashboard
             $newNot = new Notification();
-            $newNot->title = 'Nuova Prenotazione';
+            $newNot->title = 'Nuova prenotazione da: ' . $data['name'];
             $newNot->message = `Hai una nuova prenotazione: ` . $data['n_person'] . ' persone per ' . $date->date_slot;
             $newNot->source = 0;
             $newNot->source_id = $newOrder->id;
@@ -75,11 +75,11 @@ class ReservationController extends Controller
             $newNot->save();
 
             // invia mail
-            $mail = new confermaPrenotazione($data);
-            Mail::to($data['email'])->send($mail);
+            // $mail = new confermaPrenotazione($data);
+            // Mail::to($data['email'])->send($mail);
 
-            $mailAdmin = new confermaPrenotazioneAdmin($data);
-            Mail::to('test@dashboardristorante.it')->send($mailAdmin);
+            // $mailAdmin = new confermaPrenotazioneAdmin($data);
+            // Mail::to('test@dashboardristorante.it')->send($mailAdmin);
 
 
             return response()->json([
