@@ -50,7 +50,7 @@ $month_name=['gennaio','febbraio','marzo','aprile', 'maggio','giugno','luglio','
                     <tr>
                         <th class="expire-mobile">{{$day->id}}</th>
                         <td>
-                            <a href="{{ route('admin.days.show', ['day' => $day->id])  }}" style="color:white" class="ts bs a-notlink badge bg-success rounded-pill"  > {{$day->day}} / {{$day->m}} / {{$day->y}}</a >
+                            <a href="{{ route('admin.days.show', ['day' => $day->id])  }}" style="color:white" class="ts bs a-notlink badge bg-primary rounded-pill"  > {{$day->day}} / {{$day->m}} / {{$day->y}}</a >
                            
                         </td>
                     

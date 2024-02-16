@@ -15,7 +15,7 @@ class ProjectController extends Controller
     private $validations = [
         'name'          => 'required|string|min:2|max:100',
         'price'         => 'required|string|min:1|max:6',
-        'image'         => 'nullable|image|max:2048',
+        'image'         => 'nullable|image',
     ];
 
     public function index()

@@ -40,7 +40,7 @@
                     <th>
                         <div class="btn-cont">
                             <a class="btn btn-success" href="{{ route('admin.posts.create') }}">nuovo</a>
-                            <a class="btn btn-danger" href="{{ route('admin.posts.trashed') }}">cestino</a>
+                            {{-- <a class="btn btn-danger" href="{{ route('admin.posts.trashed') }}">cestino</a> --}}
 
                         </div>
                     </th>

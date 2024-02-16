@@ -91,9 +91,10 @@
         <button class="btn btn-dark mt-4">Modifica</button>
     </form>
 
+        <hr>
 
 
-    <h1>SCEGLI UN MESE</h1>    
+    <h1 class="my-4">SCEGLI UN MESE</h1>    
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -106,9 +107,9 @@
             <tbody>
                 @foreach ($months as $month)
                     <tr>
-                        <th class="expire-mobile">{{$month->id}}</th>
+                        
                         <td>
-                            <a href="{{ route('admin.days.index', ['month' =>$month->n, 'year' =>$month->y ,'month_id' =>$month->id])  }}" style="color:white" class="ts bs a-notlink badge bg-success rounded-pill"  > {{$month->month}} / {{$month->y}}</a >
+                            <a href="{{ route('admin.days.index', ['month' =>$month->n, 'year' =>$month->y ,'month_id' =>$month->id])  }}" style="color:white" class="ts bs a-notlink badge bg-primary rounded-pill"  > {{$month->month}} / {{$month->y}}</a >
                            
                         </td>
                     
