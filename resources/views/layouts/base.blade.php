@@ -14,7 +14,7 @@
         @include('admin.includes.nav')
     </header>
 
-    <div class="container">
+    <div class="container py-4">
         @yield('contents')
     </div>
 

@@ -398,6 +398,8 @@ td{
     display: flex;
     flex-wrap: wrap;
 
+    justify-content: space-between;
+
     gap: 10px;
     .myproj{
         display: flex;
@@ -655,7 +657,7 @@ td{
 }
 @media (max-width:530px) {
     .myproj, .myproj-off{
-        flex-direction: column;
+        width: 100% !important;
         section{
             width: 100% !important;
         }
@@ -673,4 +675,5 @@ td{
    flex-direction: column;
    gap: 10px;
    margin: 40px;
+
 }
