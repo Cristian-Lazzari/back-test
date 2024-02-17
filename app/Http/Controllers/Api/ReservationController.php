@@ -8,12 +8,9 @@ use App\Models\Date;
 use App\Models\Reservation;
 use App\Models\Notification;
 use Illuminate\Http\Request;
-use PhpParser\Node\Stmt\TryCatch;
 use App\Mail\confermaPrenotazione;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Redis;
 use App\Mail\confermaPrenotazioneAdmin;
 use Illuminate\Database\QueryException;
 
