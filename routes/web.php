@@ -34,6 +34,7 @@ Route::middleware(['auth', 'verified'])
         Route::get('/slot',                                  [AdminPageController::class, 'slot'])->name('slot');
 
         // Rotte Projects 
+        Route::get('/projects/showCategory/{category_id}',   [ProjectController::class, 'showCategory'])->name('projects.showCategory');
         Route::post('/projects/updatestatus/{project_id}',   [ProjectController::class, 'updatestatus'])->name('projects.updatestatus');
         Route::get('/projects/trashed',                      [ProjectController::class, 'trashed'])->name('projects.trashed');
         Route::post('/projects/{project}/restore',           [ProjectController::class, 'restore'])->name('projects.restore');

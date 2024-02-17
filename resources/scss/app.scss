@@ -396,18 +396,20 @@ td{
 
 .myproj-c{
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+
     gap: 10px;
     .myproj{
         display: flex;
+        flex-direction: column;
         background-color: #eff3fd;
         justify-content: space-between;
         align-items: center;
-        width: 100%;
+        width: 200px;
         border: 2px solid black;
         border-radius: 10px;
         section{
-            width: 33%;
+            //width: 33%;
             padding: 10px;
             display: flex;
             flex-direction: column;
@@ -426,14 +428,15 @@ td{
     }
     .myproj-off{
         display: flex;
+        flex-direction: column;
         background-color: #eaaa9c;
         justify-content: space-between;
         align-items: center;
-        width: 100%;
+        width: 200px;
         border: 2px solid black;
         border-radius: 10px;
         section{
-            width: 33%;
+            //width: 33%;
             padding: 10px;
             display: flex;
             flex-direction: column;
@@ -663,4 +666,11 @@ td{
             width: 100%;
         } 
     }
+}
+.mycontainerc{
+  
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+   margin: 40px;
 }
