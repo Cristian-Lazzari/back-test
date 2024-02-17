@@ -87,7 +87,7 @@ class ProjectController extends Controller
         $project = Project::where('slug', $slug)->firstOrFail();
 
         $categories = Category::all();
-        $tags       = Tag::all();
+        $tags       = Tag::orderBy('name')->get();
         return view('admin.projects.edit', compact('project', 'categories', 'tags'));
     }
 
