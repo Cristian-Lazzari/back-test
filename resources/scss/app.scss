@@ -617,6 +617,12 @@ td{
         
     }
 }
+.mytags{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    
+}
 @media (max-width:1050px) {
     .mycard{
         flex-direction: column;

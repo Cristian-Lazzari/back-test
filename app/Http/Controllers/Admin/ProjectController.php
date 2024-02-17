@@ -29,7 +29,7 @@ class ProjectController extends Controller
     public function create(Request $request)
     {
         $categories = Category::all();
-        $tags       = Tag::all();
+        $tags       = Tag::orderBy('name')->get();
 
         return view('admin.projects.create', compact('categories', 'tags'));
     }

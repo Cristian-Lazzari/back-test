@@ -64,26 +64,29 @@
 
     <div class="mb-3 ingredienti_">
         <h3>Ingredienti</h3>
-        @foreach($tags as $tag)
-            <div class="mb-3 form-check">
-                <input
-                    type="checkbox"
-                    class="form-check-input @error ('tags') is-invalid @enderror"
-                    id="tag{{ $tag->id }}"
-                    name="tags[]"
-                    value="{{ $tag->id }}"
-                    @if (in_array($tag->id, old('tags', []))) checked @endif
-      
-                >
-                <label class="form-check-label" for="tag{{ $tag->id }}">{{ $tag->name }}</label>
-            </div>
-            @error('tags') 
-            <div class="invalid-feedback">
-                {{ $message }}
-            </div>
-            @enderror
-         
-        @endforeach
+        <div class="mytags">
+
+            @foreach($tags as $tag)
+
+                    <input
+                        type="checkbox"
+                        class="btn-check @error ('tags') is-invalid @enderror"
+                        id="tag{{ $tag->id }}"
+                        name="tags[]"
+                        value="{{ $tag->id }}"
+                        @if (in_array($tag->id, old('tags', []))) checked @endif
+          
+                    >
+                    <label class="btn btn-outline-dark" for="tag{{ $tag->id }}">{{ $tag->name }}</label>
+
+                @error('tags') 
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+             
+            @endforeach
+        </div>
     </div>
 
 
