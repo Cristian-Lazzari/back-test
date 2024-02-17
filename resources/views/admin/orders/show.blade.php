@@ -6,44 +6,122 @@
 </a>
 
     {{-- <img src="{{ Vite::asset('resources/img/picsum30.jpg') }}" alt=""> --}}
-    <div class="my-3">
-        <div class="card p-3">
-            <h1 style="text-transform:uppercase " >{{$order->name}}</h1>
-          
-            <h3>Id: <span class="badge rounded-pill bg-secondary">{{ $order->id}}</span> </h3>
-            <h3>Nome: <span class="badge rounded-pill bg-secondary">{{ $order->name}}</span> </h3>
-            <h3>Telefono: <span class="badge rounded-pill bg-secondary">{{ $order->phone}}</span> </h3>
-            <h3>Giorno: <span class="badge rounded-pill bg-secondary">{{ $order->date}}</span> </h3>
-            <h3>Orario: <span class="badge rounded-pill bg-secondary">{{ $order->time}}</span> </h3>
-            <h3>Status:  
-            @if($order->status)
+    <div class="myres-c">
 
-                <span class="badge bg-success">Completato</span> 
-            
-            @else
-            
-                <span class="badge bg-danger">In Elaborazione</span> 
-            
-            @endif
-            </h3>
-            <h3>Prodotti ordinati: </h3>
-            <div style="display: flex; gap: .2em; flex-wrap: wrap">
-                @foreach ($order->projects as $project)
-                    <li>{{$project->name}}</li>
-                    @foreach ($quantity_item as $qt)
-                        @if($qt->project_id == $project->id && $qt->order_id == $order->id && $qt->quantity_item!==1)
-                        <strong>x{{$qt->quantity_item}}</strong>
-                        @endif
-                    @endforeach
-                @endforeach
+        <?php
+
+        $data_ora = DateTime::createFromFormat('d/m/Y H:i', $order->date_slot);
+
+        $ora_formatata = $data_ora->format('H:i');
+        $data_formatata = $data_ora->format('d/m/Y');
+        $giorno_settimana = $data_ora->format('l');
+        ?>
+
+
+
+        @if ($order->status == 0)
+                            
+        <div class="myres el">
+        @elseif ($order->status == 1)
+        <div class="myres co">
+
+        @elseif ($order->status == 2)
+
+        <div class="myres an">
+        @endif
+
+            <div class="mail-tel">
+                <div class="mail">{{$order->email}}</div>
+                <div class="tel">{{$order->phone}}</div>
             </div>
-            
-            <h3>Prezzo totale: <span class="badge rounded-pill bg-warning">€{{ $order->total_price / 100 }}</span> </h3>
-            <form action="{{ route('admin.orders.updatestatus', $order->id) }}" method="post">
-                @csrf
-                <button class="btn btn-warning">Modifica Stuatus</button>
-            </form>
+            <div class="body">
+                <section class="myres-left">
+                    <div class="name">{{$order->name}}</div>
+                    <div  class="myres-left-c">
+                        <div class="time">{{$ora_formatata}}</div>
+
+                        <div class="day_w">{{$giorno_settimana}}</div>
+                        <div class="date">{{$data_formatata}}</div>
+                    </div>
+                    <div class="c_a">inviato alle: {{$order->created_at}}</div>
+                </section>
+                <section class="myres-center">
+                    <h5>Prodotti</h5>
+
+                    @foreach ($orderProject as $i)
+                    
+                    @if ($order->id == $i->order_id)
+                    @foreach ($order->projects as $o)
+                    
+                        @if ($o->id == $i->project_id)
+                        <?php $name= $o->name ?>
+                        @endif
+                        
+                    @endforeach
+                    <?php
+                        $arrA= json_decode($i->addicted); 
+                        $arrD= json_decode($i->deselected); 
+                    ?>
+                    <div class="product">
+                        <div class="counter">* {{$i->quantity_item}}</div>              
+                        <div class="name">{{$name}}</div>
+                        <div class="variations">
+                            <div class="add">
+                          
+                                @foreach ($arrA as $a)
+                                <span>+ {{$a}}</span>
+                                @endforeach
+                               
+                            </div>
+                            <div class="removed">
+                                
+                             
+                                @foreach ($arrD as $a)
+                                <span>- {{$a}}</span>
+                                @endforeach       
+                                
+                            </div>
+                        </div>
+                        
+                    </div>
+                    @endif
+                    @endforeach
+                    <div class="t_price">€{{$order->total_price / 100}}</div>
+                    <div class="t_price">{{$order->total_pz}} pz</div>
+                    
+                </section>
+                <section class="myres-right">
+
+                    <form class="d-inline w-100 " action="{{ route('admin.orders.confirmOrder', $order->id) }}" method="post">
+                        @csrf
+                        <button value="1" class="w-100 btn btn-warning">
+                            Conferma
+                        </button>
+                    </form>
+                    <form class="d-inline w-100" action="{{ route('admin.orders.rejectOrder', $order->id) }}" method="post">
+                        @csrf
+                        <button value="2" class="w-100 btn btn-danger">
+                            Annulla
+                        </button>
+                    </form>
+                </section>
+            </div>
+            <div class="visible">
+                @if ($order->status == 0)
+                    
+                <span>in elaborazione</span>
+                @elseif ($order->status == 1)
+                <span>confermato</span>
+                
+                @elseif ($order->status == 2)
+                
+                <span>annullato</span>
+                @endif
+
+            </div>
         </div>
-    </div>    
+
+        
+    </div>
 
 @endsection

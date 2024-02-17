@@ -9,14 +9,13 @@ use App\Models\Order;
 use App\Models\Project;
 use App\Models\Category;
 use App\Mail\confermaOrdine;
+use App\Models\Notification;
 use App\Models\OrderProject;
-use App\Models\projectOrder;
 use Illuminate\Http\Request;
 use App\Mail\confermaOrdineAdmin;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\QueryException;
-use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
@@ -26,7 +25,6 @@ class OrderController extends Controller
         'phone'         => 'required|string|min:5|max:20',
         'email'         => 'required|email|max:100',
         'message'       => 'nullable|string|min:5|max:1000',
-        'date_slot'     => 'required|string|size:16',
     ];
 
     public function store(Request $request)
@@ -53,8 +51,7 @@ class OrderController extends Controller
                 // Calcolo il prezzo totale (senza aggiunte)
                 $total_price += $project->price *  $arrvar2[$i]['counter'];
             }
-            //$ingredient = Tag::where('name', $arrvar2[0]['addicted'][2])->first();
-            //dump($ingredient);
+
             // Considero le aggiunte nel prezzo totale
             for ($i = 0; $i < count($arrvar2); ++$i) {
                 for ($z = 0; $z < count($arrvar2[$i]['addicted']); $z++) {
@@ -63,12 +60,14 @@ class OrderController extends Controller
                 }
             }
 
+            $date = Date::where('id', $data['date_id'])->firstOrFail();
+
             $newOrder = new Order();
             $newOrder->name          = $data['name'];
             $newOrder->phone         = $data['phone'];
             $newOrder->email         = $data['email'];
             $newOrder->message       = $data['message'];
-            $newOrder->date_slot     = $data['date_slot'];
+            $newOrder->date_slot     = $date->date_slot;
             $newOrder->total_price   = $total_price;
             $newOrder->total_pz      = $total_pz;
             $newOrder->status        = 0;
@@ -84,7 +83,6 @@ class OrderController extends Controller
                 $item_order->save();
             }
 
-            $date = Date::where('id', $data['date_id'])->firstOrFail();
             $maximum = $date->reserved_pz + $total_pz;
 
             if ($maximum <= $date->max_pz) {
@@ -101,11 +99,19 @@ class OrderController extends Controller
                 ]);
             }
 
-            $mail = new confermaOrdine($data, $arrvar2);
-            Mail::to($data['email'])->send($mail);
+            // Invio notifica a dashboard
+            $newNot = new Notification();
+            $newNot->title = 'Nuovo ordine da: ' . $data['name'];
+            $newNot->message = `Hai un nuovo ordine: ` . $newOrder->total_pz . ' pezzi per ' . $date->date_slot;
+            $newNot->source = 1;
+            $newNot->source_id = $newOrder->id;
+            $newNot->save();
 
-            $mailAdmin = new confermaOrdineAdmin($data, $arrvar2);
-            Mail::to('test@dashboardristorante.it')->send($mailAdmin);
+            // $mail = new confermaOrdine($data, $arrvar2);
+            // Mail::to($data['email'])->send($mail);
+
+            // $mailAdmin = new confermaOrdineAdmin($data, $arrvar2);
+            // Mail::to('test@dashboardristorante.it')->send($mailAdmin);
 
             // ritornare un valore di successo al frontend
             return response()->json([

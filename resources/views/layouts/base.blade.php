@@ -14,13 +14,9 @@
         @include('admin.includes.nav')
     </header>
 
-
-
-        <div class="container">
-            @yield('contents')
-        </div>
-
-
+    <div class="container">
+        @yield('contents')
+    </div>
 
 </body>
 </html>
