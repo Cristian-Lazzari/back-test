@@ -28,7 +28,7 @@ class ProjectController extends Controller
 
     public function showCategory($category_id)
     {
-        $projects = Project::where('category_id', $category_id)->paginate(18);
+        $projects = Project::where('category_id', $category_id)->paginate(24);
         
 
         return view('admin.projects.showCategory', compact( 'projects'));
