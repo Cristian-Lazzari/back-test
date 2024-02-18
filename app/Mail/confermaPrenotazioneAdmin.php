@@ -10,16 +10,16 @@ class confermaPrenotazioneAdmin extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $data;
+    public $newOrder;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($newOrder)
     {
-        $this->data = $data;
+        $this->newOrder = $newOrder;
     }
 
     public function build()

@@ -28,19 +28,19 @@
 <body>
 
     <img src="https://db.dashboardristorante.it/public/images/res.png" alt="simbolo ordine">
-    <h1>IL Sigr/ra {{ $data['name'] }} ha prenotato un tavolo!</h1>
-    <p>Data prenotata: {{ $data['date_slot'] }}</p>
+    <h1>IL Sigr/ra {{ $newOrder['name'] }} ha prenotato un tavolo!</h1>
+    <p>Data prenotata: {{ $newOrder['date_slot'] }}</p>
     <span>Numero ospiti:</span>
-    <span style="font-size: 35px; font-weight:bolder">{{$data['n_person']}}</span>
-    @if ($data['message'])
+    <span style="font-size: 35px; font-weight:bolder">{{$newOrder['n_person']}}</span>
+    @if ($newOrder['message'])
         
     <hr>
     <h4>Il suo messaggio:</h4>
-    <p class="mes"> {{$data['message']}}</p>
+    <p class="mes"> {{$newOrder['message']}}</p>
     @endif    
     <hr>
     
-    <p>Contatta {{$data['name']}}</p>
-    <a href="tel:{{$data['phone']}}" class="btn btn-danger">Chiama {{$data['name']}}</a>
+    <p>Contatta {{$newOrder['name']}}</p>
+    <a href="tel:{{$newOrder['phone']}}" class="btn btn-danger">Chiama {{$newOrder['name']}}</a>
 </body>
 </html>

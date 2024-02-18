@@ -28,16 +28,16 @@
 <body>
 
     <img src="https://db.dashboardristorante.it/public/images/res.png" alt="simbolo ordine">
-    <h1>Grazie {{ $data['name'] }}, <br>
+    <h1>Grazie {{ $newOrder['name'] }}, <br>
     Il Capriccio di leo sta elaborando la tua prenotazione!
     </h1>
-    <p>Data prenotata: {{ $data['date_slot'] }}</p>
-    <h3>Numero ospiti: <span style="font-size: 35px; font-weight:bolder">{{$data['n_person']}}</span></h3> 
-    @if ($data['message'])
+    <p>Data prenotata: {{ $newOrder['date_slot'] }}</p>
+    <h3>Numero ospiti: <span style="font-size: 35px; font-weight:bolder">{{$newOrder['n_person']}}</span></h3> 
+    @if ($newOrder['message'])
         
     <h4>Il suo messaggio:</h4>
     <hr>
-    <p class="mes"> {{$data['message']}}</p>
+    <p class="mes"> {{$newOrder['message']}}</p>
     @endif    
     <hr>
     <p>Se desidera disdire la prenotazione la preghiamo di contattarci il prima possibile per avvisarci</p>
