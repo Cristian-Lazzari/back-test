@@ -18,25 +18,21 @@ class DateController extends Controller
             // Formatto la data e l'ora correnti in formato italiano
             $dataOraFormattate = Carbon::now()->format('d-m-Y H:i:s');
 
-            // Dalla data formattata (stringa) ottengo un oggetto sul quale posso operare
-         
-            // Crea l'oggetto Carbon dalla stringa formattata
             $dataOraCarbon = Carbon::createFromFormat('d-m-Y H:i:s', $dataOraFormattate);
             // Ottieni il numero del giorno della settimana (da 0 a 6)
             $dayWeek = $dataOraCarbon->dayOfWeek;
-            $orario = $dataOraCarbon->format('H:i');
-           // dd($orario);
-            
-            $ora1 = Carbon::createFromFormat('H:i', '18:30');
-            $ora2 = Carbon::createFromFormat('H:i', '19:00');
+
+            $ora1f = $dataOraCarbon->setTime(18, 3, 0);
+            $ora2f = $dataOraCarbon->setTime(19, 0, 0);
+    
             // Calcolo la data di inizio considerando il giorno successivo a oggi
             $dataInizio = $dataOraCarbon->copy();
            // dd($dataInizio->format('H:i'));
             // Calcolo la data di fine considerando due mesi successivi alla data odierna
             $dataDiFineParz = $dataInizio->copy()->startOfMonth();
             $dataFine = $dataDiFineParz->copy()->addMonths(2)->endOfMonth();
-
-            if(($dayWeek == 5 || $dayWeek == 6 || $dayWeek == 0) && $orario->gt($ora1)){
+           
+            if(($dayWeek == 5 || $dayWeek == 6 || $dayWeek == 0) && $dataOraCarbon->gt($ora1f)){
 
                 // Filtro dal giorno successivo a oggi e per i due mesi successivi
                 $dates = Date::where('year', '>=', $dataInizio->year)
@@ -55,7 +51,7 @@ class DateController extends Controller
                     ->where('year', '<=', $dataFine->year)
                     ->where('month', '<=', $dataFine->month)
                     ->get();
-                }else if(($dayWeek == 1 || $dayWeek == 2 || $dayWeek == 3 || $dayWeek == 4) && $orario->gt($ora2)){
+                }else if(($dayWeek == 1 || $dayWeek == 2 || $dayWeek == 3 || $dayWeek == 4) && $dataOraCarbon->gt($ora2f)){
             
                     $dates = Date::where('year', '>=', $dataInizio->year)
                     ->where('month', '>=', $dataInizio->month)
