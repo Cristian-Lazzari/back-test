@@ -19,29 +19,76 @@ class DateController extends Controller
             $dataOraFormattate = Carbon::now()->format('d-m-Y H:i:s');
 
             // Dalla data formattata (stringa) ottengo un oggetto sul quale posso operare
-            $dataOraCarbon = Carbon::createFromFormat('d-m-Y H:i:s', $dataOraFormattate)->addDay();
-
+         
+            // Crea l'oggetto Carbon dalla stringa formattata
+            $dataOraCarbon = Carbon::createFromFormat('d-m-Y H:i:s', $dataOraFormattate);
+            // Ottieni il numero del giorno della settimana (da 0 a 6)
+            $dayWeek = $dataOraCarbon->dayOfWeek;
+            $orario = $dataOraCarbon->format('H:i');
+           // dd($orario);
+            
+            $ora1 = Carbon::createFromFormat('H:i', '18:30');
+            $ora2 = Carbon::createFromFormat('H:i', '19:00');
             // Calcolo la data di inizio considerando il giorno successivo a oggi
-            $dataInizio = $dataOraCarbon->copy()->startOfDay();
-
+            $dataInizio = $dataOraCarbon->copy();
+           // dd($dataInizio->format('H:i'));
             // Calcolo la data di fine considerando due mesi successivi alla data odierna
             $dataDiFineParz = $dataInizio->copy()->startOfMonth();
             $dataFine = $dataDiFineParz->copy()->addMonths(2)->endOfMonth();
 
+            if(($dayWeek == 5 || $dayWeek == 6 || $dayWeek == 0) && $orario->gt($ora1)){
 
-            // Filtro dal giorno successivo a oggi e per i due mesi successivi
-            $dates = Date::where('year', '>=', $dataInizio->year)
-                ->where('month', '>=', $dataInizio->month)
-                ->where(function ($query) use ($dataInizio) {
-                    $query->where('month', '>', $dataInizio->month)
-                        ->orWhere(function ($query) use ($dataInizio) {
-                            $query->where('month', '=', $dataInizio->month)
-                                ->where('day', '>=', $dataInizio->day);
-                        });
-                })
-                ->where('year', '<=', $dataFine->year)
-                ->where('month', '<=', $dataFine->month)
-                ->get();
+                // Filtro dal giorno successivo a oggi e per i due mesi successivi
+                $dates = Date::where('year', '>=', $dataInizio->year)
+                    ->where('month', '>=', $dataInizio->month)
+                    ->where(function ($query) use ($dataInizio) {
+                        $query->where('month', '>', $dataInizio->month)
+                            ->orWhere(function ($query) use ($dataInizio) {
+                                $query->where('month', '=', $dataInizio->month)
+                                    ->where('day', '>', $dataInizio->day)
+                                    ->orWhere(function ($query) use ($dataInizio) {
+                                        $query->where('day', '=', $dataInizio->day)
+                                            ->where('time', '>=', $dataInizio->format('H:i'));
+                                    });
+                            });
+                    })
+                    ->where('year', '<=', $dataFine->year)
+                    ->where('month', '<=', $dataFine->month)
+                    ->get();
+                }else if(($dayWeek == 1 || $dayWeek == 2 || $dayWeek == 3 || $dayWeek == 4) && $orario->gt($ora2)){
+            
+                    $dates = Date::where('year', '>=', $dataInizio->year)
+                    ->where('month', '>=', $dataInizio->month)
+                    ->where(function ($query) use ($dataInizio) {
+                        $query->where('month', '>', $dataInizio->month)
+                            ->orWhere(function ($query) use ($dataInizio) {
+                                $query->where('month', '=', $dataInizio->month)
+                                    ->where('day', '>', $dataInizio->day)
+                                    ->orWhere(function ($query) use ($dataInizio) {
+                                        $query->where('day', '=', $dataInizio->day)
+                                            ->where('time', '>=', $dataInizio->format('H:i'));
+                                    });
+                            });
+                    })
+                    ->where('year', '<=', $dataFine->year)
+                    ->where('month', '<=', $dataFine->month)
+                    ->get();
+                }else{
+                    // Filtro dal giorno successivo a oggi e per i due mesi successivi
+                    $dataInizio = $dataInizio->addDay();
+                    $dates = Date::where('year', '>=', $dataInizio->year)
+                        ->where('month', '>=', $dataInizio->month)
+                        ->where(function ($query) use ($dataInizio) {
+                            $query->where('month', '>', $dataInizio->month)
+                                ->orWhere(function ($query) use ($dataInizio) {
+                                    $query->where('month', '=', $dataInizio->month)
+                                        ->where('day', '>=', $dataInizio->day);
+                                });
+                        })
+                        ->where('year', '<=', $dataFine->year)
+                        ->where('month', '<=', $dataFine->month)
+                        ->get();
+            }
 
             return response()->json([
                 'success' => true,
