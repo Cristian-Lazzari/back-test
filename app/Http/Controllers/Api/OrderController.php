@@ -107,11 +107,12 @@ class OrderController extends Controller
             $newNot->source_id = $newOrder->id;
             $newNot->save();
 
-            // $mail = new confermaOrdine($data, $arrvar2);
-            // Mail::to($data['email'])->send($mail);
+            // Invio Email
+            $mail = new confermaOrdine($data, $arrvar2);
+            Mail::to($data['email'])->send($mail);
 
-            // $mailAdmin = new confermaOrdineAdmin($data, $arrvar2);
-            // Mail::to('test@dashboardristorante.it')->send($mailAdmin);
+            $mailAdmin = new confermaOrdineAdmin($data, $arrvar2);
+            Mail::to('test@dashboardristorante.it')->send($mailAdmin);
 
             // ritornare un valore di successo al frontend
             return response()->json([

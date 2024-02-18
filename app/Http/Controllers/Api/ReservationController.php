@@ -71,11 +71,11 @@ class ReservationController extends Controller
             $newNot->save();
 
             // invia mail
-            // $mail = new confermaPrenotazione($data);
-            // Mail::to($data['email'])->send($mail);
+            $mail = new confermaPrenotazione($data);
+            Mail::to($data['email'])->send($mail);
 
-            // $mailAdmin = new confermaPrenotazioneAdmin($data);
-            // Mail::to('test@dashboardristorante.it')->send($mailAdmin);
+            $mailAdmin = new confermaPrenotazioneAdmin($data);
+            Mail::to('test@dashboardristorante.it')->send($mailAdmin);
 
 
             return response()->json([
