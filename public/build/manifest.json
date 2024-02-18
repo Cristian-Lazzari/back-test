@@ -8,7 +8,7 @@
     ]
   },
   "resources/scss/app.scss": {
-  "file": "../public/build/assets/app.b02913a3.css",
+    "file": "../public/build/assets/app.b02913a3.css",
     "src": "../public/build/resources/scss/app.scss",
     "isEntry": true
   }
