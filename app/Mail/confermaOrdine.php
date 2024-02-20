@@ -9,7 +9,7 @@ use Illuminate\Queue\SerializesModels;
 class confermaOrdine extends Mailable
 {
     use Queueable, SerializesModels;
-    public $data;
+    public $newOrder;
     public $arrvar2;
 
 
@@ -18,9 +18,9 @@ class confermaOrdine extends Mailable
      *
      * @return void
      */
-    public function __construct($data, $arrvar2)
+    public function __construct($newOrder, $arrvar2)
     {
-        $this->data = $data;
+        $this->newOrder = $newOrder;
         $this->arrvar2 = $arrvar2;
 
     }

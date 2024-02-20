@@ -40,9 +40,9 @@
 <body>
 
     <img src="https://db.dashboardristorante.it/public/images/or.png" alt="simbolo ordine">
-    <h1>Grazie {{ $data['name'] }}, <br>
+    <h1>Grazie {{ $newOrder['name'] }}, <br>
         Il Capriccio di Leo sta elaborando la sua richiesta!</h1>
-    <p>Data prenotata: {{ $data['date_slot'] }}</p>
+    <p>Data prenotata: {{ $newOrder['date_slot'] }}</p>
     <h3>I suoi prodotti:</h3>
     <div class="products"  style="">
       
@@ -76,7 +76,7 @@
             <hr>
         @endforeach
         </div>
-        <h4>Totale carrello: €{{intval($data['totPrice']) / 100}}</h4>
+        <h4>Totale carrello: €{{intval($newOrder['totPrice']) / 100}}</h4>
     <p>Se desidera disdire la prenotazione la preghiamo di contaatrci il prima possibile per avvisarci</p>
     <a href="tel:3271622244" class="btn btn-danger">Annulla prenotazione</a>
 </body>

@@ -54,8 +54,8 @@
 <body>
 
     <img src="https://db.dashboardristorante.it/public/images/or.png" alt="simbolo ordine">
-    <h1>Il sign/gr {{ $data['name'] }}, ha prenotato un asporto!</h1>
-    <p>Data prenotata: {{ $data['date_slot'] }}</p>
+    <h1>Il sign/gr {{ $newOrder['name'] }}, ha prenotato un asporto!</h1>
+    <p>Data prenotata: {{ $newOrder['date_slot'] }}</p>
     <h3>I prodotti:</h3>
     <div class="products"  style="width: 100%, margin-bottom: 30px;">
 
@@ -89,10 +89,10 @@
             <hr>
         @endforeach
     </div>
-    <h4>Totale carrello: €{{intval($data['totPrice']) / 100}}</h4>
+    <h4>Totale carrello: €{{intval($newOrder['totPrice']) / 100}}</h4>
     <h4>Messaggio:</h4>
-    <p>{{$data['message']}}</p>
-    <p>Contatta {{$data['name']}}</p>
-    <a href="tel:{{$data['phone']}}" class="btn btn-danger">Chiama {{$data['name']}}</a>
+    <p>{{$newOrder['message']}}</p>
+    <p>Contatta {{$newOrder['name']}}</p>
+    <a href="tel:{{$newOrder['phone']}}" class="btn btn-danger">Chiama {{$newOrder['name']}}</a>
 </body>
 </html>
