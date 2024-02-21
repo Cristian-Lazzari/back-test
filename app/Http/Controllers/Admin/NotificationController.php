@@ -6,8 +6,9 @@ use App\Models\Order;
 use App\Models\Reservation;
 use App\Models\Notification;
 use App\Models\OrderProject;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
@@ -33,5 +34,12 @@ class NotificationController extends Controller
             $notification->delete();
             return view('admin.reservations.show', compact('reservation'));
         }
+    }
+
+    public function clearAll()
+    {
+        DB::table('notifications')->truncate();
+
+        return redirect()->back();
     }
 }

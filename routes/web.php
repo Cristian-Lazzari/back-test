@@ -61,6 +61,7 @@ Route::middleware(['auth', 'verified'])
 
         // Rotte Notifications
         Route::delete('/notifications/showAndDestroy/{id}', [NotificationController::class, 'showAndDestroy'])->name('notifications.showAndDestroy');
+        Route::get('/notifications/clearAll',               [NotificationController::class, 'clearAll'])->name('notifications.clearAll');
 
         // Rotte Resource
         Route::resource('dates',        DateController::class);

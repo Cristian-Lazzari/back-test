@@ -679,3 +679,12 @@ td {
         padding: 0 5px;
     }
 }
+
+.offcanvas-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .delete-all {
+        align-self: flex-end;
+    }
+}
