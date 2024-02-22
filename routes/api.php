@@ -8,11 +8,13 @@ use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\SlotController;
 use App\Http\Controllers\Api\TimeController;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\SettingController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ReservationController;
 
+Route::get('addresses',         [AddressController::class, 'index'])->name('api.addresses.index');
 Route::get('projects',          [ProjectController::class, 'index'])->name('api.projects.index');
 Route::get('categories',        [CategoryController::class, 'index'])->name('api.categories.index');
 Route::get('setting',           [SettingController::class, 'index'])->name('api.setting.index');

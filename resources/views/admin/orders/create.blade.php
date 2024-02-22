@@ -109,6 +109,54 @@
                 @error('total_price') {{ $message }} @enderror
             </div>
         </div>
+        <div class="mb-3 ">
+            <label for="address" class="form-label">Comune (se con consena a domicilio)</label>
+            <select
+                class="form-select @error('address_id') is-invalid @enderror"
+                id="address"
+                name="address_id"
+            >
+                @foreach ($addresses as $address)
+                    <option value="{{ $address->comune }}">{{ $address->comune }}</option>
+                @endforeach
+            </select>
+            @error('address_id')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
+        <div class="mb-5">
+            <label for="indirizzo" class="form-label">Indirizzo (se con consena a domicilio)</label>
+            <input
+                type="text"
+                class="form-control @error('indirizzo') is-invalid @enderror"
+                id="indirizzo"
+                name="indirizzo"
+                @if (session('inputValues'))
+                    value="{{ session('inputValues')['indirizzo'] }}"
+                @endif
+            >
+            <div class="invalid-feedback">
+                @error('indirizzo') {{ $message }} @enderror
+            </div>
+        </div>
+
+        <div class="mb-5">
+            <label for="civico" class="form-label">civico (se con consena a domicilio)</label>
+            <input
+                type="text"
+                class="form-control @error('civico') is-invalid @enderror"
+                id="civico"
+                name="civico"
+                @if (session('inputValues'))
+                    value="{{ session('inputValues')['civico'] }}"
+                @endif
+            >
+            <div class="invalid-feedback">
+                @error('civico') {{ $message }} @enderror
+            </div>
+        </div>
 
         <div class="mb-5">
             <label for="message" class="form-label">Messaggio</label>

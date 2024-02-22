@@ -23,7 +23,7 @@
     <div class="mb-3">
         <label for="slot" class="form-label">Slot</label>
         <input
-            type="text"
+            type="number"
             class="form-control @error('slot') is-invalid @enderror"
             id="slot"
             name="slot"

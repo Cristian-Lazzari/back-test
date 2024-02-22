@@ -34,6 +34,12 @@ class SettingsTableSeeder extends Seeder
                 'from' => '',  
                 'to' => '',  
             ],
+            [
+                'name' => 'Possibilità di consegna a domicilio',  
+                'status' => false,  
+                'from' => '',  
+                'to' => '',  
+            ],
                
     
             ];

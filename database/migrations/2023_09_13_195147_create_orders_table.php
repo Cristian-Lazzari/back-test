@@ -14,6 +14,9 @@ return new class extends Migration
             $table->string('name', 50);
             $table->string('phone', 20);
             $table->string('email', 100);
+            $table->string('comune', 50)->default('none')->nullable();;
+            $table->string('indirizzo', 100)->default('none')->nullable();;
+            $table->string('civico', 30)->default('none')->nullable();;
             $table->string('message', 1000)->nullable();
             $table->unsignedBigInteger('total_price')->default(0);
             $table->smallInteger('total_pz');

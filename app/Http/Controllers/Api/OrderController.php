@@ -71,6 +71,9 @@ class OrderController extends Controller
             $newOrder->total_price   = $total_price;
             $newOrder->total_pz      = $total_pz;
             $newOrder->status        = 0;
+            if (isset($data['comune'])) { $newOrder->comune = $data['comune'];}
+            if (isset($data['civico'])) { $newOrder->civico = $data['civico'];}
+            if (isset($data['indirizzo'])) { $newOrder->indirizzo = $data['indirizzo'];}    
             $newOrder->save();
 
             foreach ($arrvar2 as $elem) {

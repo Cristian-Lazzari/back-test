@@ -6,6 +6,7 @@ use DateTime;
 use Carbon\Carbon;
 use App\Models\Date;
 use App\Models\Order;
+use App\Models\Address;
 use App\Models\OrderProject;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -100,8 +101,8 @@ class OrderController extends Controller
             ->where('year', '<=', $dataFine->year)
             ->where('month', '<=', $dataFine->month)
             ->get();
-
-        return view('admin.orders.create', compact('dates'));
+            $addresses = Address::all();
+        return view('admin.orders.create', compact('dates', 'addresses'));
     }
 
     private $validations = [
@@ -128,6 +129,9 @@ class OrderController extends Controller
         $newOrder->total_pz      = $data['total_pz'];
         $newOrder->message       = $data['message'];
         $newOrder->status        = 0;
+        if (isset($data['comune'])) { $newOrder->comune = $data['comune'];}
+        if (isset($data['civico'])) { $newOrder->civico = $data['civico'];}
+        if (isset($data['indirizzo'])) { $newOrder->indirizzo = $data['indirizzo'];}
 
         $date = Date::where('id', $data['date_id'])->firstOrFail();
         $newOrder->date_slot = $date->date_slot;
@@ -137,9 +141,9 @@ class OrderController extends Controller
         if (isset($data['max_check'])) {
             $date->reserved_pz = $date->reserved_pz + $newOrder->total_pz;
         } else {
-            if ($maximum <= $date->max_res) {
+            if ($maximum <= $date->max_pz) {
                 $date->reserved_pz = $date->reserved_pz + $newOrder->total_pz;
-                if ($date->reserved_pz >= $date->max_res) {
+                if ($date->reserved_pz >= $date->max_pz) {
                     $date->visible = 0;
                 }
             } else {

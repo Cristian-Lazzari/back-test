@@ -47,6 +47,7 @@
     
     
     <a class="mybtn bs ts bg-warning" href="{{ route('admin.months.index') }}">Gestisci Date</a>
+    <a class="mybtn bs ts bg-warning" href="{{ route('admin.addresses.index') }}">Gestisci Area di consegna</a>
 
   
 

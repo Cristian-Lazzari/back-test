@@ -36,6 +36,12 @@ class SettingController extends Controller
             $settings[1]->status    = false;
         }
         $settings[1]->update();
+        if(isset($data['status4'])){
+            $settings[3]->status    = true;
+        }else{
+            $settings[3]->status    = false;
+        }
+        $settings[3]->update();
         if(isset($data['status3'])){
             $settings[2]->status    = true;
         }else{
@@ -51,7 +57,7 @@ class SettingController extends Controller
 
 
         // ridirezionare su una rotta di tipo get
-        return to_route('admin.dashboard');
+        return to_route('admin.setting');
     }
 
 }

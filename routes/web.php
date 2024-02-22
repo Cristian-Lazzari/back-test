@@ -10,12 +10,13 @@ use App\Http\Controllers\Admin\SlotController;
 use App\Http\Controllers\Admin\TimeController;
 use App\Http\Controllers\Admin\MonthController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\AddressController;
 use App\Http\Controllers\Admin\HashtagController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\admin\NotificationController;
 use App\Http\Controllers\Admin\ReservationController;
+use App\Http\Controllers\admin\NotificationController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Guests\PageController as GuestsPageController;
 
@@ -76,6 +77,7 @@ Route::middleware(['auth', 'verified'])
         Route::resource('months',       MonthController::class);
         Route::resource('days',         DayController::class);
         Route::resource('notifications', NotificationController::class);
+        Route::resource('addresses',     AddressController::class);
 
         // Rotte Date 
         Route::post('/dates/updatestatus/{order_id}',       [DateController::class, 'updatestatus'])->name('dates.updatestatus');

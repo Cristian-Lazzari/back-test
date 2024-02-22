@@ -107,6 +107,16 @@
                             Annulla
                         </button>
                     </form>
+                    @if ($order->indirizzo !== 'none')
+                    <h3>
+                        Consegnare a domicilio
+                        <p>{{$order->comune}}, {{$order->indirizzo}}, {{$order->civico}}</p>
+                    </h3>
+                    @else
+                    <h3>
+                        Ritiro d'asporto
+                    </h3>
+                    @endif
                 </section>
             </div>
             <div class="visible">

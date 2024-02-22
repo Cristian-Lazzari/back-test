@@ -128,7 +128,7 @@
                 @endif
             >
             <label class="btn btn-outline-dark" for="btnradio{{$date->id}}">
-                {{$date->time}} | {{$date->day}}/{{$date->month}}/{{$date->year}} | <strong>{{$date->reserved_pz}}</strong> | max: {{$date->max_pz}}
+                {{$date->time}} | {{$date->day}}/{{$date->month}}/{{$date->year}} | <strong>{{$date->reserved}}</strong> | max: {{$date->max_res}}
             </label>
 
             @endforeach
