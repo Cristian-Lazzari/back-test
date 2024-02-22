@@ -19,17 +19,5 @@ class PageController extends Controller
 
         return view ('admin.setting', compact('settings', ));
     }
-    public function timeslot() {
-   
-        $times_slots = Time::all();
-  
 
-        return view ('admin.timeslot', compact('times_slots' ));
-    }
-    public function slot() {
-
-        $slots = Slot::all();
-
-        return view ('admin.slot', compact('slots'));
-    }
 }
