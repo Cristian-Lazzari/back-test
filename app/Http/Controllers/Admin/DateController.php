@@ -72,6 +72,7 @@ class DateController extends Controller
     }
 
     private $validations = [
+        'max_domicilio'         => 'required|integer',
         'max_reservations'      => 'required|integer',
         'max_pz'                => 'required|integer',
         'times_slot_1'          => 'array',
