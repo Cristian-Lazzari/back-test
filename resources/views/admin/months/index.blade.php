@@ -50,6 +50,12 @@
             <input name="max_pz" id="max_pz" type="number" class="form-control" placeholder="N° di pezzi" aria-label="N° di pezzi" aria-describedby="addon-wrapping" value="0">
           </div>
         <div>
+        <h5 class="pt-4">Indica il numero massimo di pezzi per la consegna a domicilio</h5>
+        <div class="input-group flex-nowrap py-2">
+            <label for="max_domicilio" class="input-group-text" >N° di oridini a domicilio</label>
+            <input name="max_domicilio" id="max_domicilio" type="number" class="form-control" placeholder="N° di pezzi" aria-label="N° di pezzi" aria-describedby="addon-wrapping" value="0">
+          </div>
+        <div>
             <h5 class="pt-4">Seleziona i giorni in cui sei attivo</h5>
             <div class="btn-group py-1 row g-2 " role="group" aria-label="Basic checkbox toggle button group">
 

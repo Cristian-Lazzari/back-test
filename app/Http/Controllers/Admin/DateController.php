@@ -208,7 +208,7 @@ class DateController extends Controller
 
             // Eseguo il seeder
             $seeder = new DatesTableSeeder();
-            $seeder->setVariables($max_reservations, $max_pz, $timesDay, $days_off);
+            $seeder->setVariables($max_reservations, $max_pz, $timesDay, $days_off, $max_domicilio);
             $seeder->run();
 
             // Ripristino le prenotazioni
