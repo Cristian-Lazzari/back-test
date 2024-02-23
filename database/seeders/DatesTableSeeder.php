@@ -14,12 +14,14 @@ class DatesTableSeeder extends Seeder
 
     protected $max_reservations;
     protected $max_pz;
+    protected $max_domicilio;
     protected $times;
     protected $days_off = [];
 
-    public function setVariables($max_reservations, $max_pz, $times, $days_off)
+    public function setVariables($max_reservations, $max_pz, $times, $days_off, $max_domicilio)
     {
         $this->max_reservations = $max_reservations;
+        $this->max_domicilio = $max_domicilio;
         $this->max_pz = $max_pz;
         $this->times = $times;
         $this->days_off = $days_off;
@@ -61,16 +63,25 @@ class DatesTableSeeder extends Seeder
                         Date::create([
                             'reserved' => 0,
                             'reserved_pz' => 0,
+                            'reserved_domicilio' => 0,
                             'day_w' => $currentDayOfWeek,
                             'month' => $currentDate->format('n'),
                             'day' => $currentDate->format('d'),
                             'time' => $time['time'],
                             'max_res' => $this->max_reservations,
                             'max_pz' => $this->max_pz,
+                            'max_domicilio' => $this->max_domicilio,
                             'year' => $currentDate->format('Y'),
                             'date_slot' => $currentDate->format('d') . '/' .  $currentDate->format('m') . '/' .  $currentDate->format('Y') . ' ' . $time['time'],
                             'status' => $time['set'],
                             'visible' => (1 && in_array($currentDayOfWeek, $abledDays)),
+                            // if($time['set'] == 4 || $time['set'] == 5 || $time['set'] == 6 || $time['set'] == 7){
+                            //     'visible_domicilio' => 1,
+                            // }else{
+                            //     'visible_domicilio' => 0,
+                            // }
+                            'visible_domicilio' => ($time['set'] >= 4 && $time['set'] <= 7) ? 1 : 0,
+
                         ]);
                     }
                 }

@@ -6,11 +6,12 @@
     // '10:30', '11:00', '11:30', '12:00', '12:30', '13:00', '13:30', '16:30', '17:00', '17:30', '18:00', '18:30',
     $times = [
         1 => ['time' => '19:00', 'set' => ''] ,
-        2 => ['time' => '19:30', 'set' => ''] ,
-        3 => ['time' => '20:00', 'set' => ''] ,
-        4 => ['time' => '20:30', 'set' => ''] ,
-        5 => ['time' => '21:00', 'set' => ''] ,
-        6 => ['time' => '21:30', 'set' => ''] ,
+        2 => ['time' => '19:15', 'set' => ''] ,
+        3 => ['time' => '19:30', 'set' => ''] ,
+        4 => ['time' => '19:45', 'set' => ''] ,
+        5 => ['time' => '20:00', 'set' => ''] ,
+        6 => ['time' => '20:15', 'set' => ''] ,
+        7 => ['time' => '20:30', 'set' => ''] ,
     ]; 
     $days = [1, 2, 3, 4, 5, 6, 7];
     $days_name = [' ','lunedì', 'martedi', 'mercoledì', 'giovedì', 'venerdì', 'sabato', 'domenica'];
@@ -67,10 +68,14 @@
                                    
                                         
                                         <select  class="form-select col" name="times_slot_{{$day}}[]" id="">
-                                            <option value="0" >{{ $time['time'] }} - ND</option>
+                                            <option value="0">{{ $time['time'] }} - ND</option>
                                             <option value="1">{{ $time['time'] }} - asporto</option>
                                             <option value="2">{{ $time['time'] }} - tavoli</option>
-                                            <option value="3">{{ $time['time'] }} - tutti</option>
+                                            <option value="3">{{ $time['time'] }} - asporto/tavoli</option>
+                                            <option value="4">{{ $time['time'] }} - domicilio</option>
+                                            <option value="5">{{ $time['time'] }} - domicilio/asporto</option>
+                                            <option value="6">{{ $time['time'] }} - domicilio/tavoli</option>
+                                            <option value="7">{{ $time['time'] }} - tutti</option>
                                         </select>
                                       
                                         @endforeach

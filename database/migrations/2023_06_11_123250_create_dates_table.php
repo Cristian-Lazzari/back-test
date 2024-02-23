@@ -16,8 +16,9 @@ return new class extends Migration
         Schema::create('dates', function (Blueprint $table) {
             $table->id();
 
-            $table->tinyInteger('reserved');
-            $table->tinyInteger('reserved_pz');
+            $table->smallInteger('reserved');
+            $table->smallInteger('reserved_pz');
+            $table->smallInteger('reserved_domicilio');
             $table->smallInteger('year');
             $table->tinyInteger('month');
             $table->tinyInteger('day');
@@ -25,8 +26,10 @@ return new class extends Migration
             $table->string('time');
             $table->string('date_slot');
             $table->boolean('visible');
-            $table->tinyInteger('max_res');
-            $table->tinyInteger('max_pz');
+            $table->boolean('visible_domicilio');
+            $table->smallInteger('max_res');
+            $table->smallInteger('max_pz');
+            $table->smallInteger('max_domicilio');
             $table->tinyInteger('status');
         });
     }
