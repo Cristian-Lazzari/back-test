@@ -62,7 +62,7 @@ class AddressController extends Controller
         $address->provincia       = $data['provincia'];
 
 
-        $Address->update();
+        $address->update();
 
 
         return to_route('admin.addresses.index', ['address' => $address]);
