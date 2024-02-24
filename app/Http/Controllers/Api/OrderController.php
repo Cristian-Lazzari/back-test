@@ -36,7 +36,8 @@ class OrderController extends Controller
 
         $arrvar = str_replace('\\', '', $data['products']);
         $arrvar2 = json_decode($arrvar, true);
-        $total_pz = 0;
+        $total_pz_q = 0;
+        $total_pz_t = 0;
 
 
         try {
@@ -44,8 +45,11 @@ class OrderController extends Controller
                 // Calcolo il numero di pezzi ordinati in base alla categoria
                 $project = Project::where('id', $arrvar2[$i]['p_id'])->first();
                 $category = Category::where('id', $project->category_id)->first();
-                if ($category->slot) {
-                    $total_pz += ($arrvar2[$i]['counter'] * $category->slot);
+                if ($category->slot && $category->type == 'q') {
+                    $total_pz_q += ($arrvar2[$i]['counter'] * $category->slot);
+                }else if($category->slot && $category->type == 't'){
+                    $total_pz_t += ($arrvar2[$i]['counter'] * $category->slot);
+
                 }
 
                 // Calcolo il prezzo totale (senza aggiunte)
@@ -69,11 +73,26 @@ class OrderController extends Controller
             $newOrder->message       = $data['message'];
             $newOrder->date_slot     = $date->date_slot;
             $newOrder->total_price   = $total_price;
-            $newOrder->total_pz      = $total_pz;
+            $newOrder->total_pz_t    = $total_pz_t;
+            $newOrder->total_pz_q    = $total_pz_q;
             $newOrder->status        = 0;
-            if (isset($data['comune'])) { $newOrder->comune = $data['comune'];}
-            if (isset($data['civico'])) { $newOrder->civico = $data['civico'];}
-            if (isset($data['indirizzo'])) { $newOrder->indirizzo = $data['indirizzo'];}    
+            if (isset($data['comune'])) { 
+                $newOrder->comune = $data['comune'];
+                $newOrder->indirizzo = $data['indirizzo'];
+                $newOrder->civico = $data['civico'];
+                if($date->res_domicilio < $date->max_domicilio){
+                    $date->res_domicilio ++;
+                    if($date->res_domicilio == ($date->max_domicilio + 1) ){
+                        $date->visible_d = 0;
+                    };
+                }else{
+                    // se non ci sono più posti rispondo picche
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Il numero massimo di prenotazioni per questa data e orario è già stato raggiunto',
+                ]); 
+                }
+            }  
             $newOrder->save();
 
             foreach ($arrvar2 as $elem) {
@@ -86,12 +105,16 @@ class OrderController extends Controller
                 $item_order->save();
             }
 
-            $maximum = $date->reserved_pz + $total_pz;
+            $maximum_q = $date->reserved_pz_q + $total_pz_q;
+            $maximum_t = $date->reserved_pz_t + $total_pz_t;
 
-            if ($maximum <= $date->max_pz) {
-                $date->reserved_pz += $total_pz;
-                if ($date->reserved_pz == $date->max_pz) {
-                    $date->visible = 0;
+            if ($maximum_t <= $date->max_pz_t && $maximum_q <= $date->max_pz_q) {
+                $date->reserved_pz_q += $total_pz_q;
+                $date->reserved_pz_t += $total_pz_t;
+                if ($date->reserved_pz_q == $date->max_pz_q) {
+                    $date->visible_fq = 0;
+                }else if ($date->reserved_pz_t == $date->max_pz_t){
+                    $date->visible_ft = 0;
                 }
                 $date->save();
             } else {

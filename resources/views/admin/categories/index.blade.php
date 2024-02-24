@@ -10,6 +10,7 @@
                 <tr>
 
                     <th>NOME</th>
+                    <th>Tipologia</th>
                     <th>SLOT</th>
 
                     <th>
@@ -22,6 +23,7 @@
                     <tr>
  
                         <td class="">{{$category->name}}</td>
+                        <td>{{$category->type}}</td>
                         <td>{{$category->slot}}</td>
 
                         <td >

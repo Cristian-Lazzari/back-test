@@ -12,9 +12,10 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class DateController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         try {
+            $wcf = $request->input("wcf");
             // Formatto la data e l'ora correnti in formato italiano
             $dataOraFormattate = Carbon::now()->format('d-m-Y H:i:s');
 
@@ -85,14 +86,42 @@ class DateController extends Controller
                         ->where('month', '<=', $dataFine->month)
                         ->get();
             }
+            $newDates = [];
+            //dd($wcf);
+            if($wcf == '0'){
+                foreach ($dates as $data) {
+                    if($data['visible_t']){
+                       array_push($newDates, $data); 
+                    }
+                }
+                
+            }else if($wcf == '1'){
+                foreach ($dates as $data) {
+                    if(($data['visible_fq'] || $data['visible_ft'])){
+                       array_push($newDates, $data); 
+                    }
+                }
+                
+            }else if($wcf == '2'){
+                foreach ($dates as $data) {
+                    //se anche solo un forno ha la disponibilità mostro la data, sara poi l'utente da front-end
+                    // a notare che sono disponibili 0 pezzi di una delle due categorie
+                    if($data['visible_d'] && ($data['res_pz_q'] < $data['max_pz_q'] || $data['res_pz_t'] < $data['max_pz_t'])){
+                       array_push($newDates, $data); 
+                    }
+                }
 
+            }
+            
+
+            
             return response()->json([
                 'success' => true,
                 "data_e_ora_attuali" => $dataOraFormattate,
                 // "fineParziale" => $dataDiFineParz->day,
                 "dataDiInizio" => $dataInizio->day . "/" . $dataInizio->month . "/" . $dataInizio->year,
                 "dataDiFine" => $dataFine->day . "/" . $dataFine->month . "/" . $dataFine->year,
-                'results' => $dates,
+                'results' => $newDates,
             ]);
         } catch (QueryException $e) {
             return response()->json([

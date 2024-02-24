@@ -18,11 +18,10 @@ Route::get('addresses',         [AddressController::class, 'index'])->name('api.
 Route::get('projects',          [ProjectController::class, 'index'])->name('api.projects.index');
 Route::get('categories',        [CategoryController::class, 'index'])->name('api.categories.index');
 Route::get('setting',           [SettingController::class, 'index'])->name('api.setting.index');
-Route::get('time',              [TimeController::class, 'index'])->name('api.time.index');
 Route::get('post',              [PostController::class, 'index'])->name('api.post.index');
-Route::get('slot',              [SlotController::class, 'index'])->name('api.slot.index');
 Route::get('tag',               [TagController::class, 'index'])->name('api.tag.index');
 Route::post('reservations',     [ReservationController::class, 'store'])->name('api.reservations.store');
 Route::post('orders',           [OrderController::class, 'store'])->name('api.orders.store');
 Route::get('dates',             [DateController::class, 'index'])->name('api.dates.index');
+//wcf =  where it come from e puo essere 0 (se viene da p-tavoli), 1 (se viene da p-asporto), 2 (se viene da p-domicilio),
 Route::get('dates/findDate',    [DateController::class, 'findDate'])->name('api.dates.findDate');

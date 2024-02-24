@@ -44,10 +44,16 @@
             <input name="max_reservations" id="max_reservations" type="number" class="form-control" placeholder="N° di posti a sedere" aria-label="N° di posti a sedere" aria-describedby="addon-wrapping" value="0">
           </div>
         <div>
-        <h5 class="pt-4">Indica il numero massimo di pezzi per l'asporto</h5>
+        <h5 class="pt-4">Indica il numero massimo di pezzi al taglio per l'asporto</h5>
         <div class="input-group flex-nowrap py-2">
-            <label for="max_pz" class="input-group-text" >N° di pezzi</label>
-            <input name="max_pz" id="max_pz" type="number" class="form-control" placeholder="N° di pezzi" aria-label="N° di pezzi" aria-describedby="addon-wrapping" value="0">
+            <label for="max_pz_q" class="input-group-text" >N° di pezzi</label>
+            <input name="max_pz_q" id="max_pz_q" type="number" class="form-control" placeholder="N° di pezzi" aria-label="N° di pezzi" aria-describedby="addon-wrapping" value="0">
+          </div>
+        <div>
+        <h5 class="pt-4">Indica il numero massimo di pizze al piatto per l'asporto</h5>
+        <div class="input-group flex-nowrap py-2">
+            <label for="max_pz_t" class="input-group-text" >N° di pizze</label>
+            <input name="max_pz_t" id="max_pz_t" type="number" class="form-control" placeholder="N° di pezzi" aria-label="N° di pezzi" aria-describedby="addon-wrapping" value="0">
           </div>
         <div>
         <h5 class="pt-4">Indica il numero massimo di pezzi per la consegna a domicilio</h5>

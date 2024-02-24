@@ -24,7 +24,7 @@ class ProjectsTableSeeder extends Seeder
     $tags = Tag::all()->pluck('id');
 
 
-    for ($i = 0; $i < 5; $i++) {
+    for ($i = 0; $i < 50; $i++) {
         $name = $faker->words(rand(1, 2), true);
         $slug = Str::slug($name);
         $image = 'default.png';

@@ -61,9 +61,15 @@ class OrderController extends Controller
             $date = Date::where('date_slot', $order->date_slot)->first();
             $date->reserved_pz -= $order->total_pz;
             if($date->reserved_pz < $date->max_pz){
-                $date->visible = 1;
+                if($order->comune == '0' && $order->civico == '0' && $order->comune == '0' ){
+                    $date->visible_fq = 1;
+                    $date->save();
+                    
+                }else{
+                    $date->visible_d = 1;               
+                    $date->save();
+                }
             }
-            $date->save();
 
             return redirect("https://wa.me/" . '39' . $order->phone . "?text=E' con profondo rammarico che siamo obbligati ad disdire la vostra prenotazione!");
         } else {
@@ -111,6 +117,9 @@ class OrderController extends Controller
         'email'         => 'email|max:100',
         'message'       => 'nullable|string|min:5|max:1000',
         'date_id'       => 'required',
+
+        'total_pz_t'    => 'required',
+        'total_pz_q'    => 'required',
     ];
     public function store(Request $request)
     {
@@ -126,7 +135,10 @@ class OrderController extends Controller
             $newOrder->email = 'email@example.com';
         }
         $newOrder->total_price   = $data['total_price'] * 100;
-        $newOrder->total_pz      = $data['total_pz'];
+
+        $newOrder->total_pz_q    = $data['total_pz_q'];
+        $newOrder->total_pz_t    = $data['total_pz_t'];
+
         $newOrder->message       = $data['message'];
         $newOrder->status        = 0;
         if (isset($data['comune'])) { $newOrder->comune = $data['comune'];}
@@ -136,7 +148,8 @@ class OrderController extends Controller
         $date = Date::where('id', $data['date_id'])->firstOrFail();
         $newOrder->date_slot = $date->date_slot;
 
-        $maximum = $date->reserved_pz + $newOrder->total_pz;
+        $maximum_t = $date->reserved_pz + $newOrder->total_pz;
+        $maximum_q = $date->reserved_pz + $newOrder->total_pz;
 
         if (isset($data['max_check'])) {
             $date->reserved_pz = $date->reserved_pz + $newOrder->total_pz;

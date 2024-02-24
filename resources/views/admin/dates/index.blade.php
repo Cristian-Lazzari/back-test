@@ -16,13 +16,10 @@
             
             @foreach ($dates as $date)
             
-            @if($date->visible == 1)
+            
                 
                 <div class="mycard">
-            @else
-                    
-                <div class="mycard myc-off">
-            @endif
+ 
                     <div class="left-c">
                         <div class="data">
 
@@ -31,8 +28,12 @@
                             <span>{{$date->day}}/{{$date->month}}/{{$date->year}}</span>
                         </div>
                         <div class="res">
-                            <h3>Pezzi Prenotati</h3>
-                            <div class="n_res">{{$date->reserved_pz}}</div>    
+                            <h3>Pezzi al taglio Prenotati</h3>
+                            <div class="n_res">{{$date->reserved_pz_q}}</div>    
+                        </div>
+                        <div class="res">
+                            <h3>Pizze al piatto Prenotate</h3>
+                            <div class="n_res">{{$date->reserved_pz_t}}</div>    
                         </div>
                         <div class="res">
                             <h3>Posti Prenotati</h3>
@@ -54,12 +55,26 @@
                             </form>
                         </div>
                         <div class="max">
-                            <h3>Modifica Max Pezzi</h3>
+                            <h3>Modifica Max Pizze al piatto</h3>
                             <form action="{{ route('admin.dates.upmaxpz', $date->id) }}" method="post">
                                 @csrf
                                 <button  class="btn btn-dark">+</button>
                             </form>
-                            <span>{{$date->max_pz}}</span>
+                            <span>{{$date->max_pz_t}}</span>
+
+                            <form action="{{ route('admin.dates.downmaxpz', $date->id) }}" method="post">
+                                @csrf
+                                <button  class="btn btn-dark">-</button>
+                            </form>
+
+                        </div>
+                        <div class="max">
+                            <h3>Modifica Max Pezzi al taglio</h3>
+                            <form action="{{ route('admin.dates.upmaxpz', $date->id) }}" method="post">
+                                @csrf
+                                <button  class="btn btn-dark">+</button>
+                            </form>
+                            <span>{{$date->max_pz_q}}</span>
 
                             <form action="{{ route('admin.dates.downmaxpz', $date->id) }}" method="post">
                                 @csrf
@@ -70,18 +85,16 @@
                         
                     </div>
                     
-                    @if($date->visible == 1)
-                        
+                      
                     <div class="visible-on">
-                        <span class="">visibile</span> 
-                        
-                        <form action="{{ route('admin.dates.updatestatus', $date->id) }}" method="post">
-                            @csrf
-                            <button class="btn btn-danger">Modifica visibilità</button>
-                        </form>
+                        <span class="">{{ 'pz-q' . ' ' . ($date->visible_fq ? 'si' : 'no')}}</span> 
+                        <span class="">{{ 'pz-t' . ' ' . ($date->visible_ft ? 'si' : 'no')}}</span> 
+                        <span class="">{{ 'tavoli' . ' ' . ($date->visible_t ? 'si' : 'no')}}</span> 
+                        <span class="">{{ 'domicilio' . ' ' . ($date->visible_d ? 'si' : 'no')}}</span> 
+                      
                     </div>
-                    @else
-                        
+               
+{{--                         
                     <div class="visible">
                         <span class="">non visibile</span> 
                         
@@ -90,8 +103,8 @@
                             <button class="btn btn-success">Modifica visibilità</button>
                         </form>
                         
-                    </div>
-                    @endif
+                    </div> --}}
+                  
                 </div>
                         
                     

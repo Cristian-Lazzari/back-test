@@ -47,7 +47,7 @@ class ReservationController extends Controller
             if ($maximum <= $date->max_res) {
                 $date->reserved = $date->reserved + $newOrder->n_person;
                 if ($date->reserved == $date->max_res) {
-                    $date->visible = 0;
+                    $date->visible_t = 0;
                 }
             } else {
                 // se non ci sono più posti rispondo picche

@@ -62,7 +62,7 @@ class ReservationController extends Controller
             $date->reserved -= $reservation->n_person;
 
             if($date->reserved < $date->max_res){
-                $date->visible = 1;
+                $date->visible_t = 1;
             }
             $date->save();
             return redirect("https://wa.me/" . '39' . $reservation->phone . "?text=E' con profondo rammarico che siamo obbligati a disdire la vostra prenotazione!");
@@ -142,7 +142,7 @@ class ReservationController extends Controller
             if ($maximum <= $date->max_res) {
                 $date->reserved = $date->reserved + $newReserv->n_person;
                 if ($date->reserved >= $date->max_res) {
-                    $date->visible = 0;
+                    $date->visible_t = 0;
                 }
             } else {
                 return redirect()->route('admin.reservations.create')->with(['max_res_check' => true, 'inputValues' => $data]);

@@ -20,6 +20,20 @@
             @error('name') {{ $message }} @enderror
         </div>
     </div>
+
+    <div class="mb-3">
+        <label for="type" class="form-label">Tipologia (pezzi al taglio (t), pizza al piatto (q) o altro (0))</label>
+        <input
+            type="text"
+            class="form-control @error('type') is-invalid @enderror"
+            id="type"
+            name="type"
+            value="{{ old('type',$category->type) }}"
+        >
+        <div class="invalid-feedback">
+            @error('type') {{ $message }} @enderror
+        </div>
+    </div>
     <div class="mb-3">
         <label for="slot" class="form-label">Slot</label>
         <input

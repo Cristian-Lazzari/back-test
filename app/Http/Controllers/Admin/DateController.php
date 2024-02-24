@@ -74,7 +74,8 @@ class DateController extends Controller
     private $validations = [
         'max_domicilio'         => 'required|integer',
         'max_reservations'      => 'required|integer',
-        'max_pz'                => 'required|integer',
+        'max_pz_q'              => 'required|integer',
+        'max_pz_t'              => 'required|integer',
         'times_slot_1'          => 'array',
         'times_slot_1.*'        => 'string',
         'times_slot_2'          => 'array',
@@ -96,7 +97,8 @@ class DateController extends Controller
         try {
             $request->validate($this->validations);
             $max_reservations = $request->input("max_reservations");
-            $max_pz = $request->input("max_pz");
+            $max_pz_t = $request->input("max_pz_t");
+            $max_pz_q = $request->input("max_pz_q");
             $max_domicilio = $request->input("max_domicilio");
             $days_off = $request->input("days_off");
             $times_slot1 = $request->input("times_slot_1");
@@ -209,7 +211,7 @@ class DateController extends Controller
 
             // Eseguo il seeder
             $seeder = new DatesTableSeeder();
-            $seeder->setVariables($max_reservations, $max_pz, $timesDay, $days_off, $max_domicilio);
+            $seeder->setVariables($max_reservations, $max_pz_q, $max_pz_t, $timesDay, $days_off, $max_domicilio);
             $seeder->run();
 
             // Ripristino le prenotazioni
