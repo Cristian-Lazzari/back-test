@@ -82,7 +82,7 @@ class OrderController extends Controller
                 $newOrder->civico = $data['civico'];
                 if($date->res_domicilio < $date->max_domicilio){
                     $date->res_domicilio ++;
-                    if($date->res_domicilio == ($date->max_domicilio + 1) ){
+                    if($date->res_domicilio == $date->max_domicilio ){
                         $date->visible_d = 0;
                     };
                 }else{
@@ -93,8 +93,7 @@ class OrderController extends Controller
                 ]); 
                 }
             }  
-            $newOrder->save();
-
+            
             foreach ($arrvar2 as $elem) {
                 $item_order = new OrderProject();
                 $item_order->order_id = $newOrder->id;
@@ -104,16 +103,17 @@ class OrderController extends Controller
                 $item_order->addicted = json_encode($elem['addicted']);
                 $item_order->save();
             }
-
+            
             $maximum_q = $date->reserved_pz_q + $total_pz_q;
             $maximum_t = $date->reserved_pz_t + $total_pz_t;
-
+            
             if ($maximum_t <= $date->max_pz_t && $maximum_q <= $date->max_pz_q) {
                 $date->reserved_pz_q += $total_pz_q;
                 $date->reserved_pz_t += $total_pz_t;
                 if ($date->reserved_pz_q == $date->max_pz_q) {
                     $date->visible_fq = 0;
-                }else if ($date->reserved_pz_t == $date->max_pz_t){
+                }
+                if ($date->reserved_pz_t == $date->max_pz_t){
                     $date->visible_ft = 0;
                 }
                 $date->save();
@@ -121,9 +121,10 @@ class OrderController extends Controller
                 // se non ci sono più posti rispondo picche
                 return response()->json([
                     'success' => false,
-                    'message' => 'Il numero massimo di pezzi per questa data e orario è già stato raggiunto',
+                    'message' => 'Il numero massimo di prodotti per questa data e orario è già stato raggiunto',
                 ]);
             }
+            $newOrder->save();
 
             // Invio notifica a dashboard
             $newNot = new Notification();

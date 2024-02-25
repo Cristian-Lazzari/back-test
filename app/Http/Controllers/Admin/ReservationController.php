@@ -88,7 +88,7 @@ class ReservationController extends Controller
 
 
         // Filtro dal giorno successivo a oggi e per i due mesi successivi
-        $dates = Date::where('visible', '=', 1)
+        $dates = Date::where('visible_t', '=', 1)
             ->where('year', '>=', $dataInizio->year)
             ->where('month', '>=', $dataInizio->month)
             ->where(function ($query) use ($dataInizio) {

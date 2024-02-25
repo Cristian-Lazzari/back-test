@@ -59,16 +59,20 @@ class OrderController extends Controller
             $order->status = 2;
             $order->save();
             $date = Date::where('date_slot', $order->date_slot)->first();
-            $date->reserved_pz -= $order->total_pz;
-            if($date->reserved_pz < $date->max_pz){
-                if($order->comune == '0' && $order->civico == '0' && $order->comune == '0' ){
-                    $date->visible_fq = 1;
-                    $date->save();
-                    
-                }else{
-                    $date->visible_d = 1;               
-                    $date->save();
-                }
+            $date->reserved_pz_q -= $order->total_pz_q;
+            if($date->reserved_pz_q < $date->max_pz_q){
+                $date->visible_fq = 1;
+                $date->save();
+                
+            }
+            $date->reserved_pz_t -= $order->total_pz_t;
+            if($date->reserved_pz_t < $date->max_pz_t){
+                $date->visible_ft = 1;
+                $date->save();
+            }
+            if($order->comune !== '0' && $order->civico !== '0' && $order->comune !== '0' ){
+                $date->visible_d = 1;               
+                $date->save();
             }
 
             return redirect("https://wa.me/" . '39' . $order->phone . "?text=E' con profondo rammarico che siamo obbligati ad disdire la vostra prenotazione!");
@@ -94,7 +98,7 @@ class OrderController extends Controller
 
 
         // Filtro dal giorno successivo a oggi e per i due mesi successivi
-        $dates = Date::where('visible', '=', 1)
+        $dates = Date::whereIn('status', [1, 3, 5, 7])
             ->where('year', '>=', $dataInizio->year)
             ->where('month', '>=', $dataInizio->month)
             ->where(function ($query) use ($dataInizio) {
@@ -152,13 +156,24 @@ class OrderController extends Controller
         $maximum_q = $date->reserved_pz + $newOrder->total_pz;
 
         if (isset($data['max_check'])) {
-            $date->reserved_pz = $date->reserved_pz + $newOrder->total_pz;
+            $date->reserved_pz_t = $date->reserved_pz_t + $newOrder->total_pz_t;
+            $date->reserved_pz_q = $date->reserved_pz_q + $newOrder->total_pz_q;
         } else {
-            if ($maximum <= $date->max_pz) {
-                $date->reserved_pz = $date->reserved_pz + $newOrder->total_pz;
-                if ($date->reserved_pz >= $date->max_pz) {
-                    $date->visible = 0;
+            if ($maximum_t <= $date->max_pz_t || $maximum_q <= $date->max_pz_q) {
+                $date->reserved_pz_t = $date->reserved_pz_t + $newOrder->total_pz_t;
+                $date->reserved_pz_q = $date->reserved_pz_q + $newOrder->total_pz_q;
+                
+                if ($date->reserved_pz_q >= $date->max_pz_q) {
+                $date->visible_fq = 0;
                 }
+                if ($date->reserved_pz_t >= $date->max_pz_t) {
+                $date->visible_ft = 0;
+                }
+                $date->save();
+                $newOrder->save();
+        
+                return redirect()->route('admin.orders.create')->with('reserv_success', true);
+
             } else {
                 return redirect()->route('admin.orders.create')->with(['max_res_check' => true, 'inputValues' => $data]);
             }

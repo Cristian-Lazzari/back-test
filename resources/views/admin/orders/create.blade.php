@@ -192,7 +192,7 @@
                 @endif
             >
             <label class="btn btn-outline-dark" for="btnradio{{$date->id}}">
-                {{$date->time}} | {{$date->day}}/{{$date->month}}/{{$date->year}} | <strong>{{$date->reserved_pz}}</strong> | max: {{$date->max_pz}}
+                {{$date->time}} | {{$date->day}}/{{$date->month}}/{{$date->year}} | pezzi p.<strong>{{$date->reserved_pz_t}}</strong> | max pz taglio: {{$date->max_pz_q}} | tonde p.<strong>{{$date->reserved_pz_t}}</strong> | | max pz Tonde: {{$date->max_pz_t}}
             </label>
 
             @endforeach
