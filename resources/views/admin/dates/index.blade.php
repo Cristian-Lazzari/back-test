@@ -12,16 +12,18 @@
 
 
         <div class="mydata">
-          
             
             @foreach ($dates as $date)
             
             
+          @php
+              $status = ['','asporto','tavoli','asporto/tavoli','domicilio','domicilio/asporto','domicilio/tavoli','tutti']
+          @endphp
                 
                 <div class="mycard">
- 
                     <div class="left-c">
                         <div class="data">
+                            <span>{{$status[$date['status']]}}</span>
 
                             <h2>{{$date->time}}</h2>
                             <span class="day_w">{{$days_name[$date->day_w]}}</span>

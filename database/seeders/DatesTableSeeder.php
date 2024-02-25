@@ -78,10 +78,10 @@ class DatesTableSeeder extends Seeder
                             'year' => $currentDate->format('Y'),
                             'date_slot' => $currentDate->format('d') . '/' .  $currentDate->format('m') . '/' .  $currentDate->format('Y') . ' ' . $time['time'],
                             'status' => $time['set'],
-                            'visible_d' => ($time['set'] >= 4 && $time['set'] <= 7) ? 1 : 0,
-                            'visible_ft' => ($time['set'] !== 2) ? 1 : 0,
-                            'visible_fq' => ($time['set'] !== 2) ? 1 : 0,
-                            'visible_t' => ($time['set'] == 2 || $time['set'] == 3 || $time['set'] == 6 || $time['set'] == 7) ? 1 : 0,
+                            'visible_d' => ($time['set'] >= 4 && $time['set'] <= 7 && in_array($currentDayOfWeek, $abledDays)) ? 1 : 0,
+                            'visible_ft' => (($time['set'] == 1 || $time['set'] == 3 || $time['set'] == 4 || $time['set'] == 5 || $time['set'] == 6 || $time['set'] == 7) && in_array($currentDayOfWeek, $abledDays)) ? 1 : 0,
+                            'visible_fq' => (($time['set'] == 1 || $time['set'] == 3 || $time['set'] == 4 || $time['set'] == 5 || $time['set'] == 6 || $time['set'] == 7) && in_array($currentDayOfWeek, $abledDays)) ? 1 : 0,
+                            'visible_t' => ($time['set'] == 2 || $time['set'] == 3 || $time['set'] == 6 || $time['set'] == 7) && in_array($currentDayOfWeek, $abledDays) ? 1 : 0,
                         
                         ]);
                     }
