@@ -94,15 +94,7 @@ class OrderController extends Controller
                 }
             }  
             
-            foreach ($arrvar2 as $elem) {
-                $item_order = new OrderProject();
-                $item_order->order_id = $newOrder->id;
-                $item_order->project_id = $elem['p_id'];
-                $item_order->quantity_item = $elem['counter'];
-                $item_order->deselected = json_encode($elem['deselected']);
-                $item_order->addicted = json_encode($elem['addicted']);
-                $item_order->save();
-            }
+
             
             $maximum_q = $date->reserved_pz_q + $total_pz_q;
             $maximum_t = $date->reserved_pz_t + $total_pz_t;
@@ -126,6 +118,15 @@ class OrderController extends Controller
             }
             $newOrder->save();
 
+            foreach ($arrvar2 as $elem) {
+                $item_order = new OrderProject();
+                $item_order->order_id = $newOrder->id;
+                $item_order->project_id = $elem['p_id'];
+                $item_order->quantity_item = $elem['counter'];
+                $item_order->deselected = json_encode($elem['deselected']);
+                $item_order->addicted = json_encode($elem['addicted']);
+                $item_order->save();
+            }
             // Invio notifica a dashboard
             $newNot = new Notification();
             $newNot->title = 'Nuovo ordine da: ' . $data['name'];

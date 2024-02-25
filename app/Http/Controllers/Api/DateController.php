@@ -97,8 +97,12 @@ class DateController extends Controller
                 
             }else if($wcf == '1'){
                 foreach ($dates as $data) {
-                    if(($data['visible_fq'] || ($data['visible_ft']) && $data['status'] == 1 || $data['status'] == 3 || $data['status'] == 5 || $data['status'] == 7 )) {
-                       array_push($newDates, $data); 
+                    if($data['visible_fq'] || $data['visible_ft']){
+                        if($data['status'] == 1 || $data['status'] == 3 || $data['status'] == 5 || $data['status'] == 7 ){
+
+                            array_push($newDates, $data); 
+                        }
+                            
                     }
                 }
                 
