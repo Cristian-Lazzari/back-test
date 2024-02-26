@@ -27,12 +27,23 @@
             id="status"
             name="status"
         >
-            <option value="all">Tutti</option>
+            <option value="" selected>Tutti</option>
             <option value="0">In Elaborazione</option>
             <option value="1">Confermati</option>
             <option value="2">Annullati</option>
         </select>
-        <button class="btn btn-primary mt-2" type="submit">Filtra</button>
+
+        <label for="date_order" class="form-label">Ordina per data</label>
+        <select
+            class="form-select"
+            id="date_order"
+            name="date_order"
+        >
+            <option value="" selected>Ordina per data di creazione</option>
+            <option value="1">Ordina per data di prenotazione</option>
+        </select>
+
+        <button class="btn btn-primary" type="submit">Filtra</button>
     </form>
 
     <div class="myres-c">

@@ -19,18 +19,23 @@ class ReservationController extends Controller
     {
         $status = strval($request->input('status'));
         $name = $request->input('name');
+        $date_order = $request->input('date_order');
 
         $query = Order::query();
 
-        if (isset($status) && $status !== 'all') {
+        if ($status == '0' || $status == '1' || $status == '2') {
             $query->where('status', $status);
-        };
+        }
 
         if ($name) {
             $query->where('name', 'like', '%' . $name . '%');
-        };
+        }
 
-        $query->orderBy('date_slot', 'desc');
+        if ($date_order) {
+            $query->orderBy('created_at', 'desc');
+        } else {
+            $query->orderBy('date_slot', 'desc');
+        }
 
         $reservations = $query->paginate(15);
         $dates = Date::all();
