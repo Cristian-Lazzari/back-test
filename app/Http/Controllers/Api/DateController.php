@@ -20,11 +20,12 @@ class DateController extends Controller
             $dataOraFormattate = Carbon::now()->format('d-m-Y H:i:s');
 
             $dataOraCarbon = Carbon::createFromFormat('d-m-Y H:i:s', $dataOraFormattate);
+            $dataOraCarbon2 = Carbon::createFromFormat('d-m-Y H:i:s', $dataOraFormattate);
             // Ottieni il numero del giorno della settimana (da 0 a 6)
             $dayWeek = $dataOraCarbon->dayOfWeek;
 
-            $ora1f = $dataOraCarbon->setTime(18, 3, 0);
-            $ora2f = $dataOraCarbon->setTime(19, 0, 0);
+            $ora1f = $dataOraCarbon->setTime(19, 30);//weekend //va un ora avanti non so perche ;)
+            $ora2f = $dataOraCarbon2->setTime(20, 00);//sett
     
             // Calcolo la data di inizio considerando il giorno successivo a oggi
             $dataInizio = $dataOraCarbon->copy();
@@ -32,8 +33,9 @@ class DateController extends Controller
             // Calcolo la data di fine considerando due mesi successivi alla data odierna
             $dataDiFineParz = $dataInizio->copy()->startOfMonth();
             $dataFine = $dataDiFineParz->copy()->addMonths(2)->endOfMonth();
+        
            
-            if(($dayWeek == 5 || $dayWeek == 6 || $dayWeek == 0) && $dataOraCarbon->gt($ora1f)){
+            if(($dayWeek == 5 || $dayWeek == 6 || $dayWeek == 0) && $ora1f->gt($dataOraFormattate)){
 
                 // Filtro dal giorno successivo a oggi e per i due mesi successivi
                 $dates = Date::where('year', '>=', $dataInizio->year)
@@ -52,8 +54,8 @@ class DateController extends Controller
                     ->where('year', '<=', $dataFine->year)
                     ->where('month', '<=', $dataFine->month)
                     ->get();
-                }else if(($dayWeek == 1 || $dayWeek == 2 || $dayWeek == 3 || $dayWeek == 4) && $dataOraCarbon->gt($ora2f)){
-            
+                }else if(($dayWeek == 1 || $dayWeek == 2 || $dayWeek == 3 || $dayWeek == 4) && $ora2f->gt($dataOraFormattate)){
+   
                     $dates = Date::where('year', '>=', $dataInizio->year)
                     ->where('month', '>=', $dataInizio->month)
                     ->where(function ($query) use ($dataInizio) {
@@ -71,6 +73,7 @@ class DateController extends Controller
                     ->where('month', '<=', $dataFine->month)
                     ->get();
                 }else{
+        
                     // Filtro dal giorno successivo a oggi e per i due mesi successivi
                     $dataInizio = $dataInizio->addDay();
                     $dates = Date::where('year', '>=', $dataInizio->year)
@@ -121,6 +124,7 @@ class DateController extends Controller
             
             return response()->json([
                 'success' => true,
+  
                 "data_e_ora_attuali" => $dataOraFormattate,
                 // "fineParziale" => $dataDiFineParz->day,
                 "dataDiInizio" => $dataInizio->day . "/" . $dataInizio->month . "/" . $dataInizio->year,

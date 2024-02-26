@@ -20,15 +20,6 @@ class DateController extends Controller
         return view('admin.dates.index', compact('dates'));
     }
 
-    public function updatestatus($date_id)
-    {
-        $date = Date::find($date_id);
-        if ($date) {
-            $date->visible = !$date->visible; // Inverte lo stato corrente
-            $date->save();
-        }
-        return redirect()->back();
-    }
 
     public function upmaxres($date_id)
     {
@@ -53,7 +44,7 @@ class DateController extends Controller
     public function upmaxpz($date_id)
     {
         $date = Date::find($date_id);
-        $date->max_pz++;
+        $date->max_pz_q++;
         $date->save();
 
         return redirect()->back();
@@ -62,9 +53,49 @@ class DateController extends Controller
     public function downmaxpz($date_id)
     {
         $date = Date::find($date_id);
-        if ($date->max_pz > 0) {
+        if ($date->max_pz_q > 0) {
 
-            $date->max_pz--;
+            $date->max_pz_q--;
+            $date->save();
+        }
+
+        return redirect()->back();
+    }
+    public function upmaxpzt($date_id)
+    {
+        $date = Date::find($date_id);
+        $date->max_pz_t++;
+        $date->save();
+
+        return redirect()->back();
+    }
+
+    public function downmaxpzt($date_id)
+    {
+        $date = Date::find($date_id);
+        if ($date->max_pz_t > 0) {
+
+            $date->max_pz_t--;
+            $date->save();
+        }
+
+        return redirect()->back();
+    }
+    public function upmaxpzd($date_id)
+    {
+        $date = Date::find($date_id);
+        $date->max_domicilio++;
+        $date->save();
+
+        return redirect()->back();
+    }
+
+    public function downmaxpzd($date_id)
+    {
+        $date = Date::find($date_id);
+        if ($date->max_domicilio > 0) {
+
+            $date->max_pz_t--;
             $date->save();
         }
 

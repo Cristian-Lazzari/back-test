@@ -16,7 +16,7 @@
         @csrf
         @if (session('max_res_check'))
             <div class="alert alert-danger">
-               <h3 for="max_check">Stai superando il limite di pezzi disponibili per questa data!</h3>
+               <h3 for="max_check">Stai superando il limite di pezzi disponibili per tuesta data!</h3>
                <h4 for="max_check">Vuoi continuare comunque?</h4>
                
                <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
@@ -79,18 +79,34 @@
         </div>
 
         <div class="mb-5">
-            <label for="total_pz" class="form-label">N° di pezzi</label>
+            <label for="total_pz_q" class="form-label">N° di pezzi al taglio</label>
             <input
                 type="number"
-                class="form-control @error('total_pz') is-invalid @enderror"
-                id="total_pz"
-                name="total_pz"
+                class="form-control @error('total_pz_q') is-invalid @enderror"
+                id="total_pz_q"
+                name="total_pz_q"
                 @if (session('inputValues'))
-                    value="{{ session('inputValues')['total_pz'] }}"
+                    value="{{ session('inputValues')['total_pz_q'] }}"
                 @endif
             >
             <div class="invalid-feedback">
-                @error('total_pz') {{ $message }} @enderror
+                @error('total_pz_q') {{ $message }} @enderror
+            </div>
+        </div>
+        <div class="mb-5">
+            <label for="total_pz_t" class="form-label">N° di pizze al piatto</label>
+            <input
+                type="number"
+                class="form-control @error('total_pz_t') is-invalid @enderror"
+                id="total_pz_t"
+                name="total_pz_t"
+                value="0"
+                @if (session('inputValues'))
+                    value="{{ session('inputValues')['total_pz_t'] }}"
+                @endif
+            >
+            <div class="invalid-feedback">
+                @error('total_pz_t') {{ $message }} @enderror
             </div>
         </div>
 
@@ -101,6 +117,7 @@
                 class="form-control @error('total_price') is-invalid @enderror"
                 id="total_price"
                 name="total_price"
+                value="0"
                 @if (session('inputValues'))
                     value="{{ session('inputValues')['total_price'] }}"
                 @endif
@@ -116,6 +133,7 @@
                 id="address"
                 name="address_id"
             >
+            <option value="0">Nessuno</option>
                 @foreach ($addresses as $address)
                     <option value="{{ $address->comune }}">{{ $address->comune }}</option>
                 @endforeach
@@ -192,7 +210,9 @@
                 @endif
             >
             <label class="btn btn-outline-dark" for="btnradio{{$date->id}}">
-                {{$date->time}} | {{$date->day}}/{{$date->month}}/{{$date->year}} | pezzi p.<strong>{{$date->reserved_pz_t}}</strong> | max pz taglio: {{$date->max_pz_q}} | tonde p.<strong>{{$date->reserved_pz_t}}</strong> | | max pz Tonde: {{$date->max_pz_t}}
+                {{$date->time}} | {{$date->day}}/{{$date->month}}/{{$date->year}} | 
+                disp. taglio <strong>{{$date->max_pz_q - $date->reserved_pz_q}}</strong> |
+                disp. piatto <strong>{{$date->max_pz_t - $date->reserved_pz_t}}</strong> 
             </label>
 
             @endforeach

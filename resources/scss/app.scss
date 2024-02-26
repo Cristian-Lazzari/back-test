@@ -264,9 +264,8 @@ td {
 
 .mycard {
     width: 100%;
-    background-color: #13d16221;
-    border: 2px solid black;
-
+    border: 1px solid black;
+    border-radius: 10px;
     flex-wrap: wrap;
     display: flex;
     .left-c {
@@ -282,15 +281,14 @@ td {
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            font-size: 20px;
-            padding: 2rem;
-            border: 1px solid black;
-            border: 1px solid black;
+            font-size: 16px;
+            padding: 1rem;
+            
             h2 {
                 font-size: 30px;
             }
             .day_w {
-                border: 1px solid black;
+              
                 padding: 10px;
                 width: 140px;
                 background-color: #ffffff;
@@ -298,8 +296,8 @@ td {
             }
         }
         .res {
-            border-left: 1px solid black;
-            border-right: 1px solid black;
+           
+         
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -324,8 +322,7 @@ td {
 
         .max {
             flex-grow: 1;
-            border: 1px solid black;
-            border: 1px solid black;
+            
 
             height: 100%;
             padding: 15px;
@@ -347,7 +344,7 @@ td {
         background-color: #13d162;
         padding: 1rem;
         width: 100%;
-
+        border-radius: 8px;
         display: flex;
         align-items: center;
         justify-content: space-around;
@@ -388,9 +385,7 @@ td {
         }
     }
 }
-.myc-off {
-    background: #d1131321 !important;
-}
+
 
 .myproj-c {
     display: flex;
@@ -623,6 +618,12 @@ td {
         flex-direction: column;
         .left-c,
         .right-c {
+            width: 100%;
+        }
+    }
+    .mycard {
+        .left-c {
+            flex-direction: column;
             width: 100%;
         }
     }

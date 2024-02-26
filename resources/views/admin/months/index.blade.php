@@ -67,33 +67,40 @@
 
                 @foreach ($days as $day)
                 
-                    <input class="btn-check" type="checkbox" name="days_off[]" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample{{$day}}" aria-expanded="false" aria-controls="multiCollapseExample{{$day}}" id="days_off_{{ $day }}" value="{{ $day }}">
-                    <label class="btn btn-outline-dark radius col" for="days_off_{{ $day }}">{{ $days_name[$day] }}
+                    <input class="btn-check"  name="day_off[]" data-bs-toggle="collapse" data-bs-target="#multiCollapseExample{{$day}}" aria-expanded="false" aria-controls="multiCollapseExample{{$day}}" id="day_off_{{ $day }}" value="{{ $day }}">
+                    <label class="btn btn-dark radius col" for="day_off_{{ $day }}">{{ $days_name[$day] }}
                         <div class="collapse multi-collapse" id="multiCollapseExample{{$day}}">
                             <div class="card card-body">
-                                <div>
-                                    <h5 class="pt-4 d-flex g-2">Seleziona le fasce orarie disponibili</h5>
-                        
-                                   
-                        
-                                        @foreach ($times as $time)
-                                   
-                                        
-                                        <select  class="form-select col" name="times_slot_{{$day}}[]" id="">
-                                            <option value="0">{{ $time['time'] }} - ND</option>
-                                            <option value="1">{{ $time['time'] }} - asporto</option>
-                                            <option value="2">{{ $time['time'] }} - tavoli</option>
-                                            <option value="3">{{ $time['time'] }} - asporto/tavoli</option>
-                                            <option value="4">{{ $time['time'] }} - domicilio</option>
-                                            <option value="5">{{ $time['time'] }} - domicilio/asporto</option>
-                                            <option value="6">{{ $time['time'] }} - domicilio/tavoli</option>
-                                            <option value="7">{{ $time['time'] }} - tutti</option>
-                                        </select>
-                                      
-                                        @endforeach
-                                    
-                                    
-                                </div>
+                                <input
+                                    type="checkbox"
+                                    class="btn-check @error ('tags') is-invalid @enderror"
+                                    id="days_off_{{ $day }}"
+                                    name="days_off[]"
+                                    value="{{ $day }}">
+                                 
+                    
+                                
+                                <label class="btn btn-outline-dark" for="days_off_{{ $day }}">Attiva</label>
+{{--                                                            
+                                <label class="btn btn-outline-primary " for="days_off_{{ $day }}">Attiva</label>
+                                <input class="btn-check" type="checkbox" name="days_off[]" id="days_off_{{ $day }}" value="{{ $day }}"> --}}
+                                
+                                <h5 class="p-3">Seleziona le fasce orarie disponibili</h5>
+                                @foreach ($times as $time)                            
+                                
+                                <select  class="form-select col" name="times_slot_{{$day}}[]" id="">
+                                    <option value="0">{{ $time['time'] }} - ND</option>
+                                    <option value="1">{{ $time['time'] }} - asporto</option>
+                                    <option value="2">{{ $time['time'] }} - tavoli</option>
+                                    <option value="3">{{ $time['time'] }} - asporto/tavoli</option>
+                                    <option value="4">{{ $time['time'] }} - domicilio</option>
+                                    <option value="5">{{ $time['time'] }} - domicilio/asporto</option>
+                                    <option value="6">{{ $time['time'] }} - domicilio/tavoli</option>
+                                    <option value="7">{{ $time['time'] }} - tutti</option>
+                                </select>
+                                
+                                @endforeach                    
+                            
                             </div>
                         </div>
                        

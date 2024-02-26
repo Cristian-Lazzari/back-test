@@ -87,7 +87,8 @@
                     @endif
                     @endforeach
                     <div class="t_price">€{{$order->total_price / 100}}</div>
-                    <div class="t_price">{{$order->total_pz}} pz</div>
+                    <div class="t_price">{{$order->total_pz_q}} pezzi taglio</div>
+                    <div class="t_price">{{$order->total_pz_t}} pizze piatte</div>
                     
                 </section>
                 <section class="myres-right">
@@ -104,6 +105,16 @@
                             Annulla
                         </button>
                     </form>
+                    @if ($order->indirizzo !== '0')
+                    <h3>
+                        Consegnare a domicilio
+                        <p>{{$order->comune}}, {{$order->indirizzo}}, {{$order->civico}}</p>
+                    </h3>
+                    @else
+                    <h3>
+                        Ritiro d'asporto
+                    </h3>
+                    @endif
                 </section>
             </div>
             <div class="visible">

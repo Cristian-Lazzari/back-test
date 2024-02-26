@@ -97,9 +97,8 @@ class OrderController extends Controller
         $dataFine = $dataDiFineParz->copy()->addMonths(1)->endOfMonth();
 
 
-        // Filtro dal giorno successivo a oggi e per i due mesi successivi
-        $dates = Date::whereIn('status', [1, 3, 5, 7])
-            ->where('year', '>=', $dataInizio->year)
+        // Filtro dal giorno successivo a oggi e per i due mesi successivi e conotrollo che o visible_fq o vible_ft siano uguali a 1
+        $dates = Date::whereIn('status', [1, 3, 4, 5, 6, 7])
             ->where('month', '>=', $dataInizio->month)
             ->where(function ($query) use ($dataInizio) {
                 $query->where('month', '>', $dataInizio->month)
@@ -152,12 +151,19 @@ class OrderController extends Controller
         $date = Date::where('id', $data['date_id'])->firstOrFail();
         $newOrder->date_slot = $date->date_slot;
 
-        $maximum_t = $date->reserved_pz + $newOrder->total_pz;
-        $maximum_q = $date->reserved_pz + $newOrder->total_pz;
+        $maximum_t = $date->reserved_pz_t + $newOrder->total_pz_t;
+        $maximum_q = $date->reserved_pz_q + $newOrder->total_pz_q;
 
         if (isset($data['max_check'])) {
-            $date->reserved_pz_t = $date->reserved_pz_t + $newOrder->total_pz_t;
             $date->reserved_pz_q = $date->reserved_pz_q + $newOrder->total_pz_q;
+            $date->reserved_pz_t = $date->reserved_pz_t + $newOrder->total_pz_t;
+
+            if ($date->reserved_pz_q >= $date->max_pz_q) {
+                $date->visible_fq = 0;
+            }
+            if ($date->reserved_pz_t >= $date->max_pz_t) {
+                $date->visible_ft = 0;
+            }
         } else {
             if ($maximum_t <= $date->max_pz_t || $maximum_q <= $date->max_pz_q) {
                 $date->reserved_pz_t = $date->reserved_pz_t + $newOrder->total_pz_t;
