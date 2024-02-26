@@ -20,8 +20,6 @@ class ReservationController extends Controller
         $status = strval($request->input('status'));
         $name = $request->input('name');
 
-        dump($status);
-
         $query = Order::query();
 
         if (isset($status) && $status !== 'all') {
