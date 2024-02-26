@@ -15,11 +15,26 @@ use Illuminate\Support\Facades\Http;
 class OrderController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::orderBy('created_at', 'desc')->paginate(15);
+        $status = strval($request->input('status'));
+        $name = $request->input('name');
+
+        $query = Order::query();
+
+        if (isset($status) && $status !== 'all') {
+            $query->where('status', $status);
+        };
+
+        if ($name) {
+            $query->where('name', 'like', '%' . $name . '%');
+        };
+
+        $query->orderBy('date_slot', 'desc');
+
+        $orders = $query->paginate(15);
         $orderProject = OrderProject::all();
-        //dd($quantity_item );
+
         return view('admin.orders.index', compact('orders', 'orderProject'));
     }
 
@@ -60,7 +75,7 @@ class OrderController extends Controller
             $order->save();
             $date = Date::where('date_slot', $order->date_slot)->first();
             $date->reserved_pz -= $order->total_pz;
-            if($date->reserved_pz < $date->max_pz){
+            if ($date->reserved_pz < $date->max_pz) {
                 $date->visible = 1;
             }
             $date->save();
@@ -101,7 +116,7 @@ class OrderController extends Controller
             ->where('year', '<=', $dataFine->year)
             ->where('month', '<=', $dataFine->month)
             ->get();
-            $addresses = Address::all();
+        $addresses = Address::all();
         return view('admin.orders.create', compact('dates', 'addresses'));
     }
 
@@ -129,9 +144,15 @@ class OrderController extends Controller
         $newOrder->total_pz      = $data['total_pz'];
         $newOrder->message       = $data['message'];
         $newOrder->status        = 0;
-        if (isset($data['comune'])) { $newOrder->comune = $data['comune'];}
-        if (isset($data['civico'])) { $newOrder->civico = $data['civico'];}
-        if (isset($data['indirizzo'])) { $newOrder->indirizzo = $data['indirizzo'];}
+        if (isset($data['comune'])) {
+            $newOrder->comune = $data['comune'];
+        }
+        if (isset($data['civico'])) {
+            $newOrder->civico = $data['civico'];
+        }
+        if (isset($data['indirizzo'])) {
+            $newOrder->indirizzo = $data['indirizzo'];
+        }
 
         $date = Date::where('id', $data['date_id'])->firstOrFail();
         $newOrder->date_slot = $date->date_slot;

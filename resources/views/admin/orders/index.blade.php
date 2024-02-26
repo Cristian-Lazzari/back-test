@@ -8,6 +8,33 @@
     <h1 class="my-5">PRENOTAZIONI D'ASPORTO</h1>
     <a  href="{{ route('admin.months.index') }}" class="btn btn-warning w-50 m-auto my-3 d-block">Gestione date</a>
     <a  href="{{ route('admin.orders.create') }}" class="btn btn-success w-50 m-auto my-3 d-block">Nuovo Ordine</a>
+
+    <form action="{{ route('admin.orders.index')}}" method="GET">
+        <h3>Filtri</h3>
+
+        <label for="name" class="form-label">Nome</label>
+        <input
+            type="text"
+            class="form-control mb-2"
+            id="name"
+            name="name"
+            value="{{ old('name')}}"
+        >
+
+        <label for="status" class="form-label">Stato</label>
+        <select
+            class="form-select"
+            id="status"
+            name="status"
+        >
+            <option value="all">Tutti</option>
+            <option value="0">In Elaborazione</option>
+            <option value="1">Confermati</option>
+            <option value="2">Annullati</option>
+        </select>
+        <button class="btn btn-primary mt-2" type="submit">Filtra</button>
+    </form>
+
     <div class="myres-c">
 
         @foreach ($orders as $order)

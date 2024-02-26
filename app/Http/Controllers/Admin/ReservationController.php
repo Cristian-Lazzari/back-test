@@ -15,10 +15,28 @@ class ReservationController extends Controller
 {
 
 
-    public function index()
+    public function index(Request $request)
     {
-        $reservations = Reservation::orderBy('created_at', 'desc')->paginate(15);
+        $status = strval($request->input('status'));
+        $name = $request->input('name');
+
+        dump($status);
+
+        $query = Order::query();
+
+        if (isset($status) && $status !== 'all') {
+            $query->where('status', $status);
+        };
+
+        if ($name) {
+            $query->where('name', 'like', '%' . $name . '%');
+        };
+
+        $query->orderBy('date_slot', 'desc');
+
+        $reservations = $query->paginate(15);
         $dates = Date::all();
+
         return view('admin.reservations.index', compact('reservations', 'dates'));
     }
 
@@ -61,7 +79,7 @@ class ReservationController extends Controller
             $date = Date::where('date_slot', $reservation->date_slot)->first();
             $date->reserved -= $reservation->n_person;
 
-            if($date->reserved < $date->max_res){
+            if ($date->reserved < $date->max_res) {
                 $date->visible = 1;
             }
             $date->save();

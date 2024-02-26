@@ -30,7 +30,7 @@ class DatesTableSeeder extends Seeder
     public function run()
     {
         $currentDate = new DateTime();
-     //   $currentDate->modify('+7 month');
+        //   $currentDate->modify('+7 month');
         $times = $this->times;
         $abledDays = $this->days_off;
 
@@ -75,11 +75,6 @@ class DatesTableSeeder extends Seeder
                             'date_slot' => $currentDate->format('d') . '/' .  $currentDate->format('m') . '/' .  $currentDate->format('Y') . ' ' . $time['time'],
                             'status' => $time['set'],
                             'visible' => (1 && in_array($currentDayOfWeek, $abledDays)),
-                            // if($time['set'] == 4 || $time['set'] == 5 || $time['set'] == 6 || $time['set'] == 7){
-                            //     'visible_domicilio' => 1,
-                            // }else{
-                            //     'visible_domicilio' => 0,
-                            // }
                             'visible_domicilio' => ($time['set'] >= 4 && $time['set'] <= 7) ? 1 : 0,
 
                         ]);
