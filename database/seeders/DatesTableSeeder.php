@@ -32,7 +32,7 @@ class DatesTableSeeder extends Seeder
     public function run()
     {
         $currentDate = new DateTime();
-     //   $currentDate->modify('+7 month');
+        //   $currentDate->modify('+7 month');
         $times = $this->times;
         $abledDays = $this->days_off;
 
@@ -82,7 +82,7 @@ class DatesTableSeeder extends Seeder
                             'visible_ft' => (($time['set'] == 1 || $time['set'] == 3 || $time['set'] == 4 || $time['set'] == 5 || $time['set'] == 6 || $time['set'] == 7) && in_array($currentDayOfWeek, $abledDays)) ? 1 : 0,
                             'visible_fq' => (($time['set'] == 1 || $time['set'] == 3 || $time['set'] == 4 || $time['set'] == 5 || $time['set'] == 6 || $time['set'] == 7) && in_array($currentDayOfWeek, $abledDays)) ? 1 : 0,
                             'visible_t' => ($time['set'] == 2 || $time['set'] == 3 || $time['set'] == 6 || $time['set'] == 7) && in_array($currentDayOfWeek, $abledDays) ? 1 : 0,
-                        
+
                         ]);
                     }
                 }

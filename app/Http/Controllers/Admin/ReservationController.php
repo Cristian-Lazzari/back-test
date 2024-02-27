@@ -15,11 +15,50 @@ class ReservationController extends Controller
 {
 
 
-    public function index()
+    public function index(Request $request)
     {
-        $reservations = Reservation::orderBy('created_at', 'desc')->paginate(15);
+        $reservations = Reservation::paginate(15);
         $dates = Date::all();
+
         return view('admin.reservations.index', compact('reservations', 'dates'));
+    }
+
+    public function filters(Request $request)
+    {
+        $status = strval($request->input('status'));
+        $name = $request->input('name');
+        $date_order = $request->input('date_order');
+        if ($request->input('selected_date')) {
+            $selected_date = Carbon::parse($request->input('selected_date'))->format('d/m/Y');
+        } else {
+            $selected_date = "";
+        }
+
+        $query = Reservation::query();
+
+        if ($status == '0' || $status == '1' || $status == '2') {
+            $query->where('status', $status);
+        }
+
+        if ($name) {
+            $query->where('name', 'like', '%' . $name . '%');
+        }
+
+        if (isset($selected_date)) {
+            $query->where('date_slot', 'like', $selected_date . '%');
+            $selected_date = Carbon::parse($request->input('selected_date'))->format('Y-m-d');
+        }
+
+        if ($date_order) {
+            $query->orderBy('created_at', 'desc');
+        } else {
+            $query->orderBy('date_slot', 'desc');
+        }
+
+        $reservations = $query->paginate(15);
+        $dates = Date::all();
+
+        return view('admin.reservations.index', compact('reservations', 'dates', 'status', 'name', 'date_order', 'selected_date'));
     }
 
 
@@ -61,7 +100,7 @@ class ReservationController extends Controller
             $date = Date::where('date_slot', $reservation->date_slot)->first();
             $date->reserved -= $reservation->n_person;
 
-            if($date->reserved < $date->max_res){
+            if ($date->reserved < $date->max_res) {
                 $date->visible_t = 1;
             }
             $date->save();

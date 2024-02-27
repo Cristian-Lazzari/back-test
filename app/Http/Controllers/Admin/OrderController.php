@@ -15,12 +15,51 @@ use Illuminate\Support\Facades\Http;
 class OrderController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::orderBy('created_at', 'desc')->paginate(15);
+        $orders = Order::paginate(15);
         $orderProject = OrderProject::all();
-        //dd($quantity_item );
+
         return view('admin.orders.index', compact('orders', 'orderProject'));
+    }
+
+    public function filters(Request $request)
+    {
+        $status = strval($request->input('status'));
+        $name = $request->input('name');
+        $date_order = $request->input('date_order');
+        $delivery = $request->input('delivery');
+        $selected_date = Carbon::parse($request->input('selected_date'))->format('d/m/Y');
+
+        $query = Order::query();
+
+        if ($status == '0' || $status == '1' || $status == '2') {
+            $query->where('status', $status);
+        }
+
+        if ($name) {
+            $query->where('name', 'like', '%' . $name . '%');
+        }
+
+        if ($selected_date) {
+            $query->where('date_slot', 'like', $selected_date . '%');
+            $selected_date = Carbon::parse($request->input('selected_date'))->format('Y-m-d');
+        }
+
+        if ($delivery) {
+            $query->where('comune', '0');
+        }
+
+        if ($date_order) {
+            $query->orderBy('created_at', 'desc');
+        } else {
+            $query->orderBy('date_slot', 'desc');
+        }
+
+        $orders = $query->paginate(15);
+        $orderProject  = orderProject::all();
+
+        return view('admin.orders.index', compact('orders', 'orderProject', 'status', 'name', 'date_order', 'selected_date', 'delivery'));
     }
 
 
@@ -60,18 +99,17 @@ class OrderController extends Controller
             $order->save();
             $date = Date::where('date_slot', $order->date_slot)->first();
             $date->reserved_pz_q -= $order->total_pz_q;
-            if($date->reserved_pz_q < $date->max_pz_q){
+            if ($date->reserved_pz_q < $date->max_pz_q) {
                 $date->visible_fq = 1;
                 $date->save();
-                
             }
             $date->reserved_pz_t -= $order->total_pz_t;
-            if($date->reserved_pz_t < $date->max_pz_t){
+            if ($date->reserved_pz_t < $date->max_pz_t) {
                 $date->visible_ft = 1;
                 $date->save();
             }
-            if($order->comune !== '0' && $order->civico !== '0' && $order->comune !== '0' ){
-                $date->visible_d = 1;               
+            if ($order->comune !== '0' && $order->civico !== '0' && $order->comune !== '0') {
+                $date->visible_d = 1;
                 $date->save();
             }
 
@@ -110,7 +148,7 @@ class OrderController extends Controller
             ->where('year', '<=', $dataFine->year)
             ->where('month', '<=', $dataFine->month)
             ->get();
-            $addresses = Address::all();
+        $addresses = Address::all();
         return view('admin.orders.create', compact('dates', 'addresses'));
     }
 
@@ -144,15 +182,20 @@ class OrderController extends Controller
 
         $newOrder->message       = $data['message'];
         $newOrder->status        = 0;
-        if (isset($data['comune'])) { $newOrder->comune = $data['comune'];}
-        if (isset($data['civico'])) { $newOrder->civico = $data['civico'];}
-        if (isset($data['indirizzo'])) { $newOrder->indirizzo = $data['indirizzo'];}
-        if (isset($data['comune']) && isset($data['civico']) && isset($data['indirizzo'])){
-            $date->res_domicilio ++;
-            if($date->res_domicilio >= $date->max_domicilio ){
+        if (isset($data['comune'])) {
+            $newOrder->comune = $data['comune'];
+        }
+        if (isset($data['civico'])) {
+            $newOrder->civico = $data['civico'];
+        }
+        if (isset($data['indirizzo'])) {
+            $newOrder->indirizzo = $data['indirizzo'];
+        }
+        if (isset($data['comune']) && isset($data['civico']) && isset($data['indirizzo'])) {
+            $date->res_domicilio++;
+            if ($date->res_domicilio >= $date->max_domicilio) {
                 $date->visible_d = 0;
             };
-            
         }
 
         $date = Date::where('id', $data['date_id'])->firstOrFail();
@@ -175,18 +218,17 @@ class OrderController extends Controller
             if ($maximum_t <= $date->max_pz_t || $maximum_q <= $date->max_pz_q) {
                 $date->reserved_pz_t = $date->reserved_pz_t + $newOrder->total_pz_t;
                 $date->reserved_pz_q = $date->reserved_pz_q + $newOrder->total_pz_q;
-                
+
                 if ($date->reserved_pz_q >= $date->max_pz_q) {
-                $date->visible_fq = 0;
+                    $date->visible_fq = 0;
                 }
                 if ($date->reserved_pz_t >= $date->max_pz_t) {
-                $date->visible_ft = 0;
+                    $date->visible_ft = 0;
                 }
                 $date->save();
                 $newOrder->save();
-        
-                return redirect()->route('admin.orders.create')->with('reserv_success', true);
 
+                return redirect()->route('admin.orders.create')->with('reserv_success', true);
             } else {
                 return redirect()->route('admin.orders.create')->with(['max_res_check' => true, 'inputValues' => $data]);
             }
