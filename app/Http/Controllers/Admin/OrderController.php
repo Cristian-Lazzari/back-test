@@ -17,9 +17,19 @@ class OrderController extends Controller
 
     public function index(Request $request)
     {
+        $orders = Order::paginate(15);
+        $orderProject = OrderProject::all();
+
+        return view('admin.orders.index', compact('orders', 'orderProject'));
+    }
+
+    public function filters(Request $request)
+    {
         $status = strval($request->input('status'));
         $name = $request->input('name');
         $date_order = $request->input('date_order');
+        $delivery = $request->input('delivery');
+        $selected_date = Carbon::parse($request->input('selected_date'))->format('d/m/Y');
 
         $query = Order::query();
 
@@ -29,7 +39,16 @@ class OrderController extends Controller
 
         if ($name) {
             $query->where('name', 'like', '%' . $name . '%');
-        };
+        }
+
+        if ($selected_date) {
+            $query->where('date_slot', 'like', $selected_date . '%');
+            $selected_date = Carbon::parse($request->input('selected_date'))->format('Y-m-d');
+        }
+
+        if ($delivery) {
+            $query->where('comune', '0');
+        }
 
         if ($date_order) {
             $query->orderBy('created_at', 'desc');
@@ -38,9 +57,9 @@ class OrderController extends Controller
         }
 
         $orders = $query->paginate(15);
-        $orderProject = OrderProject::all();
+        $orderProject  = orderProject::all();
 
-        return view('admin.orders.index', compact('orders', 'orderProject'));
+        return view('admin.orders.index', compact('orders', 'orderProject', 'status', 'name', 'date_order', 'selected_date', 'delivery'));
     }
 
 

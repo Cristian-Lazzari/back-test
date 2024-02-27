@@ -9,7 +9,7 @@
     <a  href="{{ route('admin.months.index') }}" class="btn btn-warning w-50 m-auto my-3 d-block">Gestione date</a>
     <a  href="{{ route('admin.orders.create') }}" class="btn btn-success w-50 m-auto my-3 d-block">Nuovo Ordine</a>
 
-    <form action="{{ route('admin.orders.index')}}" method="GET">
+    <form action="{{ route('admin.orders.filters')}}" method="GET" class="mb-2">
         <h3>Filtri</h3>
 
         <label for="name" class="form-label">Nome</label>
@@ -18,7 +18,9 @@
             class="form-control mb-2"
             id="name"
             name="name"
-            value="{{ old('name')}}"
+            @if (isset($name))
+                value="{{ $name }}"  
+            @endif
         >
 
         <label for="status" class="form-label">Stato</label>
@@ -27,10 +29,27 @@
             id="status"
             name="status"
         >
-            <option value="" selected>Tutti</option>
-            <option value="0">In Elaborazione</option>
-            <option value="1">Confermati</option>
-            <option value="2">Annullati</option>
+            <option 
+                @if (!isset($status))
+                    selected
+                @endif
+                value="" 
+            >Tutti</option>
+            <option 
+                @if (isset($status) && $status == '0')
+                    selected
+                @endif value="0"
+            >In Elaborazione</option>
+            <option 
+                @if (isset($status) && $status == '1')
+                    selected
+                @endif value="1"
+            >Confermati</option>
+            <option 
+                @if (isset($status) && $status == '2')
+                    selected
+                @endif value="2"
+            >Annullati</option>
         </select>
 
         <label for="date_order" class="form-label">Ordina per data</label>
@@ -39,12 +58,55 @@
             id="date_order"
             name="date_order"
         >
-            <option value="" selected>Ordina per data di creazione</option>
-            <option value="1">Ordina per data di prenotazione</option>
+            <option 
+                @if (isset($date_order) && $date_order == '0')
+                    selected
+                @endif
+                value=""
+            >Ordina per data di creazione</option>
+            <option 
+                @if (isset($date_order) && $date_order == '1')
+                    selected
+                @endif
+                value="1"
+            >Ordina per data di prenotazione</option>
         </select>
+
+        <label for="delivery" class="form-label">Filtra per domicilio</label>
+        <select
+            class="form-select"
+            id="delivery"
+            name="delivery"
+        >
+            <option 
+                @if (isset($delivery) && $delivery == '0')
+                    selected
+                @endif
+                value="0"
+            >Ritiro in negozio</option>
+            <option 
+                @if (isset($delivery) && $delivery == '1')
+                    selected
+                @endif
+                value="1"
+            >Domicilio</option>
+        </select>
+
+        <label for="selected_date">Filtra per data</label>
+        <input 
+            type="date" 
+            name="selected_date" 
+            id="selected_date" 
+            class="form-control" 
+            @if (isset($selected_date))
+                value="{{ $selected_date }}"  
+            @endif
+        >
 
         <button class="btn btn-primary" type="submit">Filtra</button>
     </form>
+
+        <a class="btn btn-success" href="{{ route('admin.orders.index')}}">Non filtrare</a>
 
     <div class="myres-c">
 
