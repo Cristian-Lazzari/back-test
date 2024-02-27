@@ -166,6 +166,7 @@ class OrderController extends Controller
     {
         $request->validate($this->validations);
         $data = $request->all();
+        $date = Date::where('id', $data['date_id'])->firstOrFail();
 
         $newOrder = new Order();
         $newOrder->name          = $data['name'];
@@ -198,7 +199,6 @@ class OrderController extends Controller
             };
         }
 
-        $date = Date::where('id', $data['date_id'])->firstOrFail();
         $newOrder->date_slot = $date->date_slot;
 
         $maximum_t = $date->reserved_pz_t + $newOrder->total_pz_t;
