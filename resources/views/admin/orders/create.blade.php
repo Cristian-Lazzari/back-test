@@ -131,7 +131,7 @@
             <select
                 class="form-select @error('address_id') is-invalid @enderror"
                 id="address"
-                name="address_id"
+                name="comune"
             >
             <option value="0">Nessuno</option>
                 @foreach ($addresses as $address)

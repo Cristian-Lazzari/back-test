@@ -147,6 +147,13 @@ class OrderController extends Controller
         if (isset($data['comune'])) { $newOrder->comune = $data['comune'];}
         if (isset($data['civico'])) { $newOrder->civico = $data['civico'];}
         if (isset($data['indirizzo'])) { $newOrder->indirizzo = $data['indirizzo'];}
+        if (isset($data['comune']) && isset($data['civico']) && isset($data['indirizzo'])){
+            $date->res_domicilio ++;
+            if($date->res_domicilio >= $date->max_domicilio ){
+                $date->visible_d = 0;
+            };
+            
+        }
 
         $date = Date::where('id', $data['date_id'])->firstOrFail();
         $newOrder->date_slot = $date->date_slot;

@@ -285,7 +285,13 @@ class DateController extends Controller
             foreach ($orders as $order) {
                 $date = Date::where('date_slot', $order->date_slot)->first();
                 if ($date) {
-                    $date->reserved_pz = $date->reserved_pz + $order->total_pz;
+                    $date->reserved_pz_q = $date->reserved_pz_q + $order->total_pz_q;
+                    if($date->reserved_pz_q > $date->max_px_q){
+                        $date->visble_fq = 0;
+                    }
+                    if($date->reserved_pz_t > $date->max_px_t){
+                        $date->visble_ft = 0;
+                    }
                     $date->save();
                 }
             }

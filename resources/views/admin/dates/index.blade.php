@@ -41,6 +41,10 @@
                             <h3>Posti Prenotati</h3>
                             <div class="n_res">{{$date->reserved}}</div>
                         </div>
+                        <div class="res">
+                            <h3>Ordini a domicilio</h3>
+                            <div class="n_res">{{$date->reserved_domicilio}}</div>
+                        </div>
                     </div>
                     <div class="right-c">
                         <div class="max">
