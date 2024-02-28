@@ -17,7 +17,7 @@ class ReservationController extends Controller
 
     public function index(Request $request)
     {
-        $reservations = Reservation::paginate(15);
+        $reservations = Reservation::orderBy('created_at', 'desc')->paginate(15);
         $dates = Date::all();
 
         return view('admin.reservations.index', compact('reservations', 'dates'));
@@ -51,12 +51,13 @@ class ReservationController extends Controller
         }
 
 
-        if ($date_order) {
-            $query->orderBy('created_at', 'desc');
+        if ($date_order == 1) {
+            $query->orderBy('date_slot', 'asc');
+            
         } else {
-            $query->orderBy('date_slot', 'desc');
+            $query->orderBy('created_at', 'desc');
+       
         }
-
         $reservations = $query->paginate(15);
         $dates = Date::all();
 

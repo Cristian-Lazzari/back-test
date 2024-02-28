@@ -20,7 +20,7 @@
                 <h3 class="w-100">Filtri</h3>
                 <div>
 
-                    <label for="name" class="form-label">Nome Cliente</label>
+                    <label for="name" class="form-label">Nome</label>
                     <input
                         type="text"
                         class="form-control"

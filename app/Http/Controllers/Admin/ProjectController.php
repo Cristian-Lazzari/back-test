@@ -82,18 +82,18 @@ class ProjectController extends Controller
         return redirect()->route('admin.projects.index', ['project']);
     }
 
-    public function show($slug)
+    public function show($id)
     {
-        $project = Project::where('slug', $slug)->firstOrFail();
+        $project = Project::where('id', $id)->firstOrFail();
         return view('admin.projects.show', compact('project'));
     }
 
 
 
-    public function edit($slug)
+    public function edit($id)
     {
 
-        $project = Project::where('slug', $slug)->firstOrFail();
+        $project = Project::where('id', $id)->firstOrFail();
 
         $categories = Category::all();
         $tags       = Tag::orderBy('name')->get();
@@ -101,9 +101,9 @@ class ProjectController extends Controller
     }
 
 
-    public function update(Request $request, $slug)
+    public function update(Request $request, $id)
     {
-        $project = Project::where('slug', $slug)->firstOrFail();
+        $project = Project::where('id', $id)->firstOrFail();
 
         // validare i dati del form
         $request->validate($this->validations);
@@ -139,9 +139,9 @@ class ProjectController extends Controller
     }
 
 
-    public function destroy($slug)
+    public function destroy($id)
     {
-        $project = Project::where('slug', $slug)->firstOrFail();
+        $project = Project::where('id', $id)->firstOrFail();
 
         $project->delete();
         return to_route('admin.projects.index')->with('delete_success', $project);
@@ -175,9 +175,9 @@ class ProjectController extends Controller
 
         return to_route('admin.projects.trashed')->with('delete_success', $project);
     }
-    public function updatestatus($slug)
+    public function updatestatus($id)
     {
-        $project = Project::where('slug', $slug)->firstOrFail();
+        $project = Project::where('id', $id)->firstOrFail();
         if ($project) {
             $project->visible = !$project->visible; // Inverte lo stato corrente
             $project->save();

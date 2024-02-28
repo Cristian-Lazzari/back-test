@@ -62,20 +62,20 @@
                         <div class="price">€{{$project->price / 100}}</div>
                     </section>
                     <section class="s3">
-                        <a class="btn my-btn btn-warning w-100" href="{{ route('admin.projects.edit', ['project' =>$project]) }}">Modifica</a>
+                        <a class="btn my-btn btn-warning w-100" href="{{ route('admin.projects.edit', $project->id) }}">Modifica</a>
                             <form class="w-100" action="{{ route('admin.projects.destroy', ['project' =>$project])}}" method="post">
                                 @csrf
                                 @method('delete')
                                 <button class="btn btn-danger w-100" >Elimina</button>
                             </form>
                             @if($project->visible == 0)
-                            <form class="w-100" action="{{ route('admin.projects.updatestatus', $project->slug)}}" method="post">
+                            <form class="w-100" action="{{ route('admin.projects.updatestatus', $project->id)}}" method="post">
                                 @csrf
 
                                 <button class="btn btn-warning w-100" >Nascondi</button>
                             </form>
                             @else 
-                            <form class="w-100" action="{{ route('admin.projects.updatestatus', $project->slug)}}" method="post">
+                            <form class="w-100" action="{{ route('admin.projects.updatestatus', $project->id)}}" method="post">
                                 @csrf
 
                                 <button class="btn btn-success w-100" >Mostra</button>
