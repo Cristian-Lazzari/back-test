@@ -16,7 +16,7 @@
         @csrf
         @if (session('max_res_check'))
             <div class="alert alert-danger">
-               <h3 for="max_check">Stai superando il limite di pezzi disponibili per tuesta data!</h3>
+               <h3 for="max_check">Stai superando il limite di pezzi disponibili per questa data!</h3>
                <h4 for="max_check">Vuoi continuare comunque?</h4>
                
                <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
@@ -100,7 +100,6 @@
                 class="form-control @error('total_pz_t') is-invalid @enderror"
                 id="total_pz_t"
                 name="total_pz_t"
-                value="0"
                 @if (session('inputValues'))
                     value="{{ session('inputValues')['total_pz_t'] }}"
                 @endif
@@ -117,7 +116,6 @@
                 class="form-control @error('total_price') is-invalid @enderror"
                 id="total_price"
                 name="total_price"
-                value="0"
                 @if (session('inputValues'))
                     value="{{ session('inputValues')['total_price'] }}"
                 @endif
@@ -133,9 +131,16 @@
                 id="address"
                 name="comune"
             >
-            <option value="0">Nessuno</option>
+                <option value="0">Nessuno</option>
                 @foreach ($addresses as $address)
-                    <option value="{{ $address->comune }}">{{ $address->comune }}</option>
+                    <option 
+                        value="{{ $address->comune }}"
+                        @if (isset(session('inputValues')['comune']))
+                            selected
+                        @endif
+                    >
+                        {{ $address->comune }}
+                    </option>
                 @endforeach
             </select>
             @error('address_id')

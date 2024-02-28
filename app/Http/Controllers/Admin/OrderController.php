@@ -48,21 +48,18 @@ class OrderController extends Controller
         }
 
         if ($delivery && $delivery !== 'nul') {
-            if($delivery == 1){
+            if ($delivery == 1) {
                 $query->where('comune', '!=', '0');
-                
-            }else{
-                
+            } else {
+
                 $query->where('comune', '0');
             }
         }
 
         if ($date_order == 1) {
             $query->orderBy('date_slot', 'asc');
-            
         } else {
             $query->orderBy('created_at', 'desc');
-       
         }
 
         $orders = $query->paginate(15);
@@ -202,8 +199,8 @@ class OrderController extends Controller
             $newOrder->indirizzo = $data['indirizzo'];
         }
         if (isset($data['comune']) && isset($data['civico']) && isset($data['indirizzo'])) {
-            $date->res_domicilio++;
-            if ($date->res_domicilio >= $date->max_domicilio) {
+            $date->reserved_domicilio++;
+            if ($date->reserved_domicilio >= $date->max_domicilio) {
                 $date->visible_d = 0;
             };
         }
@@ -224,14 +221,14 @@ class OrderController extends Controller
                 $date->visible_ft = 0;
             }
         } else {
-            if ($maximum_t <= $date->max_pz_t || $maximum_q <= $date->max_pz_q) {
+            if ($maximum_t <= $date->max_pz_t && $maximum_q <= $date->max_pz_q) {
                 $date->reserved_pz_t = $date->reserved_pz_t + $newOrder->total_pz_t;
                 $date->reserved_pz_q = $date->reserved_pz_q + $newOrder->total_pz_q;
 
-                if ($date->reserved_pz_q >= $date->max_pz_q) {
+                if ($date->reserved_pz_q == $date->max_pz_q) {
                     $date->visible_fq = 0;
                 }
-                if ($date->reserved_pz_t >= $date->max_pz_t) {
+                if ($date->reserved_pz_t == $date->max_pz_t) {
                     $date->visible_ft = 0;
                 }
                 $date->save();

@@ -47,9 +47,8 @@ class OrderController extends Controller
                 $category = Category::where('id', $project->category_id)->first();
                 if ($category->slot && $category->type == 'q') {
                     $total_pz_q += ($arrvar2[$i]['counter'] * $category->slot);
-                }else if($category->slot && $category->type == 't'){
+                } else if ($category->slot && $category->type == 't') {
                     $total_pz_t += ($arrvar2[$i]['counter'] * $category->slot);
-
                 }
 
                 // Calcolo il prezzo totale (senza aggiunte)
@@ -76,36 +75,36 @@ class OrderController extends Controller
             $newOrder->total_pz_t    = $total_pz_t;
             $newOrder->total_pz_q    = $total_pz_q;
             $newOrder->status        = 0;
-            if (isset($data['comune'])) { 
+            if (isset($data['comune'])) {
                 $newOrder->comune = $data['comune'];
                 $newOrder->indirizzo = $data['indirizzo'];
                 $newOrder->civico = $data['civico'];
-                if($date->res_domicilio < $date->max_domicilio){
-                    $date->res_domicilio ++;
-                    if($date->res_domicilio == $date->max_domicilio ){
+                if ($date->reserved_domicilio < $date->max_domicilio) {
+                    $date->reserved_domicilio++;
+                    if ($date->reserved_domicilio == $date->max_domicilio) {
                         $date->visible_d = 0;
                     };
-                }else{
+                } else {
                     // se non ci sono più posti rispondo picche
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Il numero massimo di prenotazioni per questa data e orario è già stato raggiunto',
-                ]); 
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Il numero massimo di prenotazioni per questa data e orario è già stato raggiunto',
+                    ]);
                 }
-            }  
-            
+            }
 
-            
+
+
             $maximum_q = $date->reserved_pz_q + $total_pz_q;
             $maximum_t = $date->reserved_pz_t + $total_pz_t;
-            
+
             if ($maximum_t <= $date->max_pz_t && $maximum_q <= $date->max_pz_q) {
                 $date->reserved_pz_q += $total_pz_q;
                 $date->reserved_pz_t += $total_pz_t;
                 if ($date->reserved_pz_q == $date->max_pz_q) {
                     $date->visible_fq = 0;
                 }
-                if ($date->reserved_pz_t == $date->max_pz_t){
+                if ($date->reserved_pz_t == $date->max_pz_t) {
                     $date->visible_ft = 0;
                 }
                 $date->save();

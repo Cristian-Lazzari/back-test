@@ -16,7 +16,7 @@
         @csrf
         @if (session('max_res_check'))
             <div class="alert alert-danger">
-               <h3 for="max_check">Stai superando il limite di pezzi disponibili per questa data!</h3>
+               <h3 for="max_check">Stai superando il limite di posti disponibili per questa data!</h3>
                <h4 for="max_check">Vuoi continuare comunque?</h4>
                
                <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
