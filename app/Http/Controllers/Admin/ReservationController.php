@@ -28,7 +28,8 @@ class ReservationController extends Controller
         $status = strval($request->input('status'));
         $name = $request->input('name');
         $date_order = $request->input('date_order');
-        if ($request->input('selected_date')) {
+        $dateok = $request->input('dateok');
+        if ($request->input('selected_date') && $dateok) {
             $selected_date = Carbon::parse($request->input('selected_date'))->format('d/m/Y');
         } else {
             $selected_date = "";
@@ -44,10 +45,11 @@ class ReservationController extends Controller
             $query->where('name', 'like', '%' . $name . '%');
         }
 
-        if (isset($selected_date)) {
+        if ($selected_date && $dateok) {
             $query->where('date_slot', 'like', $selected_date . '%');
             $selected_date = Carbon::parse($request->input('selected_date'))->format('Y-m-d');
         }
+
 
         if ($date_order) {
             $query->orderBy('created_at', 'desc');

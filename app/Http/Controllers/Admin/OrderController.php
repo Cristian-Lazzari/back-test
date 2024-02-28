@@ -29,6 +29,7 @@ class OrderController extends Controller
         $name = $request->input('name');
         $date_order = $request->input('date_order');
         $delivery = $request->input('delivery');
+        $dateok = $request->input('dateok');
         $selected_date = Carbon::parse($request->input('selected_date'))->format('d/m/Y');
 
         $query = Order::query();
@@ -41,25 +42,33 @@ class OrderController extends Controller
             $query->where('name', 'like', '%' . $name . '%');
         }
 
-        if ($selected_date) {
+        if ($selected_date && $dateok) {
             $query->where('date_slot', 'like', $selected_date . '%');
             $selected_date = Carbon::parse($request->input('selected_date'))->format('Y-m-d');
         }
 
-        if ($delivery) {
-            $query->where('comune', '0');
+        if ($delivery && $delivery !== 'nul') {
+            if($delivery == 1){
+                $query->where('comune', '!=', '0');
+                
+            }else{
+                
+                $query->where('comune', '0');
+            }
         }
 
-        if ($date_order) {
-            $query->orderBy('created_at', 'desc');
+        if ($date_order == 1) {
+            $query->orderBy('date_slot', 'asc');
+            
         } else {
-            $query->orderBy('date_slot', 'desc');
+            $query->orderBy('created_at', 'desc');
+       
         }
 
         $orders = $query->paginate(15);
         $orderProject  = orderProject::all();
 
-        return view('admin.orders.index', compact('orders', 'orderProject', 'status', 'name', 'date_order', 'selected_date', 'delivery'));
+        return view('admin.orders.index', compact('orders', 'orderProject', 'status', 'name', 'date_order', 'selected_date', 'delivery', 'dateok'));
     }
 
 

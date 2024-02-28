@@ -6,84 +6,123 @@
     <a  href="{{ route('admin.months.index') }}" class="btn btn-warning w-50 m-auto my-3  d-block">Gestione date</a>
     <a  href="{{ route('admin.reservations.create') }}" class="btn btn-success w-50 m-auto my-3 d-block">Nuova Prenotazione</a>
 
-    <form action="{{ route('admin.reservations.filters')}}" method="GET" class="mb-2">
-        <h3>Filtri</h3>
+    <p class="d-inline-flex gap-1">
+        <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
+                <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5z"/>
+            </svg>  FILTRA
+        </a>
+       
+      </p>
+      <div class="collapse" id="collapseExample">
+        <div class="card card-body">
+            <form action="{{ route('admin.reservations.filters')}}" class="filter" method="GET" class="mb-2">
+                <h3 class="w-100">Filtri</h3>
+                <div>
 
-        <label for="name" class="form-label">Nome</label>
-        <input
-            type="text"
-            class="form-control mb-2"
-            id="name"
-            name="name"
-            @if (isset($name))
-                value="{{ $name }}"  
-            @endif
-        >
+                    <label for="name" class="form-label">Nome Cliente</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="name"
+                        name="name"
+                        @if (isset($name))
+                            value="{{ $name }}"  
+                        @endif
+                    >
+                </div>
+        
+                <div>
+                    <label for="status" class="form-label">Stato</label>
+                    <select
+                        class="form-select w-auto"
+                        id="status"
+                        name="status"
+                    >
+                        <option 
+                            @if (!isset($status))
+                                selected
+                            @endif
+                            value="" 
+                        >Tutti</option>
+                        <option 
+                            @if (isset($status) && $status == '0')
+                                selected
+                            @endif value="0"
+                        >In Elaborazione</option>
+                        <option 
+                            @if (isset($status) && $status == '1')
+                                selected
+                            @endif value="1"
+                        >Confermati</option>
+                        <option 
+                            @if (isset($status) && $status == '2')
+                                selected
+                            @endif value="2"
+                        >Annullati</option>
+                    </select>
+                </div>
+                <div>
 
-        <label for="status" class="form-label">Stato</label>
-        <select
-            class="form-select"
-            id="status"
-            name="status"
-        >
-            <option 
-                @if (!isset($status))
-                    selected
-                @endif
-                value="" 
-            >Tutti</option>
-            <option 
-                @if (isset($status) && $status == '0')
-                    selected
-                @endif value="0"
-            >In Elaborazione</option>
-            <option 
-                @if (isset($status) && $status == '1')
-                    selected
-                @endif value="1"
-            >Confermati</option>
-            <option 
-                @if (isset($status) && $status == '2')
-                    selected
-                @endif value="2"
-            >Annullati</option>
-        </select>
+                    <label for="date_reservation" class="form-label">Ordina per data</label>
+                    <select
+                        class="form-select w-auto"
+                        id="date_reservation"
+                        name="date_reservation"
+                    >
+                        <option 
+                            @if (isset($date_reservation) && $date_reservation == '0')
+                                selected
+                            @endif
+                            value="0"
+                        >Ordina per data di creazione</option>
+                        <option 
+                            @if (isset($date_reservation) && $date_reservation == '1')
+                                selected
+                            @endif
+                            value="1"
+                        >Ordina per data di prenotazione</option>
+                    </select>
+                </div>
 
-        <label for="date_order" class="form-label">Ordina per data</label>
-        <select
-            class="form-select"
-            id="date_order"
-            name="date_order"
-        >
-            <option 
-                @if (isset($date_order) && $date_order == '0')
-                    selected
-                @endif
-                value=""
-            >Ordina per data di creazione</option>
-            <option 
-                @if (isset($date_order) && $date_order == '1')
-                    selected
-                @endif
-                value="1"
-            >Ordina per data di prenotazione</option>
-        </select>
+                <div>
+              
+                    <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="true" aria-controls="collapseWidthExample">
+                        <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off" name="dateok">
+                        <label class="btn btn-outline-primary" for="btncheck1">Filtra per data</label>
+                    </div>
+       
+             
+                    <div style="min-height: 100px;">
+                      <div class="collapse collapse-horizontal" id="collapseWidthExample">
+                        <div class="card card-body mt-2" style="width: 150px;">
+                            
+                            <input 
+                                type="date" 
+                                name="selected_date" 
+                                id="selected_date" 
+                                class="form-control w-auto" 
+                                @if (isset($selected_date))
+                                    value="{{ $selected_date }}"  
+                                @endif
+                            >
+                          
+                        </div>
+                      </div>
+                    </div>
+                </div>
+        
+                <button class="btn btn-primary w-100" type="submit">APPLICA FILTRI</button>
+            </form>
+        </div>
+    </div>
+    
 
-        <label for="selected_date">Filtra per data</label>
-        <input 
-            type="date" 
-            name="selected_date" 
-            id="selected_date" 
-            class="form-control" 
-            @if (isset($selected_date))
-                value="{{ $selected_date }}"  
-            @endif
-        >
+    <a class="btn btn-success m-2" href="{{ route('admin.reservations.index')}}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel" viewBox="0 0 16 16">
+            <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2z"/>
+    </svg> RIMUOVI FILTRI</a>
 
-        <button class="btn btn-primary" type="submit">Filtra</button>
-    </form>
-
-        <a class="btn btn-success" href="{{ route('admin.reservations.index')}}">Non filtrare</a>
 
     <div class="myres-c">
 

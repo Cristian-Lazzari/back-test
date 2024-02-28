@@ -689,3 +689,9 @@ td {
         align-self: flex-end;
     }
 }
+.filter{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
