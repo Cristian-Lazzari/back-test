@@ -101,9 +101,9 @@ class ProjectController extends Controller
     }
 
 
-    public function update(Request $request, Project $project)
+    public function update(Request $request, $id)
     {
-       //$project = Project::where('id', $id)->firstOrFail();
+        $project = Project::where('id', $id)->firstOrFail();
 
         // validare i dati del form
         $request->validate($this->validations);
@@ -135,7 +135,7 @@ class ProjectController extends Controller
         $project->tags()->sync($data['tags'] ?? []);
 
         // ridirezionare su una rotta di tipo get
-        return to_route('admin.projects.show', ['project' => $project]);
+        return to_route('admin.projects.index', ['project' => $project]);
     }
 
 
