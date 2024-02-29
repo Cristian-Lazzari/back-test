@@ -101,9 +101,9 @@ class ProjectController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Project $project)
     {
-        $project = Project::where('id', $id)->firstOrFail();
+       //$project = Project::where('id', $id)->firstOrFail();
 
         // validare i dati del form
         $request->validate($this->validations);
