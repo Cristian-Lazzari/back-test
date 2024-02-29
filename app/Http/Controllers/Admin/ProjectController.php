@@ -135,7 +135,7 @@ class ProjectController extends Controller
         $project->tags()->sync($data['tags'] ?? []);
 
         // ridirezionare su una rotta di tipo get
-        return to_route('admin.projects.index', ['project' => $project]);
+        return to_route('admin.projects.show', ['project' => $project]);
     }
 
 

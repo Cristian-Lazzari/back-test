@@ -15,10 +15,10 @@ class Project extends Model
     use SoftDeletes;
     use HasFactory;
 
-    public function getRouteKey()
-    {
-        return $this->slug;
-    }
+    // public function getRouteKey()
+    // {
+    //     return $this->slug;
+    // }
 
     public $timestamps = false;
     //protected $fillable = ['nome', 'link', 'link_github', 'url_image', 'url_gif', 'description'];

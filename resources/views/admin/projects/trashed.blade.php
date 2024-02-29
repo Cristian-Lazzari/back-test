@@ -51,6 +51,11 @@
                                 @csrf
                                 <button class="btn btn-warning" href="">Ripristina</button>
                             </form>
+                            <form action="{{ route('admin.projects.hardDelete', ['project' => $project->id]) }}" method="POST" class="d-inline-block">
+                                @method('delete')
+                                @csrf
+                                <button class="btn btn-warning" href="">elimina</button>
+                            </form>
     
                         </div>
                     </div>
