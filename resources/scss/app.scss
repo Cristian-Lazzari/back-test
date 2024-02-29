@@ -341,7 +341,7 @@ td {
     }
 
     .visible-on {
-        background-color: #13d162;
+        background-color: #0a506e80;
         padding: 1rem;
         width: 100%;
         border-radius: 8px;
@@ -351,39 +351,20 @@ td {
         border: 1px solid black;
         border: 1px solid black;
         align-items: center;
-        span {
+        button {
             color: white;
-            text-transform: uppercase;
+            border: none;
+            background-color: rgba(86, 86, 86, 0);
             font-size: 20px;
             font-weight: bolder;
-            text-shadow: 0 0 15px rgba(0, 0, 0, 0.555);
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.22);
         }
-        button {
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.555);
-        }
-    }
-    .visible {
-        background-color: rgb(191, 5, 5);
-        padding: 1rem;
-        width: 100%;
-
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        border: 1px solid black;
-        border: 1px solid black;
-        align-items: center;
-        span {
-            color: white;
-            text-transform: uppercase;
-            font-size: 20px;
-            font-weight: bolder;
-            text-shadow: 0 0 15px rgba(0, 0, 0, 0.555);
-        }
-        button {
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.555);
+        button.off{
+            color: red !important;
+            text-shadow: 0 0 5px rgba(228, 228, 228, 0.95) !important;
         }
     }
+    
 }
 
 

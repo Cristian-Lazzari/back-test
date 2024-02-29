@@ -48,7 +48,7 @@
                     </div>
                     <div class="right-c">
                         <div class="max">
-                            <h3>Modifica Max Posti</h3>
+                            <h3>Max Posti</h3>
                             <form action="{{ route('admin.dates.upmaxres', $date->id) }}" method="post">
                                 @csrf
                                 <button  class="btn btn-dark">+</button>
@@ -61,7 +61,7 @@
                             </form>
                         </div>
                         <div class="max">
-                            <h3>Modifica Max Pizze al piatto</h3>
+                            <h3>Max Pizze al piatto</h3>
                             <form action="{{ route('admin.dates.upmaxpz', $date->id) }}" method="post">
                                 @csrf
                                 <button  class="btn btn-dark">+</button>
@@ -75,7 +75,21 @@
 
                         </div>
                         <div class="max">
-                            <h3>Modifica Max Pezzi al taglio</h3>
+                            <h3>Max Pezzi al taglio</h3>
+                            <form action="{{ route('admin.dates.upmaxpz', $date->id) }}" method="post">
+                                @csrf
+                                <button  class="btn btn-dark">+</button>
+                            </form>
+                            <span>{{$date->max_pz_q}}</span>
+
+                            <form action="{{ route('admin.dates.downmaxpz', $date->id) }}" method="post">
+                                @csrf
+                                <button  class="btn btn-dark">-</button>
+                            </form>
+
+                        </div>
+                        <div class="max">
+                            <h3>Max ordini dom.</h3>
                             <form action="{{ route('admin.dates.upmaxpz', $date->id) }}" method="post">
                                 @csrf
                                 <button  class="btn btn-dark">+</button>
@@ -93,10 +107,31 @@
                     
                       
                     <div class="visible-on">
-                        <span class="">{{ 'pz-q' . ' ' . ($date->visible_fq ? 'si' : 'no')}}</span> 
-                        <span class="">{{ 'pz-t' . ' ' . ($date->visible_ft ? 'si' : 'no')}}</span> 
-                        <span class="">{{ 'tavoli' . ' ' . ($date->visible_t ? 'si' : 'no')}}</span> 
-                        <span class="">{{ 'domicilio' . ' ' . ($date->visible_d ? 'si' : 'no')}}</span> 
+                        <form action="{{route('admin.dates.updatestatus')}}" method="post">
+                            @csrf
+                            <button @if (!$date->visible_fq) class="off" @endif type="submit">{{ 'taglio' . '-' . ($date->visible_fq ? 'si' : 'no')}}</button>
+                            <input type="hidden" name="v" value="1">
+                            <input type="hidden" name="id" value="{{$date->id}}">
+                        </form> 
+                        <form action="{{route('admin.dates.updatestatus')}}" method="post">
+                            @csrf
+                            <button @if (!$date->visible_ft) class="off" @endif type="submit">{{ 'piatto' . '-' . ($date->visible_ft ? 'si' : 'no')}}</button>
+                            <input type="hidden" name="v" value="2">
+                            <input type="hidden" name="id" value="{{$date->id}}">
+                        </form> 
+                        <form action="{{route('admin.dates.updatestatus')}}" method="post">
+                            @csrf
+                            <button @if (!$date->visible_t) class="off" @endif type="submit">{{ 'tavoli' . '-' . ($date->visible_t ? 'si' : 'no')}}</button>
+                            <input type="hidden" name="v" value="3">
+                            <input type="hidden" name="id" value="{{$date->id}}">
+                        </form> 
+                        <form action="{{route('admin.dates.updatestatus')}}" method="post">
+                            @csrf
+                            <button @if (!$date->visible_d) class="off" @endif type="submit">{{ 'domiclio' . '-' . ($date->visible_d ? 'si' : 'no')}}</button>
+                            <input type="hidden" name="v" value="4">
+                            <input type="hidden" name="id" value="{{$date->id}}">
+                        </form> 
+                        
                       
                     </div>
                
@@ -106,7 +141,7 @@
                         
                         <form action="{{ route('admin.dates.updatestatus', $date->id) }}" method="post">
                             @csrf
-                            <button class="btn btn-success">Modifica visibilità</button>
+                            <button class="btn btn-success">visibilità</button>
                         </form>
                         
                     </div> --}}

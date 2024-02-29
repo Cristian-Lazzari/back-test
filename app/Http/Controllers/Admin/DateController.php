@@ -21,6 +21,28 @@ class DateController extends Controller
     }
 
 
+    public function updatestatus(Request $request)
+    {
+        $v = $request->input('v');
+        $date = Date::find($request->input('id'));
+        if($v == 1){
+            $date->visible_fq = !$date->visible_fq;
+            $date->save();
+           
+        }else if($v == 2){
+            $date->visible_ft = !$date->visible_ft;
+            $date->save();
+           
+        }else if($v == 3){
+            $date->visible_t = !$date->visible_t;
+            $date->save();
+        }else if($v == 4){
+            $date->visible_d = !$date->visible_d;
+            $date->save();
+        }
+        
+        return redirect()->back();
+    }
     public function upmaxres($date_id)
     {
         $date = Date::find($date_id);
