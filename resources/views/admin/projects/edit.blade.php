@@ -3,7 +3,7 @@
 @section('contents')
 
 
-<form class="cont_a" method="POST" action="{{ route('admin.projects.update', ['id' => $project->id]) }}" enctype="multipart/form-data" >
+<form class="cont_a" method="POST" action="{{ route('admin.projects.update', ['project' => $project]) }}" enctype="multipart/form-data" >
     @csrf
     @method('PUT')
 
