@@ -371,10 +371,8 @@ td {
 .myproj-c {
     display: flex;
     flex-wrap: wrap;
-
     justify-content: space-between;
-
-    gap: 10px;
+    gap: 11px;
     .myproj {
         display: flex;
         flex-direction: column;
