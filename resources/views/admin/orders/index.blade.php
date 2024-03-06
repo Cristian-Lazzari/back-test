@@ -18,7 +18,7 @@
       </p>
       <div class="collapse" id="collapseExample">
         <div class="card card-body">
-            <form action="{{ route('admin.orders.filters')}}" class="filter" method="GET" class="mb-2">
+            <form action="{{ route('admin.orders.filters')}}" class="filter mb-2" method="GET">
                 <h3 class="w-100">Filtri</h3>
                 <div>
 
@@ -153,138 +153,181 @@
     </svg> RIMUOVI FILTRI</a>
 
     
-    <div class="myres-c">
+
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Data</th>
+            <th scope="col">Ora</th>
+            <th scope="col">Nome</th>
+            <th scope="col" class="d-none d-lg-table-cell">Telefono</th>
+            <th scope="col" class="d-none d-lg-table-cell">Email</th>
+            <th scope="col" class="d-none d-lg-table-cell">Creato il</th>
+            <th scope="col">Azioni</th>
+          </tr>
+        </thead>
+        <tbody>
+            @foreach ($orders as $order)
+                <?php
+
+                $data_ora = DateTime::createFromFormat('d/m/Y H:i', $order->date_slot);
+                $ora_formattata = $data_ora->format('H:i');
+                $data_formattata = $data_ora->format('d/m');
+                
+                ?>
+                <tr>
+                    <td>{{ $data_formattata }}</td>
+                    <td>{{ $ora_formattata }}</td>
+                    <td>{{ $order->name }}</td>
+                    <td class="text-truncate d-none d-lg-table-cell">{{ $order->phone }}</td>
+                    <td class="text-truncate d-none d-lg-table-cell">{{ $order->email }}</td>
+                    <td class="d-none d-lg-table-cell">{{ date('d/m/Y H:i', strtotime($order->created_at)) }}</td>
+                    <td class="d-flex gap-1">
+                        <form  action="{{ route('admin.orders.confirmOrder', $order->id) }}" method="post">
+                            @csrf
+                            <button title="Conferma Ordine" value="1" class=" btn btn-warning">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill text-white" viewBox="0 0 16 16">
+                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                </svg>
+                            </button>
+                        </form>
+                        <form  action="{{ route('admin.orders.rejectOrder', $order->id) }}" method="post">
+                            @csrf
+                            <button title="Annulla Ordine" value="2" class=" btn btn-danger text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                </svg>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+      </table>
+
+
+
+
+
+
+    {{-- <div class="myres-c">
 
         @foreach ($orders as $order)
-        <?php
-
-        $data_ora = DateTime::createFromFormat('d/m/Y H:i', $order->date_slot);
-
-        $ora_formatata = $data_ora->format('H:i');
-        $data_formatata = $data_ora->format('d/m/Y');
-        $giorno_settimana = $data_ora->format('l');
-        ?>
 
 
 
-        @if ($order->status == 0)
-                            
-        <div class="myres el">
-        @elseif ($order->status == 1)
-        <div class="myres co">
-
-        @elseif ($order->status == 2)
-
-        <div class="myres an">
-        @endif
-
-            <div class="mail-tel">
-                <div class="mail">{{$order->email}}</div>
-                <div class="tel">{{$order->phone}}</div>
-            </div>
-            <div class="body">
-                <section class="myres-left">
-                    <div class="name">{{$order->name}}</div>
-                    <div  class="myres-left-c">
-                        <div class="time">{{$ora_formatata}}</div>
-
-                        <div class="day_w">{{$giorno_settimana}}</div>
-                        <div class="date">{{$data_formatata}}</div>
-                    </div>
-                    <div class="c_a">inviato alle: {{$order->created_at}}</div>
-                </section>
-                <section class="myres-center">
-                    <h5>Prodotti</h5>
-
-                    @foreach ($orderProject as $i)
-                    
-                    @if ($order->id == $i->order_id)
-                    @foreach ($order->projects as $o)
-                    
-                        @if ($o->id == $i->project_id)
-                        <?php $name= $o->name ?>
-                        @endif
-                        
-                    @endforeach
-                    <?php
-                        $arrA= json_decode($i->addicted); 
-                        $arrD= json_decode($i->deselected); 
-                    ?>
-                    <div class="product">
-                        <div class="counter">* {{$i->quantity_item}}</div>              
-                        <div class="name">{{$name}}</div>
-                        <div class="variations">
-                            <div class="add">
-                          
-                                @foreach ($arrA as $a)
-                                <span>+ {{$a}}</span>
-                                @endforeach
-                               
-                            </div>
-                            <div class="removed">
+            @if ($order->status == 0)
                                 
-                             
-                                @foreach ($arrD as $a)
-                                <span>- {{$a}}</span>
-                                @endforeach       
-                                
-                            </div>
+                <div class="myres el">
+            @elseif ($order->status == 1)
+                <div class="myres co">
+            @elseif ($order->status == 2)
+                <div class="myres an">
+            @endif
+
+                        <div class="mail-tel">
+                            <div class="mail">{{$order->email}}</div>
+                            <div class="tel">{{$order->phone}}</div>
                         </div>
-                        
+                        <div class="body">
+                            <section class="myres-left">
+                                <div class="name">{{$order->name}}</div>
+                                <div  class="myres-left-c">
+                                    <div class="time">{{$ora_formatata}}</div>
+                                    <div class="day_w">{{$giorno_settimana}}</div>
+                                    <div class="date">{{$data_formatata}}</div>
+                                </div>
+                                <div class="c_a">inviato alle: {{$order->created_at}}</div>
+                            </section>
+                            <section class="myres-center">
+                                <h5>Prodotti</h5>
+
+                                @foreach ($orderProject as $i)
+                                
+                                @if ($order->id == $i->order_id)
+                                @foreach ($order->projects as $o)
+                                
+                                    @if ($o->id == $i->project_id)
+                                    <?php $name= $o->name ?>
+                                    @endif
+                                    
+                                @endforeach
+                                <?php
+                                    $arrA= json_decode($i->addicted); 
+                                    $arrD= json_decode($i->deselected); 
+                                ?>
+                                <div class="product">
+                                    <div class="counter">* {{$i->quantity_item}}</div>              
+                                    <div class="name">{{$name}}</div>
+                                    <div class="variations">
+                                        <div class="add">
+                                    
+                                            @foreach ($arrA as $a)
+                                            <span>+ {{$a}}</span>
+                                            @endforeach
+                                        
+                                        </div>
+                                        <div class="removed">
+                                            
+                                        
+                                            @foreach ($arrD as $a)
+                                            <span>- {{$a}}</span>
+                                            @endforeach       
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                @endif
+                            @endforeach
+                            <div class="t_price">€{{$order->total_price / 100}}</div>
+                            <div class="t_price">{{$order->total_pz_q}} pezzi taglio</div>
+                            <div class="t_price">{{$order->total_pz_t}} pizze al piatto</div>
+                            
+                        </section>
+                        <section class="myres-right">
+
+                            <form class="d-inline w-100 " action="{{ route('admin.orders.confirmOrder', $order->id) }}" method="post">
+                                @csrf
+                                <button value="1" class="w-100 btn btn-warning">
+                                    Conferma
+                                </button>
+                            </form>
+                            <form class="d-inline w-100" action="{{ route('admin.orders.rejectOrder', $order->id) }}" method="post">
+                                @csrf
+                                <button value="2" class="w-100 btn btn-danger">
+                                    Annulla
+                                </button>
+                            </form>
+                            @if ($order->indirizzo !== '0')
+                            <h3>
+                                Consegnare a domicilio
+                                <p>{{$order->comune}}, {{$order->indirizzo}}, {{$order->civico}}</p>
+                            </h3>
+                            @else
+                            <h3>
+                                Ritiro d'asporto
+                            </h3>
+                            @endif
+                        </section>
                     </div>
-                    @endif
-                    @endforeach
-                    <div class="t_price">€{{$order->total_price / 100}}</div>
-                    <div class="t_price">{{$order->total_pz_q}} pezzi taglio</div>
-                    <div class="t_price">{{$order->total_pz_t}} pizze al piatto</div>
-                    
-                </section>
-                <section class="myres-right">
+                    <div class="visible">
+                        @if ($order->status == 0)
+                            
+                        <span>in elaborazione</span>
+                        @elseif ($order->status == 1)
+                        <span>confermato</span>
+                        
+                        @elseif ($order->status == 2)
+                        
+                        <span>annullato</span>
+                        @endif
 
-                    <form class="d-inline w-100 " action="{{ route('admin.orders.confirmOrder', $order->id) }}" method="post">
-                        @csrf
-                        <button value="1" class="w-100 btn btn-warning">
-                            Conferma
-                        </button>
-                    </form>
-                    <form class="d-inline w-100" action="{{ route('admin.orders.rejectOrder', $order->id) }}" method="post">
-                        @csrf
-                        <button value="2" class="w-100 btn btn-danger">
-                            Annulla
-                        </button>
-                    </form>
-                    @if ($order->indirizzo !== '0')
-                    <h3>
-                        Consegnare a domicilio
-                        <p>{{$order->comune}}, {{$order->indirizzo}}, {{$order->civico}}</p>
-                    </h3>
-                    @else
-                    <h3>
-                        Ritiro d'asporto
-                    </h3>
-                    @endif
-                </section>
+                    </div>
             </div>
-            <div class="visible">
-                @if ($order->status == 0)
-                    
-                <span>in elaborazione</span>
-                @elseif ($order->status == 1)
-                <span>confermato</span>
-                
-                @elseif ($order->status == 2)
-                
-                <span>annullato</span>
-                @endif
-
-            </div>
-        </div>
 
         
         @endforeach
-    </div>
-   
-
-
+    </div> --}}
     {{ $orders->links() }}
 @endsection
