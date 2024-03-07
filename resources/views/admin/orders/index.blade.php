@@ -175,7 +175,7 @@
         @endforeach
     </div>
 
-    <table class="table table-striped">
+    <table class="table">
         <thead>
           <tr>
             <th scope="col">Data</th>
@@ -195,48 +195,48 @@
                 $data_formattata = $data_ora->format('d/m');
 
                 if ($order->status == 0) {
-                    $dot_status = 'text-warning';
+                    $dot_status = 'bg-warning';
                 } else if ($order->status == 1) {
-                    $dot_status = 'text-success';
+                    $dot_status = 'bg-success';
                 } else {
-                    $dot_status = 'text-danger';
+                    $dot_status = 'bg-danger';
                 }
                 ?>
                 <tr 
                     onclick="window.location.href='{{ route('admin.orders.show', $order->id) }}'"
-                    class="table_row"
+                    class="table_row mb-3"
                 >
                     {{-- DATA  --}}
-                    <td>{{ $data_formattata }}</td>
+                    <td class="{{ $dot_status }}" style="--bs-bg-opacity: .6;">{{ $data_formattata }}</td>
 
                     {{-- ORA  --}}
-                    <td>{{ $ora_formattata }}</td>
+                    <td class="{{ $dot_status }}" style="--bs-bg-opacity: .6;">{{ $ora_formattata }}</td>
 
                     {{-- NOME  --}}
-                    <td>
+                    <td class="{{ $dot_status }}" style="--bs-bg-opacity: .6;">
                         {{ $order->name }}
-                        <span class="{{ $dot_status }}">
+                        {{-- <span class="{{ $dot_status }}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-fill ms-2" viewBox="0 0 16 16">
                                 <circle cx="7" cy="7" r="7"/>
                             </svg>
-                        </span>
+                        </span> --}}
                     </td>
 
                     {{-- TELEFONO  --}}
-                    <td class="text-truncate d-none d-lg-table-cell">
+                    <td class="text-truncate d-none d-lg-table-cell {{ $dot_status }}" style="--bs-bg-opacity: .6;">
                         <a class="phone text-decoration-none" href="{{ "https://wa.me/" . '39' . $order->phone }}">{{ $order->phone }}</a>
                     </td>
 
                     {{-- EMAIL  --}}
-                    <td class="text-truncate d-none d-lg-table-cell">{{ $order->email }}</td>
+                    <td class="text-truncate d-none d-lg-table-cell {{ $dot_status }}" style="--bs-bg-opacity: .6;">{{ $order->email }}</td>
 
                     {{-- DATA CREAZIONE  --}}
-                    <td class="d-none d-lg-table-cell">
+                    <td class="d-none d-lg-table-cell {{ $dot_status }}" style="--bs-bg-opacity: .6;">
                         {{ date('d/m/Y H:i', strtotime($order->created_at)) }}
                     </td>
 
                     {{-- BOTTONI  --}}
-                    <td class="d-flex gap-1">
+                    <td class="d-flex gap-1 {{ $dot_status }}" style="--bs-bg-opacity: .6;">
                         <form  action="{{ route('admin.orders.confirmOrder', $order->id) }}" method="post">
                             @csrf
                             <button title="Conferma Ordine" value="1" class=" btn btn-success">
