@@ -283,12 +283,11 @@ td {
             align-items: center;
             font-size: 16px;
             padding: 1rem;
-            
+
             h2 {
                 font-size: 30px;
             }
             .day_w {
-              
                 padding: 10px;
                 width: 140px;
                 background-color: #ffffff;
@@ -296,8 +295,6 @@ td {
             }
         }
         .res {
-           
-         
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -322,7 +319,6 @@ td {
 
         .max {
             flex-grow: 1;
-            
 
             height: 100%;
             padding: 15px;
@@ -385,7 +381,6 @@ td {
         }
     }
 }
-
 
 .myproj-c {
     display: flex;
@@ -599,6 +594,7 @@ td {
         }
     }
 }
+
 .specialradio {
     display: flex;
     flex-direction: column;
@@ -689,7 +685,7 @@ td {
         align-self: flex-end;
     }
 }
-.filter{
+.filter {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;

@@ -152,7 +152,28 @@
             <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2z"/>
     </svg> RIMUOVI FILTRI</a>
 
-    
+    {{-- Legenda  --}}
+    <div class="py-3">
+        <?php 
+        $statuses = ['In Elaborazione', 'Confermato', 'Annullato'];
+        ?>
+        @foreach ($statuses as $status)
+            @if ($status == 'In Elaborazione')
+                <span class="text-warning">
+                    <span>In Elaborazione</span>
+            @elseif ($status == 'Confermato')
+                <span class="text-success">
+                    <span>Confermato</span>
+            @else
+                <span class="text-danger">
+                    <span>Annullato</span>
+            @endif
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-fill me-2" viewBox="0 0 16 16">
+                    <circle cx="7" cy="7" r="7"/>
+                </svg>
+            </span>
+        @endforeach
+    </div>
 
     <table class="table table-striped">
         <thead>
@@ -176,16 +197,34 @@
                 
                 ?>
                 <tr>
-                    <td>{{ $data_formattata }}</td>
-                    <td>{{ $ora_formattata }}</td>
-                    <td>{{ $order->name }}</td>
-                    <td class="text-truncate d-none d-lg-table-cell">{{ $order->phone }}</td>
+                    <td><a class="text-decoration-none text-black" href="{{ route('admin.orders.show', $order->id) }}">{{ $data_formattata }}</a></td>
+                    <td><a class="text-decoration-none text-black" href="{{ route('admin.orders.show', $order->id) }}">{{ $ora_formattata }}</a></td>
+                    <td>
+                        <a class="text-decoration-none text-black" href="{{ route('admin.orders.show', $order->id) }}">
+                        {{ $order->name }}
+                        @if ($order->status == 0)
+                            <span class="text-warning">
+                        @elseif ($order->status == 1)
+                            <span class="text-success">
+                        @else
+                            <span class="text-danger">
+                        @endif
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-fill ms-2" viewBox="0 0 16 16">
+                                <circle cx="7" cy="7" r="7"/>
+                            </svg>
+                        </span>
+                        </a>
+                    </td>
+                    <td class="text-truncate d-none d-lg-table-cell"><a class="text-decoration-none" href="{{ "https://wa.me/" . '39' . $order->phone }}">{{ $order->phone }}</a></td>
                     <td class="text-truncate d-none d-lg-table-cell">{{ $order->email }}</td>
-                    <td class="d-none d-lg-table-cell">{{ date('d/m/Y H:i', strtotime($order->created_at)) }}</td>
+                    <td class="d-none d-lg-table-cell">
+                        {{ date('d/m/Y H:i', strtotime($order->created_at)) }}
+                    </td>
+                    {{-- Bottoni  --}}
                     <td class="d-flex gap-1">
                         <form  action="{{ route('admin.orders.confirmOrder', $order->id) }}" method="post">
                             @csrf
-                            <button title="Conferma Ordine" value="1" class=" btn btn-warning">
+                            <button title="Conferma Ordine" value="1" class=" btn btn-success">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill text-white" viewBox="0 0 16 16">
                                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
                                 </svg>
