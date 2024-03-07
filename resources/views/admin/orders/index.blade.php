@@ -190,37 +190,52 @@
         <tbody>
             @foreach ($orders as $order)
                 <?php
-
                 $data_ora = DateTime::createFromFormat('d/m/Y H:i', $order->date_slot);
                 $ora_formattata = $data_ora->format('H:i');
                 $data_formattata = $data_ora->format('d/m');
-                
+
+                if ($order->status == 0) {
+                    $dot_status = 'text-warning';
+                } else if ($order->status == 1) {
+                    $dot_status = 'text-success';
+                } else {
+                    $dot_status = 'text-danger';
+                }
                 ?>
-                <tr>
-                    <td><a class="text-decoration-none text-black" href="{{ route('admin.orders.show', $order->id) }}">{{ $data_formattata }}</a></td>
-                    <td><a class="text-decoration-none text-black" href="{{ route('admin.orders.show', $order->id) }}">{{ $ora_formattata }}</a></td>
+                <tr 
+                    onclick="window.location.href='{{ route('admin.orders.show', $order->id) }}'"
+                    class="table_row"
+                >
+                    {{-- DATA  --}}
+                    <td>{{ $data_formattata }}</td>
+
+                    {{-- ORA  --}}
+                    <td>{{ $ora_formattata }}</td>
+
+                    {{-- NOME  --}}
                     <td>
-                        <a class="text-decoration-none text-black" href="{{ route('admin.orders.show', $order->id) }}">
                         {{ $order->name }}
-                        @if ($order->status == 0)
-                            <span class="text-warning">
-                        @elseif ($order->status == 1)
-                            <span class="text-success">
-                        @else
-                            <span class="text-danger">
-                        @endif
+                        <span class="{{ $dot_status }}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-fill ms-2" viewBox="0 0 16 16">
                                 <circle cx="7" cy="7" r="7"/>
                             </svg>
                         </span>
-                        </a>
                     </td>
-                    <td class="text-truncate d-none d-lg-table-cell"><a class="text-decoration-none" href="{{ "https://wa.me/" . '39' . $order->phone }}">{{ $order->phone }}</a></td>
+
+                    {{-- TELEFONO  --}}
+                    <td class="text-truncate d-none d-lg-table-cell">
+                        <a class="phone text-decoration-none" href="{{ "https://wa.me/" . '39' . $order->phone }}">{{ $order->phone }}</a>
+                    </td>
+
+                    {{-- EMAIL  --}}
                     <td class="text-truncate d-none d-lg-table-cell">{{ $order->email }}</td>
+
+                    {{-- DATA CREAZIONE  --}}
                     <td class="d-none d-lg-table-cell">
                         {{ date('d/m/Y H:i', strtotime($order->created_at)) }}
                     </td>
-                    {{-- Bottoni  --}}
+
+                    {{-- BOTTONI  --}}
                     <td class="d-flex gap-1">
                         <form  action="{{ route('admin.orders.confirmOrder', $order->id) }}" method="post">
                             @csrf
