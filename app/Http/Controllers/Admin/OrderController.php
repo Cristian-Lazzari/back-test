@@ -78,30 +78,45 @@ class OrderController extends Controller
 
     public function confirmOrder(Request $request, $order_id)
     {
-        dd($request->input('confirm'));
         $order = Order::find($order_id);
-        if ($order && $order->status !== 1) {
+        $notification = $request->input('confirm');
+
+        if ($order && $notification && $order->status !== 1) {
+
             if ($order->status == 2) {
                 $order->status = 1;
                 $order->save();
                 $date = Date::where('date_slot', $order->date_slot)->first();
                 $date->reserved_pz += $order->total_pz;
                 $date->save();
-                return redirect("https://wa.me/" . '39' . $order->phone . "?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!");
             } else {
                 $order->status = 1;
                 $order->save();
+            }
+
+            if ($notification == "wa") {
+
                 return redirect("https://wa.me/" . '39' . $order->phone . "?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!");
+            } else if ($notification == "em") {
+                // Invio Email
+
+                // creare email dedicata
+
+                // return dedicato alla mail
             }
         } else {
             return redirect()->back();
         }
     }
 
-    public function rejectOrder($order_id)
+    public function rejectOrder(Request $request, $order_id)
     {
+
         $order = Order::find($order_id);
-        if ($order && $order->status !== 2) {
+        $notification = $request->input('confirm');
+
+        if ($order && $notification && $order->status !== 2) {
+
             $order->status = 2;
             $order->save();
             $date = Date::where('date_slot', $order->date_slot)->first();
@@ -120,7 +135,17 @@ class OrderController extends Controller
                 $date->save();
             }
 
-            return redirect("https://wa.me/" . '39' . $order->phone . "?text=E' con profondo rammarico che siamo obbligati ad disdire la vostra prenotazione!");
+
+            if ($notification == "wa") {
+
+                return redirect("https://wa.me/" . '39' . $order->phone . "?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!");
+            } else if ($notification == "em") {
+                // Invio Email
+
+                // creare email dedicata
+
+                // return dedicato alla mail
+            }
         } else {
             return redirect()->back();
         }
