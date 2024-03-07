@@ -267,6 +267,7 @@
 
                     {{-- BOTTONI  --}}
                     <td class="d-flex gap-1 {{ $dot_status }}" style="--bs-bg-opacity: .6;">
+                        {{-- CONFERMA ORDINE  --}}
                         <button 
                             title="Conferma Ordine" 
                             class="btn btn-success" 
@@ -306,6 +307,7 @@
                             </div>
                         </div>
 
+                        {{-- ANNULLA ORDINE  --}}
                         <button 
                             title="Annulla Ordine" 
                             class="btn btn-danger" 
