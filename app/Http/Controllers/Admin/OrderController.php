@@ -76,8 +76,9 @@ class OrderController extends Controller
         return view('admin.orders.show', compact('order', 'orderProject'));
     }
 
-    public function confirmOrder($order_id)
+    public function confirmOrder(Request $request, $order_id)
     {
+        dd($request->input('confirm'));
         $order = Order::find($order_id);
         if ($order && $order->status !== 1) {
             if ($order->status == 2) {
