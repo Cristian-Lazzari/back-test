@@ -698,6 +698,11 @@ td {
     color: blue !important;
 }
 
+table {
+    border-collapse: separate;
+    border-spacing: 0 1px; /* Spaziatura tra le righe */
+}
+
 .table_row:hover {
     cursor: pointer;
 }
