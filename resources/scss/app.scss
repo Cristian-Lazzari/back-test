@@ -698,13 +698,23 @@ td {
     color: blue !important;
 }
 
-.table_row:hover {
-    cursor: pointer;
+table {
+    border-collapse: separate;
+    border-spacing: 0 5px; /* Spaziatura tra le righe */
+    border-radius: 10px; /* Arrotondamento degli angoli */
+    // overflow: hidden; /* Per nascondere le parti dei bordi arrotondati */
 }
 
-@media (min-width: 960px) {
-    .table_row:hover {
-        transform: scaleX(1.01);
-        transition: all 200ms ease-in-out;
-    }
+.table_row:hover {
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: inherit; /* Eredità dell'arrotondamento degli angoli dalla tabella */
 }
+
+// @media (min-width: 960px) {
+//     .table_row:hover {
+//         transform: scale(1.01);
+//         transition: all 200ms ease-in-out;
+//     }
+// }

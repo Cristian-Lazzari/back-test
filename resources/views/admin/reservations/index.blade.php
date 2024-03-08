@@ -196,7 +196,7 @@
                         $dot_status = 'bg-danger';
                     }
                     ?>
-                    <tr class="table_row mb-3">
+                    <tr class="table_row">
                         {{-- DATA  --}}
                         <td 
                             class="{{ $dot_status }}" 

@@ -5,7 +5,7 @@
    
 
     
-    <h1 class="my-5">PRENOTAZIONI D'ASPORTO</h1>
+    <h1 class="my-5">ORDINI D'ASPORTO</h1>
 
     @if (session('confirm_success'))
         <div class="alert alert-success">
@@ -233,7 +233,7 @@
                     $dot_status = 'bg-danger';
                 }
                 ?>
-                <tr class="table_row mb-3">
+                <tr class="table_row">
                     {{-- DATA  --}}
                     <td 
                         class="{{ $dot_status }}" 
