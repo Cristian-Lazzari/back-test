@@ -28,7 +28,7 @@
             </div>
         @endif
 
-        <h1 class="py-4">Nuova Prenotazione</h1>
+        <h1 class="py-4">Nuova Prenotazione Tavolo</h1>
 
         <form action="{{ route('admin.reservations.store') }}" enctype="multipart/form-data" method="POST" class="px-2 py-5 bg-success bg-opacity-75 rounded">
             @csrf
@@ -44,7 +44,7 @@
                         value="{{ session('inputValues')['name'] }}"
                     @endif
                 >
-                <div class="invalid-feedback">
+                <div class="invalid-feedback fw-semibold">
                     @error('name') {{ $message }} @enderror
                 </div>
             </div>
@@ -60,7 +60,7 @@
                         value="{{ session('inputValues')['phone'] }}"
                     @endif
                 >
-                <div class="invalid-feedback">
+                <div class="invalid-feedback fw-semibold">
                     @error('phone') {{ $message }} @enderror
                 </div>
             </div>
@@ -76,7 +76,7 @@
                         value="{{ session('inputValues')['email'] }}"
                     @endif
                 >
-                <div class="invalid-feedback">
+                <div class="invalid-feedback fw-semibold">
                     @error('email') {{ $message }} @enderror
                 </div>
             </div>
@@ -92,7 +92,7 @@
                         value="{{ session('inputValues')['n_person'] }}"
                     @endif
                 >
-                <div class="invalid-feedback">
+                <div class="invalid-feedback fw-semibold">
                     @error('n_person') {{ $message }} @enderror
                 </div>
             </div>
@@ -110,7 +110,7 @@
                         {{ session('inputValues')['message'] }}
                     @endif
                 </textarea>
-                <div class="invalid-feedback">
+                <div class="invalid-feedback fw-semibold ">
                     @error('message') {{ $message }} @enderror
                 </div>
             </div>
