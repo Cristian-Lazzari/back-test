@@ -299,26 +299,71 @@
                     {{-- BOTTONI  --}}
                     <td class="{{ $dot_status }}" style="--bs-bg-opacity: .6;">
                         {{-- CONFERMA ORDINE  --}}
-                        <button 
-                            title="Conferma Ordine" 
-                            class="btn btn-success" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#confirmModal-{{ $order->id }}"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill text-white" viewBox="0 0 16 16">
-                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                            </svg>
-                        </button>
+                        @if ($order->status !== 1)
+                            <button 
+                                title="Conferma Ordine" 
+                                class="btn btn-success" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#confirmModal-{{ $order->id }}"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill text-white" viewBox="0 0 16 16">
+                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                </svg>
+                            </button>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="confirmModal-{{ $order->id }}" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
+                            <!-- Modal -->
+                            <div class="modal fade" id="confirmModal-{{ $order->id }}" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form  action="{{ route('admin.orders.confirmOrder', $order->id) }}" method="post">
+                                            @csrf
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="confirmModalLabel">Conferma: vuoi inviare una notifica al cliente?</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <label for="no">No
+                                                    <input class="me-2" type="radio" name="confirm" id="no" value="no">
+                                                </label>
+                                                <label for="w_app">WhatsApp
+                                                    <input class="me-2" type="radio" name="confirm" id="w_app" value="wa">
+                                                </label>
+                                                <label for="email">Email
+                                                    <input class="me-2" type="radio" name="confirm" id="email" value="em">
+                                                </label>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                                                <button type="submit" class="btn btn-primary">Procedi</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+
+                        {{-- ANNULLA ORDINE  --}}
+                        @if ($order->status !== 2)
+                            <button 
+                                title="Annulla Ordine" 
+                                class="btn btn-danger" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#rejectModal-{{ $order->id }}"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                </svg>
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="rejectModal-{{ $order->id }}" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
                                 <div class="modal-content">
-                                    <form  action="{{ route('admin.orders.confirmOrder', $order->id) }}" method="post">
+                                    <form  action="{{ route('admin.orders.rejectOrder', $order->id) }}" method="post">
                                         @csrf
                                         <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="confirmModalLabel">Conferma: vuoi inviare una notifica al cliente?</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <h1 class="modal-title fs-5" id="rejectModalLabel">Annullamento: vuoi inviare una notifica al cliente?</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             <label for="no">No
@@ -332,55 +377,14 @@
                                             </label>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                                            <button type="submit" class="btn btn-primary">Procedi</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                                        <button type="submit" class="btn btn-primary">Procedi</button>
                                         </div>
                                     </form>
                                 </div>
+                                </div>
                             </div>
-                        </div>
-
-                        {{-- ANNULLA ORDINE  --}}
-                        <button 
-                            title="Annulla Ordine" 
-                            class="btn btn-danger" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#rejectModal-{{ $order->id }}"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
-                            </svg>
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="rejectModal-{{ $order->id }}" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                            <div class="modal-content">
-                                <form  action="{{ route('admin.orders.rejectOrder', $order->id) }}" method="post">
-                                    @csrf
-                                    <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="rejectModalLabel">Annullamento: vuoi inviare una notifica al cliente?</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <label for="no">No
-                                            <input class="me-2" type="radio" name="confirm" id="no" value="no">
-                                        </label>
-                                        <label for="w_app">WhatsApp
-                                            <input class="me-2" type="radio" name="confirm" id="w_app" value="wa">
-                                        </label>
-                                        <label for="email">Email
-                                            <input class="me-2" type="radio" name="confirm" id="email" value="em">
-                                        </label>
-                                    </div>
-                                    <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                                    <button type="submit" class="btn btn-primary">Procedi</button>
-                                    </div>
-                                </form>
-                            </div>
-                            </div>
-                        </div>
+                        @endif
                     </td>
                 </tr>
             @endforeach
