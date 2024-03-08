@@ -264,7 +264,7 @@
                         </td>
     
                         {{-- BOTTONI  --}}
-                        <td class="d-flex gap-1 {{ $dot_status }}" style="--bs-bg-opacity: .6;">
+                        <td class="{{ $dot_status }}" style="--bs-bg-opacity: .6;">
                             {{-- CONFERMA ORDINE  --}}
                             <button 
                                 title="Conferma Ordine" 

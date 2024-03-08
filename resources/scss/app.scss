@@ -701,3 +701,10 @@ td {
 .table_row:hover {
     cursor: pointer;
 }
+
+@media (min-width: 960px) {
+    .table_row:hover {
+        transform: scaleX(1.01);
+        transition: all 200ms ease-in-out;
+    }
+}
