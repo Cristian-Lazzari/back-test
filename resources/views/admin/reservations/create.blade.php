@@ -2,7 +2,7 @@
 
 @section('contents')
     @php
-    $days_name = [' ','lunedì', 'martedi', 'mercoledì', 'giovedì', 'venerd', 'sabato', 'domenica'];
+    $days_name = [' ','lunedì', 'martedi', 'mercoledì', 'giovedì', 'venerdì', 'sabato', 'domenica'];
     @endphp
 
     @if (session('reserv_success'))

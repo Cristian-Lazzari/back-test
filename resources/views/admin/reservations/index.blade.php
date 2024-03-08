@@ -3,6 +3,40 @@
 @section('contents')
     {{-- <img src="{{ Vite::asset('resources/img/picsum30.jpg') }}" alt=""> --}}
     <h1 class="m-auto my-5">PRENOTAZIONI TAVOLI</h1>
+
+
+    @if (session('confirm_success'))
+        <div class="alert alert-success">
+            Prenotazione confermata correttamente
+        </div>
+    @endif
+
+    @if (session('reject_success'))
+        <div class="alert alert-success">
+            Prenotazione annullata correttamente
+        </div>
+    @endif
+
+    @if (session('error_confirm'))
+        <div class="alert alert-danger">
+            Questa prenotazione è già confermata
+        </div>
+    @endif
+
+    @if (session('error_reject'))
+        <div class="alert alert-danger">
+            Questa prenotazione è già annullata
+        </div>
+    @endif
+
+    @if (session('email_error'))
+        <div class="alert alert-danger">
+            Non è stato possibile inviare l'email
+        </div>
+    @endif
+
+
+
     <a href="{{ route('admin.months.index') }}" class="btn btn-warning w-50 m-auto my-3 d-block">Gestione date</a>
     <a href="{{ route('admin.reservations.create') }}" class="btn btn-success w-50 m-auto my-3 d-block">Nuova Prenotazione</a>
 
@@ -254,14 +288,14 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <label for="no">No
-                                                    <input class="me-2" type="radio" name="confirm" id="no" value="no">
+                                                <label for="no_c">No
+                                                    <input class="me-2" type="radio" name="confirm" id="no_c" value="no">
                                                 </label>
-                                                <label for="w_app">WhatsApp
-                                                    <input class="me-2" type="radio" name="confirm" id="w_app" value="wa">
+                                                <label for="w_app_c">WhatsApp
+                                                    <input class="me-2" type="radio" name="confirm" id="w_app_c" value="wa">
                                                 </label>
-                                                <label for="email">Email
-                                                    <input class="me-2" type="radio" name="confirm" id="email" value="em">
+                                                <label for="email_c">Email
+                                                    <input class="me-2" type="radio" name="confirm" id="email_c" value="em">
                                                 </label>
                                             </div>
                                             <div class="modal-footer">
@@ -292,23 +326,23 @@
                                     <form  action="{{ route('admin.reservations.rejectReservation', $reservation->id) }}" method="post">
                                         @csrf
                                         <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="rejectModalLabel">Annullamento: vuoi inviare una notifica al cliente?</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            <h1 class="modal-title fs-5" id="rejectModalLabel">Annullamento: vuoi inviare una notifica al cliente?</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             <label for="no">No
-                                                <input class="me-2" type="radio" name="confirm" id="no" value="no">
+                                                <input class="me-2" type="radio" name="reject" id="no" value="no">
                                             </label>
                                             <label for="w_app">WhatsApp
-                                                <input class="me-2" type="radio" name="confirm" id="w_app" value="wa">
+                                                <input class="me-2" type="radio" name="reject" id="w_app" value="wa">
                                             </label>
                                             <label for="email">Email
-                                                <input class="me-2" type="radio" name="confirm" id="email" value="em">
+                                                <input class="me-2" type="radio" name="reject" id="email" value="em">
                                             </label>
                                         </div>
                                         <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                                        <button type="submit" class="btn btn-primary">Procedi</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                                            <button type="submit" class="btn btn-primary">Procedi</button>
                                         </div>
                                     </form>
                                 </div>

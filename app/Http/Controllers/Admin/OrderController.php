@@ -10,7 +10,11 @@ use App\Models\Address;
 use App\Models\OrderProject;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Mail\orderAnnullato;
+use App\Mail\orderConfermato;
+use Exception;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -99,13 +103,18 @@ class OrderController extends Controller
                 return redirect("https://wa.me/" . '39' . $order->phone . "?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!");
             } else if ($notification == "em") {
                 // Invio Email
-
-                // creare email dedicata
-
-                // return dedicato alla mail
+                try {
+                    $mail = new orderConfermato($order);
+                    Mail::to($order['email'])->send($mail);
+                } catch (Exception) {
+                    return redirect()->back()->with('email_error', true);
+                }
+                return redirect()->back()->with('confirm_success', true);
+            } else {
+                return redirect()->back()->with('confirm_success', true);
             }
         } else {
-            return redirect()->back();
+            return redirect()->back()->with('error_confirm', true);
         }
     }
 
@@ -141,13 +150,19 @@ class OrderController extends Controller
                 return redirect("https://wa.me/" . '39' . $order->phone . "?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!");
             } else if ($notification == "em") {
                 // Invio Email
+                try {
+                    $mail = new orderAnnullato($order);
+                    Mail::to($order['email'])->send($mail);
+                } catch (Exception) {
+                    return redirect()->back()->with('email_error', true);
+                }
 
-                // creare email dedicata
-
-                // return dedicato alla mail
+                return redirect()->back()->with('reject_success', true);
+            } else {
+                return redirect()->back()->with('reject_success', true);
             }
         } else {
-            return redirect()->back();
+            return redirect()->back()->with('error_reject', true);
         }
     }
 

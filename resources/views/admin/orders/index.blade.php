@@ -6,6 +6,37 @@
 
     
     <h1 class="my-5">PRENOTAZIONI D'ASPORTO</h1>
+
+    @if (session('confirm_success'))
+        <div class="alert alert-success">
+            Ordine confermato correttamente
+        </div>
+    @endif
+
+    @if (session('reject_success'))
+        <div class="alert alert-success">
+            Ordine annullato correttamente
+        </div>
+    @endif
+
+    @if (session('error_confirm'))
+        <div class="alert alert-danger">
+            Quest'ordine è già confermato
+        </div>
+    @endif
+
+    @if (session('error_reject'))
+        <div class="alert alert-danger">
+            Quest'ordine è già annullato
+        </div>
+    @endif
+
+    @if (session('email_error'))
+        <div class="alert alert-danger">
+            Non è stato possibile inviare l'email
+        </div>
+    @endif
+
     <a  href="{{ route('admin.months.index') }}" class="btn btn-warning w-50 m-auto my-3 d-block">Gestione date</a>
     <a  href="{{ route('admin.orders.create') }}" class="btn btn-success w-50 m-auto my-3 d-block">Nuovo Ordine</a>
     <p class="d-inline-flex gap-1">

@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use DateTime;
+use Exception;
 use Carbon\Carbon;
 use App\Models\Date;
 use App\Models\Order;
+use App\Mail\resConfermata;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Mail\resAnnullata;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 
 class ReservationController extends Controller
 {
@@ -53,10 +57,8 @@ class ReservationController extends Controller
 
         if ($date_order == 1) {
             $query->orderBy('date_slot', 'asc');
-            
         } else {
             $query->orderBy('created_at', 'desc');
-       
         }
         $reservations = $query->paginate(15);
         $dates = Date::all();
@@ -72,10 +74,13 @@ class ReservationController extends Controller
         return view('admin.reservations.show', compact('reservation', 'dates'));
     }
 
-    public function confirmReservation($reservation_id)
+    public function confirmReservation(Request $request, $reservation_id)
     {
-        $reservation = Reservation::find($reservation_id);
-        if ($reservation && $reservation->status !== 1) {
+
+        $reservation = reservation::find($reservation_id);
+        $notification = $request->input('confirm');
+
+        if ($reservation && $notification && $reservation->status !== 1) {
 
             if ($reservation->status == 2) {
                 $reservation->status = 1;
@@ -83,21 +88,41 @@ class ReservationController extends Controller
                 $date = Date::where('date_slot', $reservation->date_slot)->first();
                 $date->reserved += $reservation->n_person;
                 $date->save();
-                return redirect("https://wa.me/" . '39' . $reservation->phone . "?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!");
             } else {
                 $reservation->status = 1;
                 $reservation->save();
+            }
+
+            dump($notification);
+
+            if ($notification == "wa") {
+
                 return redirect("https://wa.me/" . '39' . $reservation->phone . "?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!");
+            } else if ($notification == "em") {
+                // Invio Email
+                try {
+                    $mail = new resConfermata($reservation);
+                    Mail::to($reservation['email'])->send($mail);
+                } catch (Exception) {
+                    return redirect()->back()->with('email_error', true);
+                }
+                return redirect()->back()->with('confirm_success', true);
+            } else {
+                return redirect()->back()->with('confirm_success', true);
             }
         } else {
-            return redirect()->back();
+            return redirect()->back()->with('error_confirm', true);
         }
     }
 
-    public function rejectReservation($reservation_id)
+    public function rejectReservation(Request $request, $reservation_id)
     {
         $reservation = Reservation::find($reservation_id);
-        if ($reservation && $reservation->status !== 2) {
+        // dump($reservation->status);
+        // dd($reservation);
+        $notification = $request->input('reject');
+
+        if ($reservation && $notification && $reservation->status !== 2) {
             $reservation->status = 2;
             $reservation->save();
             $date = Date::where('date_slot', $reservation->date_slot)->first();
@@ -106,10 +131,26 @@ class ReservationController extends Controller
             if ($date->reserved < $date->max_res) {
                 $date->visible_t = 1;
             }
+
             $date->save();
-            return redirect("https://wa.me/" . '39' . $reservation->phone . "?text=E' con profondo rammarico che siamo obbligati a disdire la vostra prenotazione!");
+
+            if ($notification == "wa") {
+
+                return redirect("https://wa.me/" . '39' . $reservation->phone . "?text=E' con profondo rammarico che siamo obbligati a disdire la vostra prenotazione!");
+            } else if ($notification == "em") {
+                // Invio Email
+                try {
+                    $mail = new resAnnullata($reservation);
+                    Mail::to($reservation['email'])->send($mail);
+                } catch (Exception) {
+                    return redirect()->back()->with('email_error', true);
+                }
+                return redirect()->back()->with('reject_success', true);
+            } else {
+                return redirect()->back()->with('reject_success', true);
+            }
         } else {
-            return redirect()->back();
+            return redirect()->back()->with('error_reject', true);
         }
     }
 
