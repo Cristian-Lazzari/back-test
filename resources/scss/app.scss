@@ -712,9 +712,8 @@ table {
     border-radius: inherit; /* Eredità dell'arrotondamento degli angoli dalla tabella */
 }
 
-// @media (min-width: 960px) {
-//     .table_row:hover {
-//         transform: scale(1.01);
-//         transition: all 200ms ease-in-out;
-//     }
-// }
+@media (min-width: 960px) {
+    .table_row:hover {
+        opacity: 0.9;
+    }
+}
