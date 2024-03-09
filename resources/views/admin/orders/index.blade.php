@@ -45,14 +45,14 @@
                 <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5z"/>
             </svg>  FILTRA
         </a>
-       
-      </p>
-      <div class="collapse" id="collapseExample">
+    </p>
+    <div class="collapse" id="collapseExample">
         <div class="card card-body">
             <form action="{{ route('admin.orders.filters')}}" class="filter mb-2" method="GET">
-                <h3 class="w-100">Filtri</h3>
-                <div>
 
+                <h3 class="w-100">Filtri</h3>
+                
+                <div>
                     <label for="name" class="form-label">Nome Cliente</label>
                     <input
                         type="text"
@@ -146,15 +146,15 @@
                     </select>
                 </div>
                 <div>
-              
+            
                     <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="true" aria-controls="collapseWidthExample">
                         <input type="checkbox" class="btn-check" id="btncheck1" autocomplete="off" name="dateok">
                         <label class="btn btn-outline-primary" for="btncheck1">Filtra per data</label>
                     </div>
-       
-             
+    
+            
                     <div style="min-height: 100px;">
-                      <div class="collapse collapse-horizontal" id="collapseWidthExample">
+                    <div class="collapse collapse-horizontal" id="collapseWidthExample">
                         <div class="card card-body mt-2" style="width: 150px;">
                             
                             <input 
@@ -166,9 +166,9 @@
                                     value="{{ $selected_date }}"  
                                 @endif
                             >
-                          
+                        
                         </div>
-                      </div>
+                    </div>
                     </div>
                 </div>
         

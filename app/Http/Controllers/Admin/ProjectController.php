@@ -34,7 +34,32 @@ class ProjectController extends Controller
             $projects = Project::where('category_id', $category_id)->paginate(24);
         }
 
-        return view('admin.projects.showCategory', compact('projects'));
+        return view('admin.projects.showCategory', compact('projects', 'category_id'));
+    }
+
+    public function filter(Request $request)
+    {
+        $name = $request->input('name');
+        $visible = $request->input('visible');
+        $orderByUpdate = $request->has('orderByUpdate') ? true : false;
+        $category_id = $request->input('category_id');
+
+        $query = Project::query();
+
+        if ($name) {
+            $query->where('name', 'like', '%' . $name . '%');
+        }
+
+        if ($visible == 1) {
+            $query->where('visible', '=', 0);
+        } else if ($visible == 2) {
+            $query->where('visible', '=', 1);
+        }
+
+        $projects = $query->paginate(24);
+
+
+        return view('admin.projects.showCategory', compact('projects', 'category_id', 'name', 'visible'));
     }
 
 
@@ -49,20 +74,8 @@ class ProjectController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->all();
-        // dump($data['name']);
-        // dump($data['price']);
-        // dump($data['category_id']);
-        // if (isset($data['image'])) {
-        //     dump($data['image']);
-
-        // }
-        // dd($data['tags']);
-
-
-
         $request->validate($this->validations);
-
+        $data = $request->all();
 
         $newProject = new Project();
 
