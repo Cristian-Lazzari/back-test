@@ -189,17 +189,17 @@
                     $data_formattata = $data_ora->format('d/m');
     
                     if ($reservation->status == 0) {
-                        $dot_status = 'bg-warning';
+                        $status_bg_color = 'bg-warning';
                     } else if ($reservation->status == 1) {
-                        $dot_status = 'bg-success';
+                        $status_bg_color = 'bg-success';
                     } else {
-                        $dot_status = 'bg-danger';
+                        $status_bg_color = 'bg-danger';
                     }
                     ?>
                     <tr class="table_row">
                         {{-- DATA  --}}
                         <td 
-                            class="{{ $dot_status }}" 
+                            class="{{ $status_bg_color }}" 
                             style="--bs-bg-opacity: .6;" 
                             onclick="window.location.href='{{ route('admin.reservations.show', $reservation->id) }}'"
                         >
@@ -208,7 +208,7 @@
     
                         {{-- ORA  --}}
                         <td 
-                            class="{{ $dot_status }}" 
+                            class="{{ $status_bg_color }}" 
                             style="--bs-bg-opacity: .6;" 
                             onclick="window.location.href='{{ route('admin.reservations.show', $reservation->id) }}'"
                         >
@@ -217,7 +217,7 @@
     
                         {{-- NOME  --}}
                         <td 
-                            class="{{ $dot_status }}" 
+                            class="{{ $status_bg_color }}" 
                             style="--bs-bg-opacity: .6;" 
                             onclick="window.location.href='{{ route('admin.reservations.show', $reservation->id) }}'"
                         >
@@ -226,7 +226,7 @@
 
                         {{-- OSPITI  --}}
                         <td 
-                            class="{{ $dot_status }}" 
+                            class="{{ $status_bg_color }}" 
                             style="--bs-bg-opacity: .6;" 
                             onclick="window.location.href='{{ route('admin.reservations.show', $reservation->id) }}'"
                         >
@@ -235,7 +235,7 @@
     
                         {{-- TELEFONO  --}}
                         <td 
-                            class="text-truncate d-none d-lg-table-cell {{ $dot_status }}" style="--bs-bg-opacity: .6;" 
+                            class="text-truncate d-none d-lg-table-cell {{ $status_bg_color }}" style="--bs-bg-opacity: .6;" 
                             onclick="window.location.href='{{ route('admin.reservations.show', $reservation->id) }}'"
                         >
                             <a 
@@ -248,7 +248,7 @@
     
                         {{-- EMAIL  --}}
                         <td 
-                            class="text-truncate d-none d-lg-table-cell {{ $dot_status }}" style="--bs-bg-opacity: .6;" 
+                            class="text-truncate d-none d-lg-table-cell {{ $status_bg_color }}" style="--bs-bg-opacity: .6;" 
                             onclick="window.location.href='{{ route('admin.reservations.show', $reservation->id) }}'"
                         >
                             {{ $reservation->email }}
@@ -256,7 +256,7 @@
     
                         {{-- DATA CREAZIONE  --}}
                         <td 
-                            class="d-none d-lg-table-cell {{ $dot_status }}" 
+                            class="d-none d-lg-table-cell {{ $status_bg_color }}" 
                             style="--bs-bg-opacity: .6;" 
                             onclick="window.location.href='{{ route('admin.reservations.show', $reservation->id) }}'"
                         >
@@ -264,38 +264,83 @@
                         </td>
     
                         {{-- BOTTONI  --}}
-                        <td class="{{ $dot_status }}" style="--bs-bg-opacity: .6;">
-                            {{-- CONFERMA ORDINE  --}}
-                            <button 
-                                title="Conferma Ordine" 
-                                class="btn btn-success" 
-                                data-bs-toggle="modal" 
-                                data-bs-target="#confirmModal-{{ $reservation->id }}"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill text-white" viewBox="0 0 16 16">
-                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                </svg>
-                            </button>
+                        <td class="{{ $status_bg_color }}" style="--bs-bg-opacity: .6;">
+                            {{-- CONFERMA PRENOTA<IONE  --}}
+                            @if ($reservation->status !== 1)
+                                <button 
+                                    title="Conferma Ordine" 
+                                    class="btn btn-success" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#confirmModal-{{ $reservation->id }}"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill text-white" viewBox="0 0 16 16">
+                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                    </svg>
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="confirmModal-{{ $reservation->id }}" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <form  action="{{ route('admin.reservations.confirmReservation', $reservation->id) }}" method="post">
+                                                @csrf
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="confirmModalLabel">Conferma: vuoi inviare una notifica al cliente?</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <label for="no_c">No
+                                                        <input class="me-2" type="radio" name="confirm" id="no_c" value="no">
+                                                    </label>
+                                                    <label for="w_app_c">WhatsApp
+                                                        <input class="me-2" type="radio" name="confirm" id="w_app_c" value="wa">
+                                                    </label>
+                                                    <label for="email_c">Email
+                                                        <input class="me-2" type="radio" name="confirm" id="email_c" value="em">
+                                                    </label>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                                                    <button type="submit" class="btn btn-primary">Procedi</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
     
-                            <!-- Modal -->
-                            <div class="modal fade" id="confirmModal-{{ $reservation->id }}" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
+                            {{-- ANNULLA PRENOTAZIONE  --}}
+                            @if ($reservation->status !== 2)
+                                <button 
+                                    title="Annulla Ordine" 
+                                    class="btn btn-danger" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#rejectModal-{{ $reservation->id }}"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                    </svg>
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="rejectModal-{{ $reservation->id }}" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
                                     <div class="modal-content">
-                                        <form  action="{{ route('admin.reservations.confirmReservation', $reservation->id) }}" method="post">
+                                        <form  action="{{ route('admin.reservations.rejectReservation', $reservation->id) }}" method="post">
                                             @csrf
                                             <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="confirmModalLabel">Conferma: vuoi inviare una notifica al cliente?</h1>
+                                                <h1 class="modal-title fs-5" id="rejectModalLabel">Annullamento: vuoi inviare una notifica al cliente?</h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <label for="no_c">No
-                                                    <input class="me-2" type="radio" name="confirm" id="no_c" value="no">
+                                                <label for="no">No
+                                                    <input class="me-2" type="radio" name="reject" id="no" value="no">
                                                 </label>
-                                                <label for="w_app_c">WhatsApp
-                                                    <input class="me-2" type="radio" name="confirm" id="w_app_c" value="wa">
+                                                <label for="w_app">WhatsApp
+                                                    <input class="me-2" type="radio" name="reject" id="w_app" value="wa">
                                                 </label>
-                                                <label for="email_c">Email
-                                                    <input class="me-2" type="radio" name="confirm" id="email_c" value="em">
+                                                <label for="email">Email
+                                                    <input class="me-2" type="radio" name="reject" id="email" value="em">
                                                 </label>
                                             </div>
                                             <div class="modal-footer">
@@ -304,110 +349,13 @@
                                             </div>
                                         </form>
                                     </div>
+                                    </div>
                                 </div>
-                            </div>
-    
-                            {{-- ANNULLA ORDINE  --}}
-                            <button 
-                                title="Annulla Ordine" 
-                                class="btn btn-danger" 
-                                data-bs-toggle="modal" 
-                                data-bs-target="#rejectModal-{{ $reservation->id }}"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
-                                </svg>
-                            </button>
-    
-                            <!-- Modal -->
-                            <div class="modal fade" id="rejectModal-{{ $reservation->id }}" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <form  action="{{ route('admin.reservations.rejectReservation', $reservation->id) }}" method="post">
-                                        @csrf
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="rejectModalLabel">Annullamento: vuoi inviare una notifica al cliente?</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <label for="no">No
-                                                <input class="me-2" type="radio" name="reject" id="no" value="no">
-                                            </label>
-                                            <label for="w_app">WhatsApp
-                                                <input class="me-2" type="radio" name="reject" id="w_app" value="wa">
-                                            </label>
-                                            <label for="email">Email
-                                                <input class="me-2" type="radio" name="reject" id="email" value="em">
-                                            </label>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                                            <button type="submit" class="btn btn-primary">Procedi</button>
-                                        </div>
-                                    </form>
-                                </div>
-                                </div>
-                            </div>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-    {{-- <div class="row">
-        <h1 >PRENOTAZIONI TAVOLI</h1>
-    </div>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th style="max-width:60px">NOME</th>
-                <th class="expire-mobile-s">TELEFONO</th>
-                <th class="expire-mobile">MESSAGGIO</th>
-                <th class="expire-mobile-s">N OSPITI</th>
-                <th class="expire-mobile-s">DATA</th>
-                <th class="expire-mobile-s">ORARIO</th>
-                <th>STATUS</th>
-                <th>conferma</th>
-                <th>annulla</th>
-                <th class="expire-mobile-s"></th>
-            </tr>
-        </thead>
-        <tbody class="body-cat">
-            @foreach ($reservations->reverse() as $reservation)
-                <tr>
-                    <td class="name-mobile">
-                        <a style="color:white; white-space:wrap" class="ts bs a-notlink badge bg-success rounded-pill " href="{{ route('admin.reservations.show', ['reservation' =>$reservation]) }}" > {{$reservation->name}}</a>
-                    </td>
-                    <td class="expire-mobile-s">{{$reservation->phone}}</td>
-                    <td class="expire-mobile-s">{{$reservation->message}}</td>
-                    <td class="expire-mobile">{{$reservation->n_person}}</td>
-                    <td class="expire-mobile-s">{{substr($reservation->date_slot, 0, -6)}}</td>
-                    <td class="expire-mobile-s">{{substr($reservation->date_slot, 11)}}</td>
-                    <td>
-                        @if($reservation->status == 1)
-                            <span class="badge bg-success">Completato</span> 
-                        @elseif($reservation->status == 2)    
-                            <span class="badge bg-danger">Annullato</span> 
-                        @else
-                            <span class="badge bg-warning">In Elaborazione</span> 
-                        @endif
-                    </td>
-                    <td>
-                        <form class="d-inline" action="{{ route('admin.reservations.confirmReservation', $reservation->id) }}" method="post">
-                            @csrf
-                            <button value="1" class="expire-mobile-s btn btn-warning">
-                                Conferma
-                            </button>
-                        </form>
-                        <form class="d-inline" action="{{ route('admin.reservations.rejectReservation', $reservation->id) }}" method="post">
-                            @csrf
-                            <button value="2" class="expire-mobile-s btn btn-danger">
-                                Annulla
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table> --}}
     {{ $reservations->links() }}
 @endsection

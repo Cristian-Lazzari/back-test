@@ -93,8 +93,6 @@ class ReservationController extends Controller
                 $reservation->save();
             }
 
-            dump($notification);
-
             if ($notification == "wa") {
 
                 return redirect("https://wa.me/" . '39' . $reservation->phone . "?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!");
@@ -118,8 +116,6 @@ class ReservationController extends Controller
     public function rejectReservation(Request $request, $reservation_id)
     {
         $reservation = Reservation::find($reservation_id);
-        // dump($reservation->status);
-        // dd($reservation);
         $notification = $request->input('reject');
 
         if ($reservation && $notification && $reservation->status !== 2) {

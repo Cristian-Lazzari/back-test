@@ -20,18 +20,21 @@ class ProjectController extends Controller
 
     public function index()
     {
-       // $projects = Project::paginate(25);
+        // $projects = Project::paginate(25);
         $categories = Category::paginate(25);
 
-        return view('admin.projects.index', compact( 'categories'));
+        return view('admin.projects.index', compact('categories'));
     }
 
     public function showCategory($category_id)
     {
-        $projects = Project::where('category_id', $category_id)->paginate(24);
-        
+        if ($category_id == 1) {
+            $projects = Project::paginate(24);
+        } else {
+            $projects = Project::where('category_id', $category_id)->paginate(24);
+        }
 
-        return view('admin.projects.showCategory', compact( 'projects'));
+        return view('admin.projects.showCategory', compact('projects'));
     }
 
 
