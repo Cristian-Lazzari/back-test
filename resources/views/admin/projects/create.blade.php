@@ -2,14 +2,18 @@
 
 @section('contents')
 
-<form class="cont_a" method="POST" action="{{ route('admin.projects.store') }} " enctype="multipart/form-data" >
+<form 
+    method="POST" action="{{ route('admin.projects.store') }} "
+    enctype="multipart/form-data" 
+    class="px-2 py-5 bg-danger  bg-opacity-75 rounded" 
+>
     @csrf
 
-    <div class="mb-3 nome_">
-        <label for="name" class="form-label">Nome Prodotto</label>
+    <div class="mb-3 text-center nome_">
+        <label for="name" class="form-label fw-semibold">Nome Prodotto</label>
         <input
             type="text"
-            class="form-control @error('name') is-invalid @enderror"
+            class="form-control w-75 m-auto text-center @error('name') is-invalid @enderror"
             id="name"
             name="name"
             value="{{ old('name') }}"
@@ -19,11 +23,11 @@
         </div>
     </div>
 
-    <div class="mb-3 prezzo_">
-        <label for="price" class="form-label">Prezzo in centesimi</label>
+    <div class="mb-3 text-center prezzo_">
+        <label for="price" class="form-label fw-semibold">Prezzo in centesimi</label>
         <input
             type="text"
-            class="form-control @error('price') is-invalid @enderror"
+            class="form-control w-75 m-auto text-center @error('price') is-invalid @enderror"
             id="price"
             name="price"
             value="{{ old('price') }}"
@@ -33,7 +37,26 @@
         </div>
     </div>
 
-    <div class="input-group mb-3">
+    <div class="mb-3 text-center categoria_">
+        <label for="category" class="form-label fw-semibold">Categoria</label>
+        <select
+            class="form-select w-75 m-auto text-center @error('category_id') is-invalid @enderror"
+            id="category"
+            name="category_id"
+        >
+            @foreach ($categories as $category)
+                <option value="{{ $category->id }}">{{ $category->name }}</option>
+            @endforeach
+        </select>
+
+        @error('category_id')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
+
+    <div class="input-group my-5 text-center w-50 m-auto">
         <input type="file" class="form-control" id="image" name="image" accept="image/*">
         <label class="input-group-text  @error('image') is-invalid @enderror" for="image">Upload</label>
         @error('image')
@@ -43,46 +66,31 @@
         @enderror
     </div>
 
-
-    <div class="mb-3 categoria_">
-        <label for="category" class="form-label">Categoria</label>
-        <select
-            class="form-select @error('category_id') is-invalid @enderror"
-            id="category"
-            name="category_id"
-        >
-            @foreach ($categories as $category)
-                <option value="{{ $category->id }}">{{ $category->name }}</option>
-            @endforeach
-        </select>
-        @error('category_id')
-            <div class="invalid-feedback">
-                {{ $message }}
-            </div>
-        @enderror
-    </div>
-
-    <div class="mb-3 ingredienti_">
+    <div class="mb-5 m-auto w-75 btn-group specialradio">
         <h3>Ingredienti</h3>
+
+        
+
+
         <div class="mytags">
 
             @foreach($tags as $tag)
 
-                    <input
-                        type="checkbox"
-                        class="btn-check @error ('tags') is-invalid @enderror"
-                        id="tag{{ $tag->id }}"
-                        name="tags[]"
-                        value="{{ $tag->id }}"
-                        @if (in_array($tag->id, old('tags', []))) checked @endif
-          
-                    >
-                    <label class="btn btn-outline-dark" for="tag{{ $tag->id }}">{{ $tag->name }}</label>
+                <input
+                    type="checkbox"
+                    class="btn-check @error ('tags') is-invalid @enderror"
+                    id="tag{{ $tag->id }}"
+                    name="tags[]"
+                    value="{{ $tag->id }}"
+                    @if (in_array($tag->id, old('tags', []))) checked @endif
+        
+                >
+                <label class="btn btn-outline-dark" for="tag{{ $tag->id }}">{{ $tag->name }}</label>
 
                 @error('tags') 
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
                 @enderror
              
             @endforeach
@@ -93,7 +101,7 @@
 
 
 
-    <button class="btn btn-primary">Salva</button>
+    <button class="btn mb-5 w-75 m-auto btn-dark d-block">Salva</button>
 </form>
 
 @endsection

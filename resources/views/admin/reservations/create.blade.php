@@ -30,7 +30,12 @@
 
         <h1 class="py-4">Nuova Prenotazione Tavolo</h1>
 
-        <form action="{{ route('admin.reservations.store') }}" enctype="multipart/form-data" method="POST" class="px-2 py-5 bg-success bg-opacity-75 rounded">
+        <form 
+            action="{{ route('admin.reservations.store') }}" 
+            enctype="multipart/form-data" 
+            method="POST" 
+            class="px-2 py-5 bg-success bg-opacity-75 rounded"
+        >
             @csrf
     
             <div class="mb-5 text-center">

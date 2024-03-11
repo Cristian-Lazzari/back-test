@@ -32,7 +32,12 @@
 
         <h1 class="py-4">Nuovo Ordine D'Asporto</h1>
 
-        <form action="{{ route('admin.orders.store') }}" enctype="multipart/form-data" method="POST" class="px-2 py-5 bg-primary bg-opacity-75 rounded">
+        <form 
+            action="{{ route('admin.orders.store') }}" 
+            enctype="multipart/form-data"
+            method="POST"
+            class="px-2 py-5 bg-primary bg-opacity-75 rounded"
+        >
             @csrf
     
             <div class="mb-5 text-center">
