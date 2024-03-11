@@ -54,6 +54,7 @@
 
     </div>
 
+    {{-- INPUT FILTRI  --}}
     <div class="collapse" id="collapseExample">
         <div class="card card-body">
             <form action="{{ route('admin.projects.filter')}}" class="filter mb-2" method="GET">
@@ -109,10 +110,12 @@
         </div>
     </div>
 
+    {{-- CONTAINER PRODOTTI  --}}
     <div class="d-flex flex-wrap justify-content-center gap-4 py-4">
 
         @foreach ($projects as $project)
 
+            {{-- CARD PRODOTTO  --}}
             <div 
                 class="product border rounded p-4  <?= !$project->visible ? 'opacity-50 bg-secondary-subtle' : '' ?>" 
                 style="flex: 1 1 300px"
@@ -142,6 +145,7 @@
                     </div>
                 </div>
                 <div class="actions d-flex flex-wrap gap-2">
+                    {{-- MODIFICA  --}}
                     <a class="btn btn-sm btn-warning" href="{{ route('admin.projects.edit', $project->id) }}">
                         <svg style="vertical-align: sub" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -149,6 +153,7 @@
                         </svg>
                         Modifica
                     </a>
+                    {{-- ELIMINA  --}}
                     <form action="{{ route('admin.projects.destroy', ['project' =>$project])}}" method="post">
                         @csrf
                         <button class="btn btn-sm btn-danger">
@@ -159,6 +164,7 @@
                             <span class="align-items-end">Elimina</span>
                         </button>
                     </form>
+                    {{-- MOSTRA/NASCONDI  --}}
                     <form action="{{ route('admin.projects.updatestatus', $project->id)}}" method="post">
                         @csrf
                         <button 
