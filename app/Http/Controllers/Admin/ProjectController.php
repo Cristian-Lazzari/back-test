@@ -183,6 +183,7 @@ class ProjectController extends Controller
 
         return view('admin.projects.trashed', compact('trashedProjects'));
     }
+
     public function hardDelete($id)
     {
         $project = Project::withTrashed()->find($id);
@@ -191,6 +192,7 @@ class ProjectController extends Controller
 
         return to_route('admin.projects.trashed')->with('delete_success', $project);
     }
+
     public function updatestatus($id)
     {
         $project = Project::where('id', $id)->firstOrFail();

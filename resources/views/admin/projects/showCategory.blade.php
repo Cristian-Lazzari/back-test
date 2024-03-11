@@ -29,7 +29,7 @@
     
     
     <h1 class="m-3">Gestione prodotti</h1>
-    <div class="d-flex align-items-center justify-content-between gap-4 py-3">
+    <div class="d-md-flex align-items-center justify-content-between gap-4 py-3">
 
         <a class="btn my-btn btn-success my-1 flex-grow-1" href="{{ route('admin.projects.create') }}">
             Nuovo
@@ -109,17 +109,89 @@
         </div>
     </div>
 
-    <div class="myproj-c my-4">
+    <div class="d-flex flex-wrap justify-content-center gap-4 py-4">
 
         @foreach ($projects as $project)
 
-        @if($project->visible == 0)
-        <div class="myproj">
-        @else 
+            <div 
+                class="product border rounded p-4  <?= !$project->visible ? 'opacity-50 bg-secondary-subtle' : '' ?>" 
+                style="flex: 1 1 300px"
+            >
+                <div class="fs-4 fw-bold">{{ $project->name }}</div>
+                <div class="fs-6 text-secondary">{{ $project->category->name }}</div>
+                <img class="my-image" src="https://db.dashboardristorante.it/public/images/or.png" alt="{{ $project->name }}">
+                <div class="fs-6 text-primary fw-bold mb-2 pointer" data-bs-toggle="modal" data-bs-target="#exampleModal">Ingredienti</div>
+                
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Ingredienti</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>
+                                @foreach ($project->tags as $tag)
+                                    <span>{{ $tag->name }}</span>{{ !$loop->last ? ', ' : '.' }}
+                                @endforeach
+                            </p>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="actions d-flex flex-wrap gap-2">
+                    <a class="btn btn-sm btn-warning" href="{{ route('admin.projects.edit', $project->id) }}">
+                        <svg style="vertical-align: sub" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                        </svg>
+                        Modifica
+                    </a>
+                    <form action="{{ route('admin.projects.destroy', ['project' =>$project])}}" method="post">
+                        @csrf
+                        <button class="btn btn-sm btn-danger">
+                            <svg style="vertical-align: sub" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                            </svg>
+                            <span class="align-items-end">Elimina</span>
+                        </button>
+                    </form>
+                    <form action="{{ route('admin.projects.updatestatus', $project->id)}}" method="post">
+                        @csrf
+                        <button 
+                            class="btn btn-sm <?= $project->visible ? 'btn-success' : 'btn-dark' ?>"
+                            title="<?= $project->visible ? 'Nascondi' : 'Mostra' ?>"
+                        >
+                            @if ($project->visible == 1)
+                                <svg style="vertical-align: sub" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
+                                    <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z"/>
+                                    <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z"/>
+                                </svg>
+                            @else
+                                <svg style="vertical-align: sub" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                                    <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+                                </svg>  
+                            @endif
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+
+
         
-        <div class="myproj-off">
-        
-        @endif
+            {{-- @if($project->visible == 0)
+
+            <div class="myproj">
+                
+            @else 
+            
+            <div class="myproj-off">
+            
+            @endif
 
                 <section class="s1">
                     <h4>{{$project->name}}</h4>
@@ -142,13 +214,15 @@
                             @method('delete')
                             <button class="btn btn-danger w-100" >Elimina</button>
                         </form>
-                        @if($project->visible == 0)
-                        <form class="w-100" action="{{ route('admin.projects.updatestatus', $project->id)}}" method="post">
-                            @csrf
 
-                            <button class="btn btn-warning w-100" >Nascondi</button>
-                        </form>
-                        @else 
+                        @if($project->visible == 0)
+                            <form class="w-100" action="{{ route('admin.projects.updatestatus', $project->id)}}" method="post">
+                                @csrf
+
+                                <button class="btn btn-warning w-100" >Nascondi</button>
+                            </form>
+                        @else
+
                         <form class="w-100" action="{{ route('admin.projects.updatestatus', $project->id)}}" method="post">
                             @csrf
 
@@ -157,7 +231,7 @@
                         
                         @endif
                 </section>
-            </div>
+            </div> --}}
 
         
         @endforeach
