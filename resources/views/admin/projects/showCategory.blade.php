@@ -124,7 +124,7 @@
                 <div class="fs-6 text-secondary">{{ $project->category->name }}</div>
                 <img class="my-image" src="https://db.dashboardristorante.it/public/images/or.png" alt="{{ $project->name }}">
                 {{-- <img class="my-image" src="{{ asset('public/storage/' . $project->image) }}" alt="{{ $project->name }}"> --}}
-                <div class="fs-6 text-primary fw-bold mb-2 pointer" data-bs-toggle="modal" data-bs-target="#modalIngrendient-{{ $project->id }}">Ingredienti</div>
+                <div class="fs-6 text-primary fw-bold mb-2 pointer" data-bs-toggle="modal" data-bs-target="#modalIngrendient-{{ $project->id }}">Dettagli</div>
 
                 <div class="actions d-flex flex-wrap gap-2">
                     {{-- MODIFICA  --}}
@@ -169,18 +169,30 @@
                 </div>
             </div>
 
-            <!-- MODALE INGREDIENTI -->
+            <!-- MODALE DETTAGLI -->
             <div class="modal" id="modalIngrendient-{{ $project->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Ingredienti</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Dettagli</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <p>
+                            <span class="fw-semibold">Descrizione: </span>
+                            @if (strlen($project->tags[0]['name']) > 50)
+                                {{ $project->tags[0]['name'] }}
+                            @else
+                                Nessuna descrizione
+                            @endif
+                        </p>
+                        <p>
+                            <span class="fw-semibold">Ingredienti: </span>
                             @foreach ($project->tags as $tag)
-                                <span>{{ $tag->name }}</span>{{ !$loop->last ? ', ' : '.' }}
+                                @if (strlen($tag->name) < 50)
+                                    <span>{{ $tag->name }}</span>
+                                @endif
+                                {{ !$loop->last ? ', ' : '.' }}
                             @endforeach
                         </p>
                     </div>
