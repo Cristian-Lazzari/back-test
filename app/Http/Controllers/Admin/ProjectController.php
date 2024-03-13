@@ -94,7 +94,7 @@ class ProjectController extends Controller
 
             $new_ing->save();
 
-            return redirect()->back()->with('tag_success', true);
+            return redirect()->route('admin.projects.create')->with('tag_success', true);
         }
 
         $request->validate($this->validations);

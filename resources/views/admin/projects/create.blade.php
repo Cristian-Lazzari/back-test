@@ -87,7 +87,7 @@
                         @if (old('description') == $description->id) checked @endif
             
                     >
-                    <label class="btn btn-outline-dark" for="description-{{ $description->id }}">{{ $description->name }}</label>
+                    <label class="btn btn-outline-dark shadow-sm" for="description-{{ $description->id }}">{{ $description->name }}</label>
 
                     @error('description') 
                         <div class="invalid-feedback">
@@ -112,7 +112,7 @@
                         @if (in_array($tag->id, old('tags', []))) checked @endif
             
                     >
-                    <label class="btn btn-outline-dark" for="tag{{ $tag->id }}">{{ $tag->name }}</label>
+                    <label class="btn btn-outline-dark shadow-sm" for="tag{{ $tag->id }}">{{ $tag->name }}</label>
 
                     @error('tags') 
                         <div class="invalid-feedback">
@@ -125,30 +125,34 @@
             </div>
         </div>
 
-        <div class="mb-3">
-            <label for="name_ing" class="form-label">Titolo</label>
-            <input
-                type="text"
-                class="form-control @error('name_ing') is-invalid @enderror"
-                id="name_ing"
-                name="name_ing"
-                value="{{ old('name_ing') }}"
-            >
-            <div class="invalid-feedback">
-                @error('name_ing') {{ $message }} @enderror
+        <div class="text-center border border-black w-50 mx-auto mb-4 p-3 rounded shadow">
+            <h4>Ingrediente mancante? Crealo ora!</h4>
+            <p><span class="fw-semibold">Attenzione:</span> Gli ingredienti con più di 50 caratteri saranno considerati una descrizione del prodotto</p>
+            <div class="mb-3 text-center">
+                <label for="name_ing" class="form-label fw-semibold">Nome</label>
+                <input
+                    type="text"
+                    class="form-control w-75 m-auto text-center @error('name_ing') is-invalid @enderror"
+                    id="name_ing"
+                    name="name_ing"
+                    value="{{ old('name_ing') }}"
+                >
+                <div class="invalid-feedback">
+                    @error('name_ing') {{ $message }} @enderror
+                </div>
             </div>
-        </div>
-        <div class="mb-3">
-            <label for="price_ing" class="form-label">Prezzo in centesimi</label>
-            <input
-                type="text"
-                class="form-control @error('price_ing') is-invalid @enderror"
-                id="price_ing"
-                name="price_ing"
-                value="{{ old('price_ing') }}"
-            >
-            <div class="invalid-feedback">
-                @error('price_ing') {{ $message }} @enderror
+            <div class="mb-3 text-center">
+                <label for="price_ing" class="form-label fw-semibold">Prezzo in centesimi</label>
+                <input
+                    type="text"
+                    class="form-control w-75 m-auto text-center @error('price_ing') is-invalid @enderror"
+                    id="price_ing"
+                    name="price_ing"
+                    value="{{ old('price_ing') }}"
+                >
+                <div class="invalid-feedback">
+                    @error('price_ing') {{ $message }} @enderror
+                </div>
             </div>
         </div>
 
