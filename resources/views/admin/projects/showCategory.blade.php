@@ -117,33 +117,15 @@
 
             {{-- CARD PRODOTTO  --}}
             <div 
-                class="product border rounded p-4  <?= !$project->visible ? 'opacity-50 bg-secondary-subtle' : '' ?>" 
+                class="product border rounded p-4 shadow <?= $project->visible ? 'opacity-50 bg-secondary-subtle' : '' ?>" 
                 style="flex: 1 1 300px"
             >
                 <div class="fs-4 fw-bold">{{ $project->name }}</div>
                 <div class="fs-6 text-secondary">{{ $project->category->name }}</div>
                 <img class="my-image" src="https://db.dashboardristorante.it/public/images/or.png" alt="{{ $project->name }}">
                 {{-- <img class="my-image" src="{{ asset('public/storage/' . $project->image) }}" alt="{{ $project->name }}"> --}}
-                <div class="fs-6 text-primary fw-bold mb-2 pointer" data-bs-toggle="modal" data-bs-target="#exampleModal">Ingredienti</div>
-                
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Ingredienti</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p>
-                                @foreach ($project->tags as $tag)
-                                    <span>{{ $tag->name }}</span>{{ !$loop->last ? ', ' : '.' }}
-                                @endforeach
-                            </p>
-                        </div>
-                    </div>
-                    </div>
-                </div>
+                <div class="fs-6 text-primary fw-bold mb-2 pointer" data-bs-toggle="modal" data-bs-target="#modalIngrendient-{{ $project->id }}">Ingredienti</div>
+
                 <div class="actions d-flex flex-wrap gap-2">
                     {{-- MODIFICA  --}}
                     <a class="btn btn-sm btn-warning" href="{{ route('admin.projects.edit', $project->id) }}">
@@ -168,10 +150,10 @@
                     <form action="{{ route('admin.projects.updatestatus', $project->id)}}" method="post">
                         @csrf
                         <button 
-                            class="btn btn-sm <?= $project->visible ? 'btn-success' : 'btn-dark' ?>"
-                            title="<?= $project->visible ? 'Nascondi' : 'Mostra' ?>"
+                            class="btn btn-sm <?= !$project->visible ? 'btn-success' : 'btn-dark' ?>"
+                            title="<?= !$project->visible ? 'Nascondi' : 'Mostra' ?>"
                         >
-                            @if ($project->visible == 1)
+                            @if (!$project->visible)
                                 <svg style="vertical-align: sub" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
                                     <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z"/>
                                     <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z"/>
@@ -185,11 +167,30 @@
                         </button>
                     </form>
                 </div>
+            </div>
+
+            <!-- MODALE INGREDIENTI -->
+            <div class="modal" id="modalIngrendient-{{ $project->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Ingredienti</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            @foreach ($project->tags as $tag)
+                                <span>{{ $tag->name }}</span>{{ !$loop->last ? ', ' : '.' }}
+                            @endforeach
+                        </p>
+                    </div>
+                </div>
+                </div>
             </div>        
         @endforeach
     </div>
 
 
-    {{ $projects->links() }}
+    {{-- {{ $projects->links() }} --}}
 @endsection
 

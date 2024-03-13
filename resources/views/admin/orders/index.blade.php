@@ -46,6 +46,8 @@
     </a>
     <div class="collapse mt-2" id="collapseExample">
         <div class="card card-body">
+
+            {{-- FILTRI  --}}
             <form action="{{ route('admin.orders.filters')}}" class="filter mb-2" method="GET">
 
                 <h3 class="w-100">Filtri</h3>
@@ -257,11 +259,6 @@
                         onclick="window.location.href='{{ route('admin.orders.show', $order->id) }}'"
                     >
                         {{ $order->name }}
-                        {{-- <span class="{{ $dot_status }}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-fill ms-2" viewBox="0 0 16 16">
-                                <circle cx="7" cy="7" r="7"/>
-                            </svg>
-                        </span> --}}
                     </td>
 
                     {{-- TELEFONO  --}}

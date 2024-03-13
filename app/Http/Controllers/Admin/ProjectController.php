@@ -29,9 +29,9 @@ class ProjectController extends Controller
     public function showCategory($category_id)
     {
         if ($category_id == 1) {
-            $projects = Project::paginate(24);
+            $projects = Project::orderBy('name')->paginate(24);
         } else {
-            $projects = Project::where('category_id', $category_id)->paginate(24);
+            $projects = Project::where('category_id', $category_id)->orderBy('name')->paginate(24);
         }
 
         return view('admin.projects.showCategory', compact('projects', 'category_id'));
@@ -56,7 +56,7 @@ class ProjectController extends Controller
             $query->where('visible', '=', 1);
         }
 
-        $projects = $query->paginate(24);
+        $projects = $query->orderBy('name')->get();
 
 
         return view('admin.projects.showCategory', compact('projects', 'category_id', 'name', 'visible'));
@@ -65,27 +65,40 @@ class ProjectController extends Controller
 
     public function create(Request $request)
     {
-        $categories = Category::all();
-        $tags       = Tag::orderBy('name')->get();
+        $categories             = Category::all();
+        $tags                   = Tag::orderBy('name')->get();
+        $tagDescription         = Tag::whereRaw('CHAR_LENGTH(name) >= 50')->orderBy('name')->get();
 
-        return view('admin.projects.create', compact('categories', 'tags'));
+        return view('admin.projects.create', compact('categories', 'tags', 'tagDescription'));
     }
 
-
+    private $validations_tag = [
+        'name_ing'          => 'required|string|min:2',
+        'price_ing'         => 'required',
+    ];
     public function store(Request $request)
     {
+        $tag_name = $request->name_ing;
+        $tag_price = $request->price_ing;
+        if ($tag_name && $tag_price) {
+            $request->validate($this->validations_tag);
+
+            $new_ing = new Tag();
+            $new_ing->name = $tag_name;
+
+            if ($tag_name > 50) {
+                $new_ing->price = 0;
+            } else {
+                $new_ing->price = $tag_price;
+            }
+
+            $new_ing->save();
+
+            return redirect()->back()->with('tag_success', true);
+        }
+
         $request->validate($this->validations);
         $data = $request->all();
-
-        // if ($data['name_ing'] && $data['price_ing']) {
-        //     $new_ing = new Tag();
-
-        //     $new_ing->name = $data['name_ing'];
-        //     $new_ing->price = $data['price_ing'];
-        //     $new_ing->save();
-
-        //     return 
-        // }
 
         $newProject = new Project();
 
@@ -103,6 +116,7 @@ class ProjectController extends Controller
 
         $newProject->save();
 
+        array_unshift($data['tags'], $data['description']);
         $newProject->tags()->sync($data['tags'] ?? []);
 
         return redirect()->route('admin.projects.index', ['project']);

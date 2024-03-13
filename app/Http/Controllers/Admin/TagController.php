@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 class TagController extends Controller
 {
     private $validations = [
-        'name'          => 'required|string|min:2|max:50',
+        'name'          => 'required|string|min:2',
         'price'         => 'required',
     ];
 

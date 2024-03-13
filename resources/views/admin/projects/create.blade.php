@@ -2,6 +2,12 @@
 
 @section('contents')
 
+    @if (session('tag_success'))
+        <div class="alert alert-success">
+            Ingrediente creato correttamente
+        </div>
+    @endif
+
     <form 
         method="POST" action="{{ route('admin.projects.store') }} "
         enctype="multipart/form-data" 
@@ -67,9 +73,34 @@
         </div>
 
         <div class="mb-5 m-auto w-75 btn-group specialradio">
+
+            <h3>Descrizione</h3>
+            <div class="mytags mb-4">
+                @foreach($tagDescription as $description)
+
+                    <input
+                        type="radio"
+                        class="btn-check @error ('description') is-invalid @enderror"
+                        id="description-{{ $description->id }}"
+                        name="description"
+                        value="{{ $description->id }}"
+                        @if (old('description') == $description->id) checked @endif
+            
+                    >
+                    <label class="btn btn-outline-dark" for="description-{{ $description->id }}">{{ $description->name }}</label>
+
+                    @error('description') 
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                
+                @endforeach
+
+            </div>
+
             <h3>Ingredienti</h3>
             <div class="mytags">
-
                 @foreach($tags as $tag)
 
                     <input
