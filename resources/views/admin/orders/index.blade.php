@@ -39,14 +39,12 @@
 
     <a  href="{{ route('admin.months.index') }}" class="btn btn-warning w-50 m-auto my-3 d-block">Gestione date</a>
     <a  href="{{ route('admin.orders.create') }}" class="btn btn-success w-50 m-auto my-3 d-block">Nuovo Ordine</a>
-    <p class="d-inline-flex gap-1">
-        <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
-                <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5z"/>
-            </svg>  FILTRA
-        </a>
-    </p>
-    <div class="collapse" id="collapseExample">
+    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
+            <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5z"/>
+        </svg>  FILTRA
+    </a>
+    <div class="collapse mt-2" id="collapseExample">
         <div class="card card-body">
             <form action="{{ route('admin.orders.filters')}}" class="filter mb-2" method="GET">
 

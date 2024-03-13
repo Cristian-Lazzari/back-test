@@ -66,7 +66,7 @@ class ProjectController extends Controller
     public function create(Request $request)
     {
         $categories = Category::all();
-        $tags       = Tag::orderBy('name')->limit(10)->get();
+        $tags       = Tag::orderBy('name')->get();
 
         return view('admin.projects.create', compact('categories', 'tags'));
     }
@@ -76,6 +76,16 @@ class ProjectController extends Controller
     {
         $request->validate($this->validations);
         $data = $request->all();
+
+        // if ($data['name_ing'] && $data['price_ing']) {
+        //     $new_ing = new Tag();
+
+        //     $new_ing->name = $data['name_ing'];
+        //     $new_ing->price = $data['price_ing'];
+        //     $new_ing->save();
+
+        //     return 
+        // }
 
         $newProject = new Project();
 
