@@ -15,11 +15,11 @@
     >
         @csrf
 
-        <div class="mb-3 text-center nome_">
+        <div class="mb-3 text-center w-50 m-auto">
             <label for="name" class="form-label fw-semibold">Nome Prodotto</label>
             <input
                 type="text"
-                class="form-control w-75 m-auto text-center @error('name') is-invalid @enderror"
+                class="form-control @error('name') is-invalid @enderror"
                 id="name"
                 name="name"
                 value="{{ old('name') }}"
@@ -29,11 +29,11 @@
             </div>
         </div>
 
-        <div class="mb-3 text-center prezzo_">
+        <div class="mb-3 text-center w-50 m-auto">
             <label for="price" class="form-label fw-semibold">Prezzo in centesimi</label>
             <input
                 type="text"
-                class="form-control w-75 m-auto text-center @error('price') is-invalid @enderror"
+                class="form-control @error('price') is-invalid @enderror"
                 id="price"
                 name="price"
                 value="{{ old('price') }}"
@@ -43,10 +43,10 @@
             </div>
         </div>
 
-        <div class="mb-3 text-center categoria_">
+        <div class="mb-3 text-center w-50 m-auto">
             <label for="category" class="form-label fw-semibold">Categoria</label>
             <select
-                class="form-select w-75 m-auto text-center @error('category_id') is-invalid @enderror"
+                class="form-select @error('category_id') is-invalid @enderror"
                 id="category"
                 name="category_id"
             >
@@ -87,7 +87,7 @@
                         @if (old('description') == $description->id) checked @endif
             
                     >
-                    <label class="btn btn-outline-dark shadow-sm" for="description-{{ $description->id }}">{{ $description->name }}</label>
+                    <label class="btn btn-outline-dark" for="description-{{ $description->id }}">{{ $description->name }}</label>
 
                     @error('description') 
                         <div class="invalid-feedback">
