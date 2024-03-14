@@ -230,16 +230,25 @@ td {
 .mybtn,
 .mybtn-1 {
     text-transform: uppercase;
-    font-size: 1.4rem;
-    padding: 1rem;
-    max-width: 500px;
-    width: 250px;
+    font-size: clamp(0.8rem, 1vh, 1.4rem);
+    padding: 3rem 1rem;
+    // max-width: 500px;
+    // width: 250px;
     text-decoration: none;
     border-radius: 10px;
     text-align: center;
     font-weight: bold;
     color: white;
+    border-bottom: 5px solid;
 }
+
+.mybtn:active,
+.mybtn-1:active {
+    border-bottom: 0px solid;
+    transform: translate(-0.5px, 2px);
+    transition: all 50ms ease-in-out;
+}
+
 .mybtn {
     color: rgba(255, 255, 255, 0.822);
 }
