@@ -2,9 +2,12 @@
 
 @section('contents')
 
-<form class="cont_a" method="POST" action="{{ route('admin.tags.store') }}">
+<form class="px-2 py-5 s2c rounded c-white" method="POST" action="{{ route('admin.tags.store') }}">
     @csrf
+    <h2>
 
+        Crea un nuovo ingrediente
+    </h2>
     <div class="mb-3">
         <label for="name" class="form-label">Titolo</label>
         <input
@@ -34,7 +37,7 @@
 
 
 
-    <button class="btn btn-primary">Salva</button>
+    <button class="btn btn-light">Salva</button>
 </form>
 
 @endsection

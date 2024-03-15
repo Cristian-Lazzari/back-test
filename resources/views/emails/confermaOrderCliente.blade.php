@@ -77,7 +77,7 @@
         @endforeach
         </div>
         <h4>Totale carrello: €{{intval($newOrder['totPrice']) / 100}}</h4>
-    <p>Se desidera disdire la prenotazione la preghiamo di contaatrci il prima possibile per avvisarci</p>
+    <p>Se desidera disdire la prenotazione la preghiamo di contattarci il prima possibile per avvisarci</p>
     <a href="tel:3271622244" class="btn btn-danger">Annulla prenotazione</a>
 </body>
 </html>

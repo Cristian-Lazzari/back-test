@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Tag;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -40,7 +41,11 @@ class TagController extends Controller
 
         $newTag->save();
 
-
+        if (isset($data['fromProduct'])) {
+            $categories = Category::all();
+            $tags       = Tag::whereRaw('CHAR_LENGTH(name) <= 50')->orderBy('name')->get();
+            return view('admin.projects.create', compact('categories', 'tags'));
+        }
         return redirect()->route('admin.tags.index');
     }
 

@@ -20,46 +20,85 @@ class ProjectController extends Controller
 
     public function index()
     {
-       // $projects = Project::paginate(25);
+        // $projects = Project::paginate(25);
         $categories = Category::paginate(25);
 
-        return view('admin.projects.index', compact( 'categories'));
+        return view('admin.projects.index', compact('categories'));
     }
 
     public function showCategory($category_id)
     {
-        $projects = Project::where('category_id', $category_id)->paginate(24);
-        
+        if ($category_id == 1) {
+            $projects = Project::orderBy('name')->paginate(24);
+        } else {
+            $projects = Project::where('category_id', $category_id)->orderBy('name')->paginate(24);
+        }
 
-        return view('admin.projects.showCategory', compact( 'projects'));
+        return view('admin.projects.showCategory', compact('projects', 'category_id'));
+    }
+
+    public function filter(Request $request)
+    {
+        $name = $request->input('name');
+        $visible = $request->input('visible');
+        $orderByUpdate = $request->has('orderByUpdate') ? true : false;
+        $category_id = $request->input('category_id');
+
+        $query = Project::query();
+
+        if ($name) {
+            $query->where('name', 'like', '%' . $name . '%');
+        }
+
+        if ($visible == 1) {
+            $query->where('visible', '=', 0);
+        } else if ($visible == 2) {
+            $query->where('visible', '=', 1);
+        }
+
+        $projects = $query->orderBy('name')->get();
+
+
+        return view('admin.projects.showCategory', compact('projects', 'category_id', 'name', 'visible'));
     }
 
 
     public function create(Request $request)
     {
-        $categories = Category::all();
-        $tags       = Tag::orderBy('name')->get();
+        $categories             = Category::all();
+        $tags                   = Tag::orderBy('name')->get();
+        $tagDescription         = Tag::whereRaw('CHAR_LENGTH(name) >= 50')->orderBy('name')->get();
 
-        return view('admin.projects.create', compact('categories', 'tags'));
+        return view('admin.projects.create', compact('categories', 'tags', 'tagDescription'));
     }
 
-
+    private $validations_tag = [
+        'name_ing'          => 'required|string|min:2',
+        'price_ing'         => 'required',
+    ];
     public function store(Request $request)
     {
-        $data = $request->all();
-        // dump($data['name']);
-        // dump($data['price']);
-        // dump($data['category_id']);
-        // if (isset($data['image'])) {
-        //     dump($data['image']);
+        $tag_name = $request->name_ing;
+        $tag_price = $request->price_ing;
+        if ($tag_name && $tag_price) {
+            $request->validate($this->validations_tag);
 
-        // }
-        // dd($data['tags']);
+            $new_ing = new Tag();
+            $new_ing->name = $tag_name;
 
+            if ($tag_name > 50) {
+                $new_ing->price = 0;
+            } else {
+                $new_ing->price = $tag_price;
+            }
 
+            $new_ing->save();
+
+            return redirect()->route('admin.projects.create')->with('tag_success', true);
+        }
 
         $request->validate($this->validations);
-
+        $data = $request->all();
 
         $newProject = new Project();
 
@@ -77,6 +116,7 @@ class ProjectController extends Controller
 
         $newProject->save();
 
+        array_unshift($data['tags'], $data['description']);
         $newProject->tags()->sync($data['tags'] ?? []);
 
         return redirect()->route('admin.projects.index', ['project']);
@@ -167,6 +207,7 @@ class ProjectController extends Controller
 
         return view('admin.projects.trashed', compact('trashedProjects'));
     }
+
     public function hardDelete($id)
     {
         $project = Project::withTrashed()->find($id);
@@ -175,6 +216,7 @@ class ProjectController extends Controller
 
         return to_route('admin.projects.trashed')->with('delete_success', $project);
     }
+
     public function updatestatus($id)
     {
         $project = Project::where('id', $id)->firstOrFail();

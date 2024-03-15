@@ -26,10 +26,14 @@ td {
 }
 
 .my-image {
-    width: 50px;
-    height: 50px;
+    width: 100px;
+    height: 100px;
     border-radius: 300px;
+    margin-left: 10px;
+    float: right;
+    object-fit: cover;
 }
+
 .my-image-show {
     width: 50%;
     aspect-ratio: 1;
@@ -226,16 +230,25 @@ td {
 .mybtn,
 .mybtn-1 {
     text-transform: uppercase;
-    font-size: 1.4rem;
-    padding: 1rem;
-    max-width: 500px;
-    width: 250px;
+    font-size: clamp(0.8rem, 1vh, 1.4rem);
+    padding: 3rem 1rem;
+    // max-width: 500px;
+    // width: 250px;
     text-decoration: none;
     border-radius: 10px;
     text-align: center;
     font-weight: bold;
     color: white;
+    border-bottom: 5px solid;
 }
+
+.mybtn:active,
+.mybtn-1:active {
+    border-bottom: 0px solid;
+    transform: translate(-0.5px, 2px);
+    transition: all 50ms ease-in-out;
+}
+
 .mybtn {
     color: rgba(255, 255, 255, 0.822);
 }
@@ -283,12 +296,11 @@ td {
             align-items: center;
             font-size: 16px;
             padding: 1rem;
-            
+
             h2 {
                 font-size: 30px;
             }
             .day_w {
-              
                 padding: 10px;
                 width: 140px;
                 background-color: #ffffff;
@@ -296,8 +308,6 @@ td {
             }
         }
         .res {
-           
-         
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -322,7 +332,6 @@ td {
 
         .max {
             flex-grow: 1;
-            
 
             height: 100%;
             padding: 15px;
@@ -366,7 +375,6 @@ td {
     }
     
 }
-
 
 .myproj-c {
     display: flex;
@@ -578,6 +586,7 @@ td {
         }
     }
 }
+
 .specialradio {
     display: flex;
     flex-direction: column;
@@ -653,9 +662,9 @@ td {
         position: absolute;
         right: -7px;
         bottom: -8px;
-        border: 1px solid blue;
+        border: 1px solid rgb(0, 0, 0);
         font-weight: bold;
-        border-radius: 7px;
+        border-radius: 15px;
         padding: 0 5px;
     }
 }
@@ -668,9 +677,124 @@ td {
         align-self: flex-end;
     }
 }
-.filter{
+.filter {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
     align-items: flex-end;
+}
+
+// STILE PER LE TABELLE
+
+.phone:hover {
+    color: blue !important;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0 1px; /* Spaziatura tra le righe */
+}
+
+.table_row:hover {
+    cursor: pointer;
+}
+
+.pointer:hover {
+    cursor: pointer;
+}
+.mycDash{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    section{
+        display: flex;
+        gap: 10px;
+        width: 100%;
+    }
+    a{
+        text-decoration: none;
+        color: rgb(255, 255, 255);
+        flex: 8 1 auto;
+        //background-color: #78b1d5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 20px;
+        gap: 4px;
+        box-shadow: 3px 3px 9px rgba(0, 0, 0, 0.4);
+        transition: all .3s ease-in-out;
+        font-size: clamp(20px, 2.7vw, 26px);
+        text-transform: uppercase; 
+        font-weight: bold;
+    }
+
+    .small{
+        
+        width:clamp(70px, 10%, 150px) !important;
+        flex-grow: 0;
+        //width: auto !important;
+        aspect-ratio: 1;
+    }
+}
+@media (min-width: 950px) {
+    .mycDash{
+        a:hover{
+            font-size: 29px;
+            transition: all .3s ease-in-out;
+            opacity: 0.7;
+        }
+    }
+}
+.s1a{
+    
+    background-color: rgb(130, 125, 149, 0.788) !important;
+}
+.s1b{
+    background-color: rgb(3, 46, 187, 0.788) !important;
+    
+}
+.s2a{
+    background-color: rgb(52, 53, 87, 0.788) !important;
+    
+}
+.s2b{
+    
+    background-color: rgb(0, 32, 134, 0.788) !important;
+}
+.s2c{
+    background-color: rgb(0, 22, 96, 0.788) !important;
+    
+    
+}
+.s3a{
+    
+    background-color: rgb(0, 82, 158, 0.788) !important;
+}
+.s3b{
+    
+    background-color: rgb(0, 79, 152, 0.788) !important;
+}
+.s4a{
+    background-color: rgb(201, 125, 39, 0.788) !important;
+    
+}
+.s4b{
+    
+    background-color: rgba(69, 23, 4, 0.788) !important;
+}
+.s5a{
+    
+    background-color: rgb(139, 74, 4, 0.788) !important;
+}
+.s5b{
+    
+    background-color: rgb(69, 23, 4, 0.788) !important;
+}
+.mybtdb{
+    font-size: 25px;
+    padding: 5px 20px;
+    border-radius: 11px;
+}
+.c-white{
+    color: white !important;
 }

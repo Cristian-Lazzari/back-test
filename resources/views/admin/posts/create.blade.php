@@ -2,9 +2,9 @@
 
 @section('contents')
 
-<form class="cont_a" method="POST" action="{{ route('admin.posts.store') }} " enctype="multipart/form-data" >
+<form class="px-2 py-5 s3b rounded c-white" method="POST" action="{{ route('admin.posts.store') }} " enctype="multipart/form-data" >
     @csrf
-
+    <h2>Crea un nuovo Post</h2>
     <div class="mb-3 nome_">
         <label for="title" class="form-label">Titolo del Post</label>
         <input
@@ -70,7 +70,7 @@
                     value="{{ $tag->id }}"
                     @if (in_array($tag->id, old('tags', []))) checked @endif
                 >
-                <label class="form-check-label" for="tag{{ $tag->id }}">{{ $tag->tag }}</label>
+                <label class="form-check-label" for="tag{{ $tag->id }}">#{{ $tag->tag }}</label>
             </div>
         @endforeach
     </div>
@@ -79,7 +79,7 @@
 
 
 
-    <button class="btn btn-primary">Salva</button>
+    <button class="btn btn-light">Salva</button>
 </form>
 
 @endsection

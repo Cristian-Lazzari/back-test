@@ -38,6 +38,7 @@ Route::middleware(['auth', 'verified'])
         // Rotte Projects 
         Route::get('/projects/showCategory/{category_id}',   [ProjectController::class, 'showCategory'])->name('projects.showCategory');
         Route::post('/projects/updatestatus/{project_id}',   [ProjectController::class, 'updatestatus'])->name('projects.updatestatus');
+        Route::get('/projects/filter',                      [ProjectController::class, 'filter'])->name('projects.filter');
         Route::get('/projects/trashed',                      [ProjectController::class, 'trashed'])->name('projects.trashed');
         Route::post('/projects/{project}/restore',           [ProjectController::class, 'restore'])->name('projects.restore');
         Route::delete('/projects/{project}/hardDelete',      [ProjectController::class, 'harddelete'])->name('projects.hardDelete');

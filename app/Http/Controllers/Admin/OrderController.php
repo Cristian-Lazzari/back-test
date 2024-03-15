@@ -10,7 +10,11 @@ use App\Models\Address;
 use App\Models\OrderProject;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Mail\orderAnnullato;
+use App\Mail\orderConfermato;
+use Exception;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -76,31 +80,52 @@ class OrderController extends Controller
         return view('admin.orders.show', compact('order', 'orderProject'));
     }
 
-    public function confirmOrder($order_id)
+    public function confirmOrder(Request $request, $order_id)
     {
         $order = Order::find($order_id);
-        if ($order && $order->status !== 1) {
+        $notification = $request->input('confirm');
+
+        if ($order && $notification && $order->status !== 1) {
+
             if ($order->status == 2) {
                 $order->status = 1;
                 $order->save();
                 $date = Date::where('date_slot', $order->date_slot)->first();
                 $date->reserved_pz += $order->total_pz;
                 $date->save();
-                return redirect("https://wa.me/" . '39' . $order->phone . "?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!");
             } else {
                 $order->status = 1;
                 $order->save();
+            }
+
+            if ($notification == "wa") {
+
                 return redirect("https://wa.me/" . '39' . $order->phone . "?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!");
+            } else if ($notification == "em") {
+                // Invio Email
+                try {
+                    $mail = new orderConfermato($order);
+                    Mail::to($order['email'])->send($mail);
+                } catch (Exception) {
+                    return redirect()->back()->with('email_error', true);
+                }
+                return redirect()->back()->with('confirm_success', true);
+            } else {
+                return redirect()->back()->with('confirm_success', true);
             }
         } else {
-            return redirect()->back();
+            return redirect()->back()->with('error_confirm', true);
         }
     }
 
-    public function rejectOrder($order_id)
+    public function rejectOrder(Request $request, $order_id)
     {
+
         $order = Order::find($order_id);
-        if ($order && $order->status !== 2) {
+        $notification = $request->input('confirm');
+
+        if ($order && $notification && $order->status !== 2) {
+
             $order->status = 2;
             $order->save();
             $date = Date::where('date_slot', $order->date_slot)->first();
@@ -119,9 +144,25 @@ class OrderController extends Controller
                 $date->save();
             }
 
-            return redirect("https://wa.me/" . '39' . $order->phone . "?text=E' con profondo rammarico che siamo obbligati ad disdire la vostra prenotazione!");
+
+            if ($notification == "wa") {
+
+                return redirect("https://wa.me/" . '39' . $order->phone . "?text=Le confermiamo che abbiamo accettato la sua prenotazione. Buona serata!");
+            } else if ($notification == "em") {
+                // Invio Email
+                try {
+                    $mail = new orderAnnullato($order);
+                    Mail::to($order['email'])->send($mail);
+                } catch (Exception) {
+                    return redirect()->back()->with('email_error', true);
+                }
+
+                return redirect()->back()->with('reject_success', true);
+            } else {
+                return redirect()->back()->with('reject_success', true);
+            }
         } else {
-            return redirect()->back();
+            return redirect()->back()->with('error_reject', true);
         }
     }
 
