@@ -185,10 +185,13 @@
                     <div class="modal-body">
                         <p>
                             <span class="fw-semibold">Descrizione: </span>
-                            @if (strlen($project->tags[0]['name']) > 50)
-                                {{ $project->tags[0]['name'] }}
-                            @else
-                                Nessuna descrizione
+                            @if (count($project->tags))
+                                
+                                @if (strlen($project->tags[0]['name']) > 50)
+                                    {{ $project->tags[0]['name'] }}
+                                @else
+                                    Nessuna descrizione
+                                @endif
                             @endif
                         </p>
                         <p>
