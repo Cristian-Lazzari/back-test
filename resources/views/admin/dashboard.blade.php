@@ -2,7 +2,7 @@
 
 @section('contents')
 
-<div class="mycDash mt-5" style="max-width: 900px">
+<div class="mycDash mt-5 m-auto" style="max-width: 900px">
     <section>
         <a class="small s1a" href="{{ route('admin.setting') }}">
             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-gear-wide-connected" viewBox="0 0 16 16">
