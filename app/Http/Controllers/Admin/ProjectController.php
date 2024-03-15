@@ -56,11 +56,20 @@ class ProjectController extends Controller
         } else if ($visible == 2) {
             $query->where('visible', '=', 1);
         }
+        if($category_id == 0){
+            $projects = $query->orderBy('name')->get();
+            
+            $category = 0;
+        }else{
+           
+            $projects = $query->where('category_id', $category_id)->orderBy('name')->get();
+            $category = Category::where('id', $category_id)->first();
+            
+        }
 
-        $projects = $query->where('category_id', $category_id)->orderBy('name')->get();
 
 
-        return view('admin.projects.showCategory', compact('projects', 'category_id', 'name', 'visible'));
+        return view('admin.projects.showCategory', compact('projects', 'category_id', 'name', 'visible', 'category'));
     }
 
 

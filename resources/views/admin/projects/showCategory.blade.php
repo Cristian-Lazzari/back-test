@@ -29,7 +29,11 @@
     
     
     <h1 class="m-3">Gestione prodotti -
-        {{$category->name}}
+        @if ($category_id == 0)
+            TUTTI
+        @else
+            {{$category->name}}
+        @endif
         </h1>
     <div class="d-md-flex align-items-center justify-content-between gap-4 py-3">
 
