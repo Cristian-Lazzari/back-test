@@ -36,7 +36,7 @@
             action="{{ route('admin.orders.store') }}" 
             enctype="multipart/form-data"
             method="POST"
-            class="px-2 py-5 bg-primary bg-opacity-75 rounded"
+            class="px-2 py-5 s5a rounded c-white"
         >
             @csrf
     

@@ -34,7 +34,7 @@
             action="{{ route('admin.reservations.store') }}" 
             enctype="multipart/form-data" 
             method="POST" 
-            class="px-2 py-5 bg-success bg-opacity-75 rounded"
+            class="px-2 py-5 s4a rounded c-white"
         >
             @csrf
     
@@ -120,7 +120,7 @@
                 </div>
             </div>
     
-            <button class="btn mb-5 w-75 m-auto btn-dark d-block">Salva</button>
+            <button class="btn mb-5 w-75 m-auto btn-light d-block">Salva</button>
 
             <div class="mb-5 m-auto w-50 btn-group specialradio" role="group" aria-label="Basic radio toggle button group"> 
     
@@ -136,7 +136,7 @@
                             checked
                         @endif
                     >
-                    <label class="btn btn-outline-dark rounded" for="btnradio{{$date->id}}">
+                    <label class="btn btn-outline-light rounded" for="btnradio{{$date->id}}">
                         {{$date->time}} | {{$date->day}}/{{$date->month}}/{{$date->year}} | <strong>{{$date->reserved}}</strong> | max: {{$date->max_res}}
                     </label>
     
@@ -144,7 +144,7 @@
             </div>
          
       
-            <button class="btn w-75 m-auto btn-dark d-block">Salva</button>
+            <button class="btn w-75 m-auto btn-light d-block">Salva</button>
     
         </form>
     </div>

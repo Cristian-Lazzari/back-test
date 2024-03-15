@@ -11,7 +11,7 @@
     <form 
         method="POST" action="{{ route('admin.projects.store') }} "
         enctype="multipart/form-data" 
-        class="px-2 py-5 bg-danger  bg-opacity-75 rounded" 
+        class="px-2 py-5 s1b rounded c-white" 
     >
         @csrf
 
@@ -87,7 +87,7 @@
                         @if (old('description') == $description->id) checked @endif
             
                     >
-                    <label class="btn btn-outline-dark" for="description-{{ $description->id }}">{{ $description->name }}</label>
+                    <label class="btn btn-outline-light" for="description-{{ $description->id }}">{{ $description->name }}</label>
 
                     @error('description') 
                         <div class="invalid-feedback">
@@ -112,7 +112,7 @@
                         @if (in_array($tag->id, old('tags', []))) checked @endif
             
                     >
-                    <label class="btn btn-outline-dark shadow-sm" for="tag{{ $tag->id }}">{{ $tag->name }}</label>
+                    <label class="btn btn-outline-light shadow-sm" for="tag{{ $tag->id }}">{{ $tag->name }}</label>
 
                     @error('tags') 
                         <div class="invalid-feedback">
@@ -156,6 +156,6 @@
             </div>
         </div>
 
-        <button class="btn mb-5 w-75 m-auto btn-dark d-block">Salva</button>
+        <button class="btn mb-5 w-75 m-auto btn-light d-block">Salva</button>
     </form>
 @endsection

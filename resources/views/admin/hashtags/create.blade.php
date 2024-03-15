@@ -2,11 +2,15 @@
 
 @section('contents')
 
-<form class="cont_a" method="POST" action="{{ route('admin.hashtags.store') }} " enctype="multipart/form-data">
+<form class="px-2 py-5 s3a rounded c-white" method="POST" action="{{ route('admin.hashtags.store') }} " enctype="multipart/form-data">
     @csrf
 
     <div class="mb-3 nome_">
-        <label for="tag" class="form-label">Nome Prodotto</label>
+        <h2>
+
+            Crea un nuovo hashtag
+        </h2>
+        <label for="tag" class="form-label">Nome hashtag</label>
         <input
             type="text"
             class="form-control @error('tag') is-invalid @enderror"
@@ -23,7 +27,7 @@
 
 
 
-    <button class="btn btn-primary">Salva</button>
+    <button class="btn btn-light">Salva</button>
 </form>
 
 @endsection
