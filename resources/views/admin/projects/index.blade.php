@@ -33,8 +33,14 @@
         </div>
         <div class="mycontainerc ">
 
+            <a href="{{ route('admin.projects.showCategory', ['category_id' => 0]) }}" class="btn btn-dark w-50 my-2 m-auto"> TUTTI </a>
             @foreach ($categories as $item)
-                <a href="{{ route('admin.projects.showCategory', ['category_id' => $item->id]) }}" class="btn btn-dark w-50 my-2 m-auto">{{$item->name}}</a>              
+                <a href="{{ route('admin.projects.showCategory', ['category_id' => $item->id]) }}" class="btn btn-dark w-50 my-2 m-auto">
+                    @if ($item->id == 1)
+                        (non categorizzati)
+                    @else
+                    {{$item->name}}</a>              
+                    @endif
             @endforeach        
           
         </div>

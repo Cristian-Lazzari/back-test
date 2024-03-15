@@ -28,7 +28,7 @@ class ProjectController extends Controller
 
     public function showCategory($category_id)
     {
-        if ($category_id == 1) {
+        if ($category_id == 0) {
             $projects = Project::orderBy('name')->paginate(24);
         } else {
             $projects = Project::where('category_id', $category_id)->orderBy('name')->paginate(24);
@@ -56,7 +56,7 @@ class ProjectController extends Controller
             $query->where('visible', '=', 1);
         }
 
-        $projects = $query->orderBy('name')->get();
+        $projects = $query->where('category_id', $category_id)->orderBy('name')->get();
 
 
         return view('admin.projects.showCategory', compact('projects', 'category_id', 'name', 'visible'));
