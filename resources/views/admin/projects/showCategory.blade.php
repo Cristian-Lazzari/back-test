@@ -28,7 +28,9 @@
     </a>
     
     
-    <h1 class="m-3">Gestione prodotti - {{$projects[0]->category->name}}</h1>
+    <h1 class="m-3">Gestione prodotti -
+        {{$category->name}}
+        </h1>
     <div class="d-md-flex align-items-center justify-content-between gap-4 py-3">
 
 

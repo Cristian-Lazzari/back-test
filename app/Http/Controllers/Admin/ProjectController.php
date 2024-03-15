@@ -33,8 +33,9 @@ class ProjectController extends Controller
         } else {
             $projects = Project::where('category_id', $category_id)->orderBy('name')->paginate(24);
         }
+        $category = Category::where('id', $category_id)->first();
 
-        return view('admin.projects.showCategory', compact('projects', 'category_id'));
+        return view('admin.projects.showCategory', compact('projects', 'category_id', 'category'));
     }
 
     public function filter(Request $request)
