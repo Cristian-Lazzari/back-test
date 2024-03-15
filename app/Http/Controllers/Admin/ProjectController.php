@@ -21,7 +21,7 @@ class ProjectController extends Controller
     public function index()
     {
         // $projects = Project::paginate(25);
-        $categories = Category::paginate(25);
+        $categories = Category::all();
 
         return view('admin.projects.index', compact('categories'));
     }
@@ -29,9 +29,9 @@ class ProjectController extends Controller
     public function showCategory($category_id)
     {
         if ($category_id == 0) {
-            $projects = Project::orderBy('name')->paginate(24);
+            $projects = Project::orderBy('name')->get();
         } else {
-            $projects = Project::where('category_id', $category_id)->orderBy('name')->paginate(24);
+            $projects = Project::where('category_id', $category_id)->orderBy('name')->get();
         }
         $category = Category::where('id', $category_id)->first();
 
