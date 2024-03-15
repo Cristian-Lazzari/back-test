@@ -133,8 +133,8 @@
             >
                 <div class="fs-4 fw-bold">{{ $project->name }}</div>
                 <div class="fs-6 text-secondary">{{ $project->category->name }}</div>
-                <img class="my-image" src="https://db.dashboardristorante.it/public/images/or.png" alt="{{ $project->name }}">
-                {{-- <img class="my-image" src="{{ asset('public/storage/' . $project->image) }}" alt="{{ $project->name }}"> --}}
+                {{-- <img class="my-image" src="https://db.dashboardristorante.it/public/images/or.png" alt="{{ $project->name }}"> --}}
+                <img class="my-image" src="{{ asset('public/storage/' . $project->image) }}" alt="img di {{ $project->name }}">
                 <div class="fs-6 text-primary fw-bold mb-2 pointer" data-bs-toggle="modal" data-bs-target="#modalIngrendient-{{ $project->id }}">Dettagli</div>
 
                 <div class="actions d-flex flex-wrap gap-2">
