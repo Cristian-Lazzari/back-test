@@ -17,7 +17,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse flex-grow-0" id="navbarNavDropdown">
+        <div class="collapse navbar-collapse flex-grow-0 me-5" id="navbarNavDropdown">
 
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-2">
                 <li class="nav-item dropdown">
@@ -79,7 +79,7 @@
                         Impostazioni
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ route('admin.setting') }}">Disponibilità servizi</a></li>
+                        <li><a class="dropdown-item" href="{{ route('admin.setting') }}">Servizi</a></li>
                         <li><a class="dropdown-item" href="{{ route('admin.months.index') }}">Gestione date</a></li>
 
                     </ul>
