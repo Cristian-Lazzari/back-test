@@ -86,12 +86,15 @@ class OrderController extends Controller
         $notification = $request->input('confirm');
 
         if ($order && $notification && $order->status !== 1) {
+            //0 elaborazione
+            //1 confermato
+            //2 annullato
 
             if ($order->status == 2) {
                 $order->status = 1;
                 $order->save();
                 $date = Date::where('date_slot', $order->date_slot)->first();
-                $date->reserved_pz += $order->total_pz;
+                $date->reserved_asporto ++;
                 $date->save();
             } else {
                 $order->status = 1;
@@ -129,15 +132,9 @@ class OrderController extends Controller
             $order->status = 2;
             $order->save();
             $date = Date::where('date_slot', $order->date_slot)->first();
-            $date->reserved_pz_q -= $order->total_pz_q;
-            if ($date->reserved_pz_q < $date->max_pz_q) {
-                $date->visible_fq = 1;
-                $date->save();
-            }
-            $date->reserved_pz_t -= $order->total_pz_t;
-            if ($date->reserved_pz_t < $date->max_pz_t) {
-                $date->visible_ft = 1;
-                $date->save();
+            $date->reserved_aporto --;
+            if ($date->reserved_asporto < $date->max_asporto) {
+                $date->visible_asporto = 1;
             }
             if ($order->comune !== '0' && $order->civico !== '0' && $order->comune !== '0') {
                 $date->visible_d = 1;
@@ -206,8 +203,7 @@ class OrderController extends Controller
         'message'       => 'nullable|string|min:5|max:1000',
         'date_id'       => 'required',
 
-        'total_pz_t'    => 'required',
-        'total_pz_q'    => 'required',
+
     ];
     public function store(Request $request)
     {
@@ -223,10 +219,13 @@ class OrderController extends Controller
         } else {
             $newOrder->email = 'email@example.com';
         }
-        $newOrder->total_price   = $data['total_price'] * 100;
+        if(isset($data['total_price'])){
+            $newOrder->total_price   = $data['total_price'] * 100;
+        }
+        if(isset($data['total_pz'])){
+            $newOrder->total_pz    = $data['total_pz'];
+        }
 
-        $newOrder->total_pz_q    = $data['total_pz_q'];
-        $newOrder->total_pz_t    = $data['total_pz_t'];
 
         $newOrder->message       = $data['message'];
         $newOrder->status        = 0;
@@ -245,43 +244,14 @@ class OrderController extends Controller
                 $date->visible_d = 0;
             };
         }
+        if ($date->reserved_asporto >= $date->max_asporto) {
+            $date->visible_asporto = 0;
+        };
 
         $newOrder->date_slot = $date->date_slot;
 
-        $maximum_t = $date->reserved_pz_t + $newOrder->total_pz_t;
-        $maximum_q = $date->reserved_pz_q + $newOrder->total_pz_q;
+        
 
-        if (isset($data['max_check'])) {
-            $date->reserved_pz_q = $date->reserved_pz_q + $newOrder->total_pz_q;
-            $date->reserved_pz_t = $date->reserved_pz_t + $newOrder->total_pz_t;
-
-            if ($date->reserved_pz_q >= $date->max_pz_q) {
-                $date->visible_fq = 0;
-            }
-            if ($date->reserved_pz_t >= $date->max_pz_t) {
-                $date->visible_ft = 0;
-            }
-        } else {
-            if ($maximum_t <= $date->max_pz_t && $maximum_q <= $date->max_pz_q) {
-                $date->reserved_pz_t = $date->reserved_pz_t + $newOrder->total_pz_t;
-                $date->reserved_pz_q = $date->reserved_pz_q + $newOrder->total_pz_q;
-
-                if ($date->reserved_pz_q == $date->max_pz_q) {
-                    $date->visible_fq = 0;
-                }
-                if ($date->reserved_pz_t == $date->max_pz_t) {
-                    $date->visible_ft = 0;
-                }
-                $date->save();
-                $newOrder->save();
-
-                return redirect()->route('admin.orders.create')->with('reserv_success', true);
-            } else {
-                return redirect()->route('admin.orders.create')->with(['max_res_check' => true, 'inputValues' => $data]);
-            }
-        }
-
-        // dd("date: " . $date, "order: " . $newOrder);
         $date->save();
         $newOrder->save();
 

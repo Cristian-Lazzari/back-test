@@ -19,8 +19,7 @@ return new class extends Migration
             $table->string('civico', 30)->default('0');
             $table->string('message', 1000)->nullable();
             $table->unsignedBigInteger('total_price')->default(0);
-            $table->smallInteger('total_pz_q');
-            $table->smallInteger('total_pz_t');
+            $table->smallInteger('total_pz')->default(0);
             $table->string('date_slot', 16);
             $table->tinyInteger('status');
             $table->timestamps();

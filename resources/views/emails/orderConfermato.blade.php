@@ -11,7 +11,7 @@
     <h1>Ordine confermato</h1>
     <p>
         Gentile {{ $order['name'] }},<br>
-        siamo lieti di comunicarle che il suo ordine è stato confermato<br> 
+        siamo lieti di comunicarle che il suo ordine per la data {{$order['date_slot']}} è stato confermato<br> 
         Grazie di averci scelto
     </p>
 

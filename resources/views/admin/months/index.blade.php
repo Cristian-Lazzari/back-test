@@ -39,24 +39,21 @@
         @csrf
         <h3>GENERA NUOVE DATE</h3>
         <h5 class="pt-4">Indica il numero di posti a sedere per fascia oraria</h5>
-        <div class="input-group flex-nowrap py-2">
+        {{-- <div class="input-group flex-nowrap py-2">
             <label for="max_reservations" class="input-group-text" >N° di posti a sedere</label>
             <input name="max_reservations" id="max_reservations" type="number" class="form-control" placeholder="N° di posti a sedere" aria-label="N° di posti a sedere" aria-describedby="addon-wrapping" value="0">
           </div>
-        <div>
-        <h5 class="pt-4">Indica il numero massimo di pezzi al taglio per l'asporto</h5>
+        <div> --}}
+        <input name="max_reservations"  type="hidden" value="0">
+
+        <h5 class="pt-4">Indica il numero massimo di ordini per l'asporto</h5>
         <div class="input-group flex-nowrap py-2">
-            <label for="max_pz_q" class="input-group-text" >N° di pezzi</label>
-            <input name="max_pz_q" id="max_pz_q" type="number" class="form-control" placeholder="N° di pezzi" aria-label="N° di pezzi" aria-describedby="addon-wrapping" value="0">
+            <label for="max_asporto" class="input-group-text" >N° di ordini</label>
+            <input name="max_asporto" id="max_asporto" type="number" class="form-control" placeholder="N° di pezzi" aria-label="N° di pezzi" aria-describedby="addon-wrapping" value="0">
           </div>
         <div>
-        <h5 class="pt-4">Indica il numero massimo di pizze al piatto per l'asporto</h5>
-        <div class="input-group flex-nowrap py-2">
-            <label for="max_pz_t" class="input-group-text" >N° di pizze</label>
-            <input name="max_pz_t" id="max_pz_t" type="number" class="form-control" placeholder="N° di pezzi" aria-label="N° di pezzi" aria-describedby="addon-wrapping" value="0">
-          </div>
-        <div>
-        <h5 class="pt-4">Indica il numero massimo di pezzi per la consegna a domicilio</h5>
+
+        <h5 class="pt-4">Indica il numero massimo ordini con consegna a domicilio</h5>
         <div class="input-group flex-nowrap py-2">
             <label for="max_domicilio" class="input-group-text" >N° di oridini a domicilio</label>
             <input name="max_domicilio" id="max_domicilio" type="number" class="form-control" placeholder="N° di pezzi" aria-label="N° di pezzi" aria-describedby="addon-wrapping" value="0">
@@ -91,11 +88,11 @@
                                 <select  class="form-select col" name="times_slot_{{$day}}[]" id="">
                                     <option value="0">{{ $time['time'] }} - ND</option>
                                     <option value="1">{{ $time['time'] }} - asporto</option>
-                                    <option value="2">{{ $time['time'] }} - tavoli</option>
-                                    <option value="3">{{ $time['time'] }} - asporto/tavoli</option>
+                                    {{-- <option value="2">{{ $time['time'] }} - tavoli</option> --}}
+                                    {{-- <option value="3">{{ $time['time'] }} - asporto/tavoli</option> --}}
                                     <option value="4">{{ $time['time'] }} - domicilio</option>
-                                    <option value="5">{{ $time['time'] }} - domicilio/asporto</option>
-                                    <option value="6">{{ $time['time'] }} - domicilio/tavoli</option>
+                                    {{-- <option value="5">{{ $time['time'] }} - domicilio/asporto</option> --}}
+                                    {{-- <option value="6">{{ $time['time'] }} - domicilio/tavoli</option> --}}
                                     <option value="7">{{ $time['time'] }} - tutti</option>
                                 </select>
                                 

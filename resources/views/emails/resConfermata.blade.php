@@ -11,7 +11,7 @@
     <h1>Prenotazione confermata</h1>
     <p>
         Gentile {{ $reservation['name'] }},<br>
-        siamo lieti di comunicarle che la sua prenotazione è stata confermata<br> 
+        siamo lieti di comunicarle che la sua prenotazione per la data {{$order['date_slot']}} è stata confermata<br> 
         Grazie di averci scelto
     </p>
 

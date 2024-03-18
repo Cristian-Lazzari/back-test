@@ -88,34 +88,20 @@
                 </div>
             </div>
     
+
             <div class="mb-5 text-center">
-                <label for="total_pz_q" class="form-label fw-semibold">N° di pezzi al taglio</label>
+                <label for="total_pz" class="form-label fw-semibold">N° di pezzi</label>
                 <input
                     type="number"
-                    class="form-control w-75 m-auto text-center @error('total_pz_q') is-invalid @enderror"
-                    id="total_pz_q"
-                    name="total_pz_q"
+                    class="form-control w-75 m-auto text-center @error('total_pz') is-invalid @enderror"
+                    id="total_pz"
+                    name="total_pz"
                     @if (session('inputValues'))
-                        value="{{ session('inputValues')['total_pz_q'] }}"
+                        value="{{ session('inputValues')['total_pz'] }}"
                     @endif
                 >
                 <div class="invalid-feedback fw-semibold">
-                    @error('total_pz_q') {{ $message }} @enderror
-                </div>
-            </div>
-            <div class="mb-5 text-center">
-                <label for="total_pz_t" class="form-label fw-semibold">N° di pizze al piatto</label>
-                <input
-                    type="number"
-                    class="form-control w-75 m-auto text-center @error('total_pz_t') is-invalid @enderror"
-                    id="total_pz_t"
-                    name="total_pz_t"
-                    @if (session('inputValues'))
-                        value="{{ session('inputValues')['total_pz_t'] }}"
-                    @endif
-                >
-                <div class="invalid-feedback fw-semibold">
-                    @error('total_pz_t') {{ $message }} @enderror
+                    @error('total_pz') {{ $message }} @enderror
                 </div>
             </div>
     
@@ -209,7 +195,7 @@
                 </div>
             </div>
     
-            <button class="btn mb-5 w-75 m-auto btn-dark d-block">Salva</button>
+            <button class="btn mb-5 w-75 m-auto btn-light s5b c-white d-block">Salva</button>
             
             <div class="mb-5 m-auto w-50 btn-group specialradio" role="group" aria-label="Basic radio toggle button group"> 
     
@@ -225,17 +211,16 @@
                         checked
                     @endif
                 >
-                <label class="btn btn-outline-dark" for="btnradio{{$date->id}}">
+                <label class="btn btn-outline-light" for="btnradio{{$date->id}}">
                     {{$date->time}} | {{$date->day}}/{{$date->month}}/{{$date->year}} | 
-                    disp. taglio <strong>{{$date->max_pz_q - $date->reserved_pz_q}}</strong> |
-                    disp. piatto <strong>{{$date->max_pz_t - $date->reserved_pz_t}}</strong> 
+                    disp. asporto <strong>{{$date->max_asporto - $date->reserved_asporto}}</strong> 
                 </label>
     
                 @endforeach
             </div>
          
       
-            <button class="btn  w-75 m-auto btn-dark d-block">Salva</button>
+            <button class="btn  w-75 m-auto btn-light s5b c-white d-block">Salva</button>
     
         </form>
     </div>

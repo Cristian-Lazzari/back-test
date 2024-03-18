@@ -26,25 +26,21 @@ class DateController extends Controller
         $v = $request->input('v');
         $date = Date::find($request->input('id'));
         if($v == 1){
-            $date->visible_fq = !$date->visible_fq;
+            $date->visible_asporto = !$date->visible_asporto;
             $date->save();
-           
         }else if($v == 2){
-            $date->visible_ft = !$date->visible_ft;
-            $date->save();
-           
-        }else if($v == 3){
             $date->visible_t = !$date->visible_t;
             $date->save();
-        }else if($v == 4){
+        }else if($v == 3){
             $date->visible_d = !$date->visible_d;
             $date->save();
         }
         
         return redirect()->back();
     }
-    public function upmaxres($date_id)
+    public function upmaxres(Request $request)
     {
+        $date_id = $request->input('date_id');
         $date = Date::find($date_id);
         $date->max_res++;
         $date->save();
@@ -52,8 +48,9 @@ class DateController extends Controller
         return redirect()->back();
     }
 
-    public function downmaxres($date_id)
+    public function downmaxres(Request $request)
     {
+        $date_id = $request->input('date_id');
         $date = Date::find($date_id);
         if ($date->max_res > 0) {
 
@@ -63,48 +60,33 @@ class DateController extends Controller
 
         return redirect()->back();
     }
-    public function upmaxpz($date_id)
+
+    public function upmaxpz(Request $request)
     {
+        $date_id = $request->input('date_id');
         $date = Date::find($date_id);
-        $date->max_pz_q++;
+        $date->max_asporto++;
         $date->save();
 
         return redirect()->back();
     }
 
-    public function downmaxpz($date_id)
+    public function downmaxpz(Request $request)
     {
+        $date_id = $request->input('date_id');
         $date = Date::find($date_id);
-        if ($date->max_pz_q > 0) {
+        if ($date->max_asporto > 0) {
 
-            $date->max_pz_q--;
+            $date->max_asporto--;
             $date->save();
         }
 
         return redirect()->back();
     }
-    public function upmaxpzt($date_id)
+
+    public function upmaxpzd(Request $request)
     {
-        $date = Date::find($date_id);
-        $date->max_pz_t++;
-        $date->save();
-
-        return redirect()->back();
-    }
-
-    public function downmaxpzt($date_id)
-    {
-        $date = Date::find($date_id);
-        if ($date->max_pz_t > 0) {
-
-            $date->max_pz_t--;
-            $date->save();
-        }
-
-        return redirect()->back();
-    }
-    public function upmaxpzd($date_id)
-    {
+        $date_id = $request->input('date_id');
         $date = Date::find($date_id);
         $date->max_domicilio++;
         $date->save();
@@ -112,12 +94,13 @@ class DateController extends Controller
         return redirect()->back();
     }
 
-    public function downmaxpzd($date_id)
+    public function downmaxpzd(Request $request)
     {
+        $date_id = $request->input('date_id');
         $date = Date::find($date_id);
         if ($date->max_domicilio > 0) {
 
-            $date->max_pz_t--;
+            $date->max_domicilio--;
             $date->save();
         }
 
@@ -127,8 +110,7 @@ class DateController extends Controller
     private $validations = [
         'max_domicilio'         => 'required|integer',
         'max_reservations'      => 'required|integer',
-        'max_pz_q'              => 'required|integer',
-        'max_pz_t'              => 'required|integer',
+        'max_asporto'              => 'required|integer',
         'times_slot_1'          => 'array',
         'times_slot_1.*'        => 'string',
         'times_slot_2'          => 'array',
@@ -150,8 +132,8 @@ class DateController extends Controller
         try {
             $request->validate($this->validations);
             $max_reservations = $request->input("max_reservations");
-            $max_pz_t = $request->input("max_pz_t");
-            $max_pz_q = $request->input("max_pz_q");
+            $max_asporto = $request->input("max_asporto");
+            
             $max_domicilio = $request->input("max_domicilio");
             $days_off = $request->input("days_off");
             $times_slot1 = $request->input("times_slot_1");
@@ -264,7 +246,7 @@ class DateController extends Controller
 
             // Eseguo il seeder
             $seeder = new DatesTableSeeder();
-            $seeder->setVariables($max_reservations, $max_pz_q, $max_pz_t, $timesDay, $days_off, $max_domicilio);
+            $seeder->setVariables($max_reservations, $max_asporto, $timesDay, $days_off, $max_domicilio);
             $seeder->run();
 
             // Ripristino le prenotazioni
@@ -294,7 +276,7 @@ class DateController extends Controller
         if ($reservations) {
             foreach ($reservations as $reservation) {
                 $date = Date::where('date_slot', $reservation->date_slot)->first();
-                if ($date) {
+                if (isset($date)) {
                     $date->reserved = $date->reserved + $reservation->n_person;
                     $date->save();
                 }
@@ -306,13 +288,10 @@ class DateController extends Controller
         if ($orders) {
             foreach ($orders as $order) {
                 $date = Date::where('date_slot', $order->date_slot)->first();
-                if ($date) {
-                    $date->reserved_pz_q = $date->reserved_pz_q + $order->total_pz_q;
-                    if($date->reserved_pz_q > $date->max_px_q){
-                        $date->visble_fq = 0;
-                    }
-                    if($date->reserved_pz_t > $date->max_px_t){
-                        $date->visble_ft = 0;
+                if (isset($date)) {
+                    $date->reserved_max_asporto = $date->reserved_max_asporto + $order->total_max_asporto;
+                    if($date->reserved_asporto > $date->max_asporto){
+                        $date->visble_asporto = 0;
                     }
                     $date->save();
                 }

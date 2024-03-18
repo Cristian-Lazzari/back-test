@@ -18,7 +18,7 @@
             @error('name') {{ $message }} @enderror
         </div>
     </div>
-    <div class="mb-3">
+    {{-- <div class="mb-3">
         <label for="type" class="form-label">Tipologia (pezzi al taglio (t), pizza al piatto (q) o altro (0))</label>
         <input
             type="text"
@@ -30,7 +30,7 @@
         <div class="invalid-feedback">
             @error('type') {{ $message }} @enderror
         </div>
-    </div>
+    </div> --}}
     <div class="mb-3">
         <label for="slot" class="form-label">Slot</label>
         <input

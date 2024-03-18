@@ -92,8 +92,8 @@ Route::middleware(['auth', 'verified'])
         Route::post('/dates/upmaxpz/date_id}',            [DateController::class, 'upmaxpz'])->name('dates.upmaxpz');
         Route::post('/dates/downmaxpz/date_id}',          [DateController::class, 'downmaxpz'])->name('dates.downmaxpz');
         
-        Route::post('/dates/upmaxpzt/date_id}',           [DateController::class, 'upmaxpzt'])->name('dates.upmaxpzt');
-        Route::post('/dates/downmaxpzt/date_id}',         [DateController::class, 'downmaxpzt'])->name('dates.downmaxpzt');
+        // Route::post('/dates/upmaxpzt/date_id}',           [DateController::class, 'upmaxpzt'])->name('dates.upmaxpzt');
+        // Route::post('/dates/downmaxpzt/date_id}',         [DateController::class, 'downmaxpzt'])->name('dates.downmaxpzt');
         
         Route::post('/dates/upmaxpzd/date_id}',           [DateController::class, 'upmaxpzd'])->name('dates.upmaxpzd');
         Route::post('/dates/downmaxpzd/date_id}',         [DateController::class, 'downmaxpzd'])->name('dates.downmaxpzd');

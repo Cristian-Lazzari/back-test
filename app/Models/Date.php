@@ -12,8 +12,7 @@ class Date extends Model
 
     protected $fillable = [
         'reserved', 
-        'reserved_pz_q',
-        'reserved_pz_t',
+        'reserved_asporto',    
         'reserved_domicilio',
         'year',
         'month',
@@ -21,15 +20,14 @@ class Date extends Model
         'day_w', 
         'time', 
         'max_res', 
-        'max_pz_q', 
-        'max_pz_t', 
+        'max_asporto',      
         'max_domicilio', 
         'date_slot', 
         'status', 
         'visible_d',
         'visible_t',
-        'visible_fq',
-        'visible_ft',
+        'visible_asporto',
+       
     ];
     public $timestamps = false;
 

@@ -100,7 +100,7 @@ class DateController extends Controller
                 
             }else if($wcf == '1'){
                 foreach ($dates as $data) {
-                    if($data['visible_fq'] || $data['visible_ft']){
+                    if($data['visible_asporto'] || $data['visible_asporto']){
                         if($data['status'] == 1 || $data['status'] == 3 || $data['status'] == 5 || $data['status'] == 7 ){
 
                             array_push($newDates, $data); 
@@ -113,7 +113,7 @@ class DateController extends Controller
                 foreach ($dates as $data) {
                     //se anche solo un forno ha la disponibilità mostro la data, sara poi l'utente da front-end
                     // a notare che sono disponibili 0 pezzi di una delle due categorie
-                    if($data['visible_d'] && ($data['res_pz_q'] < $data['max_pz_q'] || $data['res_pz_t'] < $data['max_pz_t'])){
+                    if($data['visible_d'] && ($data['res_asporto'] < $data['max_asporto'])){
                        array_push($newDates, $data); 
                     }
                 }

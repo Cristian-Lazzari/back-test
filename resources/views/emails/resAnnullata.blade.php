@@ -11,7 +11,7 @@
     <h1>Prenotazione annullata</h1>
     <p>
         Gentile {{ $reservation['name'] }},<br>
-        le comunichiamo con profondo rammarico che la sua prenotazione è stata annullata<br> 
+        le comunichiamo con profondo rammarico che la sua prenotazione per la data {{$order['date_slot']}} è stata annullata<br> 
         La ringraziamo per avervci scelto e ci scusiamo per il disagio.
     </p>
 

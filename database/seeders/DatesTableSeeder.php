@@ -13,18 +13,18 @@ class DatesTableSeeder extends Seeder
 {
 
     protected $max_reservations;
-    protected $max_pz_t;
-    protected $max_pz_q;
+    protected $max_asporto;
+
     protected $max_domicilio;
     protected $times;
     protected $days_off = [];
 
-    public function setVariables($max_reservations, $max_pz_q, $max_pz_t, $times, $days_off, $max_domicilio)
+    public function setVariables($max_reservations,  $max_asporto, $times, $days_off, $max_domicilio)
     {
         $this->max_reservations = $max_reservations;
         $this->max_domicilio = $max_domicilio;
-        $this->max_pz_t = $max_pz_t;
-        $this->max_pz_q = $max_pz_q;
+        $this->max_asporto = $max_asporto;
+
         $this->times = $times;
         $this->days_off = $days_off;
     }
@@ -64,24 +64,22 @@ class DatesTableSeeder extends Seeder
                     if ($time['set']) {
                         Date::create([
                             'reserved' => 0,
-                            'reserved_pz_t' => 0,
-                            'reserved_pz_q' => 0,
+                            'reserved_asporto' => 0,
+ 
                             'reserved_domicilio' => 0,
-                            'day_w' => $currentDayOfWeek,
-                            'month' => $currentDate->format('n'),
-                            'day' => $currentDate->format('d'),
-                            'time' => $time['time'],
                             'max_res' => $this->max_reservations,
-                            'max_pz_q' => $this->max_pz_q,
-                            'max_pz_t' => $this->max_pz_t,
+                            'max_asporto' => $this->max_asporto,
                             'max_domicilio' => $this->max_domicilio,
+                            'visible_t' => ($time['set'] == 2 || $time['set'] == 3 || $time['set'] == 6 || $time['set'] == 7) && in_array($currentDayOfWeek, $abledDays) ? 1 : 0,
+                            'visible_asporto' => (($time['set'] == 1 || $time['set'] == 3 || $time['set'] == 5 || $time['set'] == 7) && in_array($currentDayOfWeek, $abledDays)) ? 1 : 0,
+                            'visible_d' => ($time['set'] >= 4 && $time['set'] <= 7 && in_array($currentDayOfWeek, $abledDays)) ? 1 : 0,
+                            'time' => $time['time'],
+                            'day_w' => $currentDayOfWeek,
+                            'day' => $currentDate->format('d'),
+                            'month' => $currentDate->format('n'),
                             'year' => $currentDate->format('Y'),
                             'date_slot' => $currentDate->format('d') . '/' .  $currentDate->format('m') . '/' .  $currentDate->format('Y') . ' ' . $time['time'],
                             'status' => $time['set'],
-                            'visible_d' => ($time['set'] >= 4 && $time['set'] <= 7 && in_array($currentDayOfWeek, $abledDays)) ? 1 : 0,
-                            'visible_ft' => (($time['set'] == 1 || $time['set'] == 3 || $time['set'] == 4 || $time['set'] == 5 || $time['set'] == 6 || $time['set'] == 7) && in_array($currentDayOfWeek, $abledDays)) ? 1 : 0,
-                            'visible_fq' => (($time['set'] == 1 || $time['set'] == 3 || $time['set'] == 4 || $time['set'] == 5 || $time['set'] == 6 || $time['set'] == 7) && in_array($currentDayOfWeek, $abledDays)) ? 1 : 0,
-                            'visible_t' => ($time['set'] == 2 || $time['set'] == 3 || $time['set'] == 6 || $time['set'] == 7) && in_array($currentDayOfWeek, $abledDays) ? 1 : 0,
 
                         ]);
                     }

@@ -87,9 +87,8 @@
                     @endif
                     @endforeach
                     <div class="t_price">€{{$order->total_price / 100}}</div>
-                    <div class="t_price">{{$order->total_pz_q}} pezzi taglio</div>
-                    <div class="t_price">{{$order->total_pz_t}} pizze piatte</div>
-                    
+                    <div class="t_price">{{$order->total_pz}} pezzi (escluse bibite)</div>
+                   
                 </section>
                 <section class="myres-right">
 

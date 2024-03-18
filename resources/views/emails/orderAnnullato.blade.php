@@ -11,7 +11,7 @@
     <h1>Ordine annullato</h1>
     <p>
         Gentile {{ $order['name'] }},<br>
-        le comunichiamo con profondo rammarico che il suo ordine è stato annullato<br> 
+        le comunichiamo con profondo rammarico che il suo ordine per la data {{$order['date_slot']}} è stato annullato<br> 
         La ringraziamo per avervci scelto e ci scusiamo per il disagio.
     </p>
 

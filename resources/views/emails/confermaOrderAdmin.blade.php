@@ -89,7 +89,7 @@
             <hr>
         @endforeach
     </div>
-    <h4>Totale carrello: €{{intval($newOrder['totPrice']) / 100}}</h4>
+    <h4>Totale carrello: €{{intval($newOrder['total_price']) / 100}}</h4>
     <h4>Messaggio:</h4>
     <p>{{$newOrder['message']}}</p>
     <p>Contatta {{$newOrder['name']}}</p>
