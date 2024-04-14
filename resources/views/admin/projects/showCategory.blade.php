@@ -132,7 +132,7 @@
                 style="flex: 1 1 300px"
             >
                 <div class="fs-4 fw-bold">{{ $project->name }}</div>
-                <div class="fs-2 fw-bold">€{{ $project->price / 100 }}</div>
+                <div class="fs-2 fw-bold">€{{ intval($project->price) / 100 }}</div>
 
                 <div class="fs-6 text-secondary">{{ $project->category->name }}</div>
                 @if ($project->image)                
