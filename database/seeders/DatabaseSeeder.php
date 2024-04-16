@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
              CategoriesTableSeeder::class,
             // TagsTableSeeder::class,
-            // ProjectsTableSeeder::class,
+             ProjectsTableSeeder::class,
             SettingsTableSeeder::class,
             
             //DatesTableSeeder::class,

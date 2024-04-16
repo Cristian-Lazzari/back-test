@@ -18,9 +18,7 @@ return new class extends Migration
             $table->id();
 
             $table->string('name', 100);
-            $table->string('slug', 100);
             $table->string('price', 6);
-            $table->string('counter', 50);
             $table->string('visible')->default('0');
             $table->string('image')->nullable();
             $table->softDeletes();

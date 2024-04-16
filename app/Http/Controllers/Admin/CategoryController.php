@@ -11,7 +11,7 @@ class CategoryController extends Controller
     private $validations = [
         'name'   => 'required|string|min:5|max:50',
         'slot'   => 'required',
-        'type'   => 'required',
+       // 'type'   => 'required',
     ];
 
     public function index()
@@ -38,7 +38,7 @@ class CategoryController extends Controller
 
         $newCategory->name          = $data['name'];
         $newCategory->slot          = $data['slot'];
-        $newCategory->type          = $data['type'];
+        //$newCategory->type          = $data['type'];
 
         $newCategory->save();
 
@@ -62,7 +62,7 @@ class CategoryController extends Controller
 
         $category->name          = $data['name'];
         $category->slot          = $data['slot'];
-        $category->type          = $data['type'];
+        //$category->type          = $data['type'];
 
 
         $category->update();
