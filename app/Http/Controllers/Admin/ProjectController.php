@@ -81,7 +81,7 @@ class ProjectController extends Controller
         $tags = [];
         $tagDescription = [];
         foreach ($alltag as $tag) {
-            if($tag['price'] == 0){
+            if($tag['price'] == '0'){
                 array_push($tagDescription, $tag);
             }else{
                 array_push($tags, $tag);
