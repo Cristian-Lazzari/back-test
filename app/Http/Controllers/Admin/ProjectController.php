@@ -131,7 +131,7 @@ class ProjectController extends Controller
         $newProject->name          = $data['name'];
         $newProject->price         = $data['price'];
         $newProject->counter       = 0;
-        $newProject->slug          = Project::slugger($data['name']);
+        
         $newProject->category_id   = $data['category_id'];
         
         $newProject->save();
