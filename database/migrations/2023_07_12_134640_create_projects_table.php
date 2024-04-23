@@ -19,7 +19,7 @@ return new class extends Migration
 
             $table->string('name', 100);
             $table->string('price', 6);
-            $table->string('counter', 50);
+            $table->string('counter', 50)->default('0');
             $table->string('visible')->default('0');
             $table->string('image')->nullable();
             $table->softDeletes();
