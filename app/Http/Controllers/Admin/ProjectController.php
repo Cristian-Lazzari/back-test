@@ -79,16 +79,16 @@ class ProjectController extends Controller
         $categories     = Category::all();
         $alltag         = Tag::all();
         $tags = [];
-        $tagDescription = [];
+        $desc = [];
         foreach ($alltag as $tag) {
             if($tag['price'] == '0'){
-                array_push($tagDescription, $tag);
+                array_push($desc, $tag);
             }else{
                 array_push($tags, $tag);
             }
         }
         
-        return view('admin.projects.create', compact('categories', 'tags', 'tagDescription'));
+        return view('admin.projects.create', compact('categories', 'tags', 'desc'));
     }
     
     private $validations_tag = [

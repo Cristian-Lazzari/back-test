@@ -75,7 +75,7 @@
 
         <h3>Descrizione</h3>
         <div class="mytags mb-4">
-            @foreach($tagDescription as $description)
+            @foreach($desc as $description)
 
                 <input
                     type="checkbox"
