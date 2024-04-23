@@ -73,6 +73,7 @@ class ProjectController extends Controller
     }
 
 
+
     public function create(Request $request)
     {
         $categories     = Category::all();
@@ -104,8 +105,12 @@ class ProjectController extends Controller
             
             $new_ing = new Tag();
             $new_ing->name = $tag_name;
-            $new_ing->price = $tag_price;
             
+            if ($tag_name > 50) {
+                $new_ing->price = 0;
+            } else {
+                $new_ing->price = $tag_price;
+            }
             
             $new_ing->save();
             
@@ -126,6 +131,7 @@ class ProjectController extends Controller
         $newProject->name          = $data['name'];
         $newProject->price         = $data['price'];
         $newProject->counter       = 0;
+        $newProject->slug          = Project::slugger($data['name']);
         $newProject->category_id   = $data['category_id'];
         
         $newProject->save();
@@ -148,7 +154,6 @@ class ProjectController extends Controller
         
         return to_route('admin.projects.show', ['project' => $newProject]);
     }
-    
     public function show($id)
     {
         $project = Project::where('id', $id)->firstOrFail();
