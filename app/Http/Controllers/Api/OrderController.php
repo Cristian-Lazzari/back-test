@@ -79,7 +79,7 @@ class OrderController extends Controller
                 $newOrder->indirizzo = $data['indirizzo'];
                 $newOrder->civico = $data['civico'];
                 if ($date->reserved_domicilio <= $date->max_domicilio) {
-                    $date->reserved_domicilio++;
+                    $date->reserved_domicilio ++;
                     if ($date->reserved_domicilio == $date->max_domicilio) {
                         $date->visible_d = 0;
                     };
@@ -95,7 +95,8 @@ class OrderController extends Controller
 
 
             
-            if ($date->reserved_asporto <= $date->max_asporto) {       
+            if ($date->reserved_asporto <= $date->max_asporto) {  
+                $date->reserved_asporto ++;
                 if ($date->max_asporto == $date->reserved_asporto) {
                     $date->visible_asporto = 0;
                 }

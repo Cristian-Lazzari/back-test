@@ -41,7 +41,7 @@
 
     <img src="https://db.dashboardristorante.it/public/images/or.png" alt="simbolo ordine">
     <h1>Grazie {{ $newOrder['name'] }}, <br>
-        Il Capriccio di Leo sta elaborando la sua richiesta!</h1>
+        Kojo Sushi sta elaborando la sua richiesta!</h1>
     <p>Data prenotata: {{ $newOrder['date_slot'] }}</p>
     <h3>I suoi prodotti:</h3>
     <div class="products"  style="">

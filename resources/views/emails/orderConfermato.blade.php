@@ -16,6 +16,6 @@
     </p>
 
     <p>Cordialmente,</p>
-    <p>Il Capriccio di Leo</p>
+    <p>Kojo Sushi</p>
 </body>
 </html>
