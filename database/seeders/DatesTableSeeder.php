@@ -65,14 +65,16 @@ class DatesTableSeeder extends Seeder
                         Date::create([
                             'reserved' => 0,
                             'reserved_asporto' => 0,
- 
                             'reserved_domicilio' => 0,
+                            
                             'max_res' => $this->max_reservations,
                             'max_asporto' => $this->max_asporto,
                             'max_domicilio' => $this->max_domicilio,
+
                             'visible_t' => ($time['set'] == 2 || $time['set'] == 3 || $time['set'] == 6 || $time['set'] == 7) && in_array($currentDayOfWeek, $abledDays) ? 1 : 0,
                             'visible_asporto' => (($time['set'] == 1 || $time['set'] == 3 || $time['set'] == 5 || $time['set'] == 7) && in_array($currentDayOfWeek, $abledDays)) ? 1 : 0,
                             'visible_d' => ($time['set'] >= 4 && $time['set'] <= 7 && in_array($currentDayOfWeek, $abledDays)) ? 1 : 0,
+                            
                             'time' => $time['time'],
                             'day_w' => $currentDayOfWeek,
                             'day' => $currentDate->format('d'),
