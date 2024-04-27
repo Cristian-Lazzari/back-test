@@ -81,7 +81,7 @@ class ProjectController extends Controller
         $tags = [];
         $desc = [];
         foreach ($alltag as $tag) {
-            if($tag['price'] == '0'){
+            if($tag['price'] == 0){
                 array_push($desc, $tag);
             }else{
                 array_push($tags, $tag);
@@ -167,9 +167,19 @@ class ProjectController extends Controller
 
         $project = Project::where('id', $id)->firstOrFail();
 
-        $categories = Category::all();
-        $tags       = Tag::orderBy('name')->get();
-        return view('admin.projects.edit', compact('project', 'categories', 'tags'));
+        $categories     = Category::all();
+        $alltag         = Tag::all();
+        $tags = [];
+        $desc = [];
+        foreach ($alltag as $tag) {
+            if($tag['price'] == 0){
+                array_push($desc, $tag);
+            }else{
+                array_push($tags, $tag);
+            }
+        }
+        
+        return view('admin.projects.edit', compact('project', 'categories', 'tags', 'desc'));
     }
 
 

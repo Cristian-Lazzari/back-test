@@ -73,7 +73,7 @@
 
     <div class="mb-5 m-auto w-75 btn-group specialradio">
 
-        {{-- <h3>Descrizione</h3>
+        <h3>Descrizione</h3>
         <div class="mytags mb-4">
             @foreach($desc as $description)
 
@@ -96,7 +96,7 @@
             
             @endforeach
 
-        </div> --}}
+        </div>
 
         <h3>Ingredienti</h3>
         <div class="mytags">
