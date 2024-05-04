@@ -7,11 +7,12 @@
         <h1>CATEGORIE</h1>
         <table class="table table-striped">
             <thead>
+                <p>*se impostato a 0 nel front-end non sara possibile modificare gli ingredienti, se impostato a 1 sarà possibile solo togliere gli ingredienti gia presenti, se impostato a 2 si potranno aggiungiere nuovi ingredienti e/o togliere ingredienti gia presenti </p>
                 <tr>
 
                     <th>NOME</th>
                     <th>Tipologia</th>
-                    <th>SLOT</th>
+                    <th >SLOT*</th>
 
                     <th>
                         <a class="btn btn-success" href="{{ route('admin.categories.create') }}">Nuovo</a>

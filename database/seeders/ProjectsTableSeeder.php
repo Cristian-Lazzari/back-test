@@ -1700,7 +1700,8 @@ class ProjectsTableSeeder extends Seeder
                     if(!$check){
                         $newTag = new Tag();
                         $newTag->name          = strtolower($tag);
-                        $newTag->price         = 100;
+                        $newTag->price         = 0;
+
                         $newTag->save();
                         array_push($arrIdTag, $newTag->id);
                     }else{
@@ -1715,6 +1716,7 @@ class ProjectsTableSeeder extends Seeder
             'price'=> floatval($project['price']) * 100,
             'category_id'=> $category_id,
             'arrIdTag'=> $arrIdTag,
+        
         ];
         array_push($newprojects, $newproject);
         //dump( $newprojects);
@@ -1726,6 +1728,7 @@ class ProjectsTableSeeder extends Seeder
             'category_id'   => $project['category_id'],
             'name'          => $project['name'],
             'price'         => $project['price'],
+            'visible'       => ($project['price'] !== 0) ? 0 : 1,
             'image'         => 'public/uploads/default.png',           
         ]);
         if(count($project['arrIdTag'])){

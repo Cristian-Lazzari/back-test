@@ -100,39 +100,39 @@ class CategoriesTableSeeder extends Seeder
 
             [
                 'name'          => 'Bevande',
-                'slot'          => 1,
+                'slot'          => 0,
             ],
             [
                 'name'          => 'Birre',
-                'slot'          => 1,
+                'slot'          => 0,
             ],
             [
                 'name'          => 'Amari',
-                'slot'          => 1,
+                'slot'          => 0,
             ],
             [
                 'name'          => 'Dessert',
-                'slot'          => 1,
+                'slot'          => 0,
             ],
             [
                 'name'          => 'Caffetteria',
-                'slot'          => 1,
+                'slot'          => 0,
             ],
             [
                 'name'          => 'Grappe',
-                'slot'          => 1,
+                'slot'          => 0,
             ],
             [
                 'name'          => 'Vino Bianco',
-                'slot'          => 1,
+                'slot'          => 0,
             ],
             [
                 'name'          => 'Vino Rosè',
-                'slot'          => 1,
+                'slot'          => 0,
             ],
             [
                 'name'          => 'Spina',
-                'slot'          => 1,
+                'slot'          => 0,
             ],
         ];
 

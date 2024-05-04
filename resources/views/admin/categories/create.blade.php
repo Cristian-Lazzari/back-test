@@ -32,7 +32,7 @@
         </div>
     </div> --}}
     <div class="mb-3">
-        <label for="slot" class="form-label">Slot</label>
+        <label for="slot" class="form-label">Slot*</label>
         <input
             type="number"
             class="form-control @error('slot') is-invalid @enderror"
@@ -44,6 +44,7 @@
             @error('slot') {{ $message }} @enderror
         </div>
     </div>
+    <p>*se impostato a 0 nel front-end non sara possibile modificare gli ingredienti, se impostato a 1 sarà possibile solo togliere gli ingredienti gia presenti, se impostato a 2 si potranno aggiungiere nuovi ingredienti e/o togliere ingredienti gia presenti </p>
 
     
 

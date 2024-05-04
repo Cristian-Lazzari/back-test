@@ -36,8 +36,7 @@ class OrderController extends Controller
 
         $arrvar = str_replace('\\', '', $data['products']);
         $arrvar2 = json_decode($arrvar, true);
-        // $total_pz_q = 0;
-        // $total_pz_t = 0;
+
         $total_pz = 0;
 
 
@@ -46,9 +45,9 @@ class OrderController extends Controller
                 // Calcolo il numero di pezzi ordinati in base alla categoria
                 $project = Project::where('id', $arrvar2[$i]['p_id'])->first();
                 $category = Category::where('id', $project->category_id)->first();
-                if ($category->slot !== 0) {
-                    $total_pz ++;
-                } 
+            
+                $total_pz ++;
+              
 
                 // Calcolo il prezzo totale (senza aggiunte)
                 $total_price += $project->price *  $arrvar2[$i]['counter'];
@@ -71,7 +70,7 @@ class OrderController extends Controller
             $newOrder->message       = $data['message'];
             $newOrder->date_slot     = $date->date_slot;
             $newOrder->total_price   = $total_price;
-            $newOrder->total_pz   = $total_pz;
+            $newOrder->total_pz      = $total_pz;
           
             $newOrder->status        = 0;
             if (isset($data['comune'])) {
