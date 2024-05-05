@@ -1728,7 +1728,7 @@ class ProjectsTableSeeder extends Seeder
             'category_id'   => $project['category_id'],
             'name'          => $project['name'],
             'price'         => $project['price'],
-            'visible'       => ($project['price'] > 0) ? 1 : 0,
+            'visible'       => ($project['price'] > 0) ? 0 : 1,
             'image'         => 'public/uploads/default.png',           
         ]);
         if(count($project['arrIdTag'])){
