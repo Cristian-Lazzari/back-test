@@ -95,7 +95,7 @@
                     <div class="visible-on">
                         <form action="{{route('admin.dates.updatestatus')}}" method="post">
                             @csrf
-                            <button @if (!$date->visible_asporto) class="off" @endif type="submit">{{ 'asporto' . '-' . ($date->visible_fq ? 'si' : 'no')}}</button>
+                            <button @if (!$date->visible_asporto) class="off" @endif type="submit">{{ 'asporto' . '-' . ($date->visible_asporto ? 'si' : 'no')}}</button>
                             <input type="hidden" name="v" value="1">
                             <input type="hidden" name="id" value="{{$date->id}}">
                         </form> 
